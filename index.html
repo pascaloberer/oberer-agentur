@@ -248,53 +248,6 @@
       #hero { padding: 7rem 6% 3rem; }
     }
 
-    /* TRUSTED BY */
-    #trusted {
-      padding: 3rem 0;
-      text-align: center;
-      overflow: hidden;
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .trusted-label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--muted);
-      margin-bottom: 1.5rem;
-      padding: 0 5%;
-    }
-
-    .trusted-track {
-      display: flex;
-      width: max-content;
-      animation: marquee 18s linear infinite;
-    }
-
-    #trusted:hover .trusted-track { animation-play-state: paused; }
-
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
-
-    .trusted-names {
-      display: flex;
-      align-items: center;
-      gap: 4rem;
-      padding-right: 4rem;
-    }
-
-    .trusted-name {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 600;
-      font-size: 1.3rem;
-      color: var(--muted);
-      letter-spacing: 0.02em;
-      white-space: nowrap;
-    }
-
     /* SECTION COMMONS */
     section { padding: 7rem 5%; }
 
@@ -814,25 +767,6 @@
       </div>
     </div>
     <div class="scroll-cue"></div>
-  </section>
-
-  <!-- TRUSTED BY -->
-  <section id="trusted">
-    <p class="trusted-label">🤝 Bereits gearbeitet mit</p>
-    <div class="trusted-track">
-      <div class="trusted-names">
-        <span class="trusted-name">IDC AG</span>
-        <span class="trusted-name">Blue Kosmetik</span>
-        <span class="trusted-name">IDC AG</span>
-        <span class="trusted-name">Blue Kosmetik</span>
-      </div>
-      <div class="trusted-names" aria-hidden="true">
-        <span class="trusted-name">IDC AG</span>
-        <span class="trusted-name">Blue Kosmetik</span>
-        <span class="trusted-name">IDC AG</span>
-        <span class="trusted-name">Blue Kosmetik</span>
-      </div>
-    </div>
   </section>
 
   <!-- SERVICES -->
