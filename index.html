@@ -381,87 +381,6 @@
       margin-top: 0.5rem;
     }
 
-    /* TESTIMONIALS */
-    #testimonials { background: var(--bg); }
-
-    .testimonials-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .testimonial-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.75rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-
-    .testimonial-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-4px);
-    }
-
-    .testimonial-stars {
-      color: #f59e0b;
-      font-size: 0.85rem;
-      letter-spacing: 0.1em;
-    }
-
-    .testimonial-quote {
-      color: var(--text);
-      font-size: 0.95rem;
-      line-height: 1.7;
-      flex: 1;
-    }
-
-    .testimonial-quote::before {
-      content: '\201C';
-      color: var(--accent);
-      font-size: 1.5rem;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800;
-      line-height: 0;
-      vertical-align: -0.4rem;
-      margin-right: 0.2rem;
-    }
-
-    .testimonial-author {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      border-top: 1px solid var(--border);
-      padding-top: 1.25rem;
-    }
-
-    .author-avatar {
-      width: 40px; height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      flex-shrink: 0;
-    }
-
-    .av1 { background: linear-gradient(135deg, #e8722a, #c45a1a); }
-    .av2 { background: linear-gradient(135deg, #f5a84a, #d4842a); }
-    .av3 { background: linear-gradient(135deg, #ec4899, #be185d); }
-
-    .author-name {
-      font-weight: 500;
-      font-size: 0.9rem;
-    }
-
-    .author-role {
-      color: var(--muted);
-      font-size: 0.78rem;
-    }
-
     /* ABOUT */
     #about {
       background: var(--surface);
@@ -689,7 +608,6 @@
     <ul class="nav-links">
       <li><a href="#services">Leistungen</a></li>
       <li><a href="#portfolio">Arbeiten</a></li>
-      <li><a href="#testimonials">Referenzen</a></li>
       <li><a href="#about">Über mich</a></li>
       <li><a href="#contact" class="nav-cta">Kontakt aufnehmen</a></li>
     </ul>
@@ -808,48 +726,6 @@
     </div>
   </section>
 
-  <!-- TESTIMONIALS -->
-  <section id="testimonials">
-    <p class="section-label">Was Kunden sagen</p>
-    <h2>Überzeug dich selbst.</h2>
-    <p class="section-intro">Echtes Feedback von echten Kunden — ohne Marketingfloskeln.</p>
-    <div class="testimonials-grid">
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-quote">Pascal hat unsere Instagram-Präsenz komplett verändert. In drei Monaten hat sich unser Engagement verdreifacht und wir erhalten plötzlich Nachrichten von Kunden, die wir vorher nie erreicht hätten.</p>
-        <div class="testimonial-author">
-          <div class="author-avatar av1">S</div>
-          <div>
-            <div class="author-name">Sarah M.</div>
-            <div class="author-role">Gründerin, Boutique-Brand</div>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-quote">Der Markenfilm, den er für uns erstellt hat, berührt mich jedes Mal aufs Neue. Er hat das Briefing beim ersten Schnitt getroffen — das passiert mit niemandem sonst, mit dem wir je zusammengearbeitet haben.</p>
-        <div class="testimonial-author">
-          <div class="author-avatar av2">T</div>
-          <div>
-            <div class="author-name">Tom K.</div>
-            <div class="author-role">CEO, Tech-Startup</div>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-quote">Unsere alte Website war eine Katastrophe. Die neue, die Pascal gebaut hat, lädt in unter einer Sekunde und hat in der ersten Woche nach dem Launch bereits drei neue Anfragen gebracht.</p>
-        <div class="testimonial-author">
-          <div class="author-avatar av3">L</div>
-          <div>
-            <div class="author-name">Laura B.</div>
-            <div class="author-role">Inhaberin, Design Studio</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ABOUT -->
   <section id="about">
     <div class="about-visual">
@@ -959,7 +835,7 @@
       });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('.service-card, .portfolio-card, .testimonial-card').forEach(el => {
+    document.querySelectorAll('.service-card, .portfolio-card').forEach(el => {
       el.style.opacity = '0';
       el.style.transform = 'translateY(20px)';
       el.style.transition = 'opacity 0.5s ease, transform 0.5s ease, border-color 0.2s, transform 0.2s';
