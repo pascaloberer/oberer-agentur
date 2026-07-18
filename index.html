@@ -217,8 +217,9 @@
 
     /* TRUSTED BY */
     #trusted {
-      padding: 2.5rem 5% 4rem;
+      padding: 2.5rem 0 4rem;
       text-align: center;
+      overflow: hidden;
     }
 
     .trusted-label {
@@ -227,21 +228,36 @@
       letter-spacing: 0.12em;
       color: var(--muted);
       margin-bottom: 1.5rem;
+      padding: 0 5%;
+    }
+
+    .trusted-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 18s linear infinite;
+    }
+
+    #trusted:hover .trusted-track { animation-play-state: paused; }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
     }
 
     .trusted-names {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 2.5rem;
+      align-items: center;
+      gap: 4rem;
+      padding-right: 4rem;
     }
 
     .trusted-name {
       font-family: 'Poppins', sans-serif;
       font-weight: 600;
-      font-size: 1.1rem;
+      font-size: 1.3rem;
       color: var(--muted);
       letter-spacing: 0.02em;
+      white-space: nowrap;
     }
 
     /* SECTION COMMONS */
@@ -404,6 +420,33 @@
       font-weight: 600;
       margin-top: 0.5rem;
     }
+
+    /* CTA BAND */
+    .cta-band {
+      background: linear-gradient(135deg, var(--accent), #d4601c);
+      color: #fff;
+      text-align: center;
+      padding: 4.5rem 5%;
+    }
+
+    .cta-band h2 {
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .cta-band p {
+      color: rgba(255,255,255,0.85);
+      max-width: 46ch;
+      margin: 0 auto 2rem;
+    }
+
+    .cta-band .btn-primary {
+      background: #fff;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .cta-band .btn-primary:hover { opacity: 0.9; }
 
     /* PROCESS */
     #process { background: var(--surface); }
@@ -723,16 +766,26 @@
 
   <!-- TRUSTED BY -->
   <section id="trusted">
-    <p class="trusted-label">Bereits gearbeitet mit</p>
-    <div class="trusted-names">
-      <span class="trusted-name">IDC AG</span>
-      <span class="trusted-name">Blue Kosmetik</span>
+    <p class="trusted-label">🤝 Bereits gearbeitet mit</p>
+    <div class="trusted-track">
+      <div class="trusted-names">
+        <span class="trusted-name">IDC AG</span>
+        <span class="trusted-name">Blue Kosmetik</span>
+        <span class="trusted-name">IDC AG</span>
+        <span class="trusted-name">Blue Kosmetik</span>
+      </div>
+      <div class="trusted-names" aria-hidden="true">
+        <span class="trusted-name">IDC AG</span>
+        <span class="trusted-name">Blue Kosmetik</span>
+        <span class="trusted-name">IDC AG</span>
+        <span class="trusted-name">Blue Kosmetik</span>
+      </div>
     </div>
   </section>
 
   <!-- SERVICES -->
   <section id="services">
-    <p class="section-label">Was ich mache</p>
+    <p class="section-label">🎬 Was ich mache</p>
     <h2>Eine Person.<br>Drei Stärken.</h2>
     <p class="section-intro">
       Kein Agentur-Overhead. Du arbeitest direkt mit mir — schnelle Entscheidungen, kurze
@@ -777,7 +830,7 @@
 
   <!-- PORTFOLIO -->
   <section id="portfolio">
-    <p class="section-label">Ausgewählte Arbeiten</p>
+    <p class="section-label">🎞️ Ausgewählte Arbeiten</p>
     <h2>Aktuelle Projekte.</h2>
     <p class="section-intro">Ein Einblick in aktuelle Kundenprojekte aus Social Media, Video und Web.</p>
     <div class="portfolio-grid">
@@ -822,9 +875,16 @@
     </div>
   </section>
 
+  <!-- CTA BAND -->
+  <section class="cta-band">
+    <h2>Bereit für dein nächstes Projekt?</h2>
+    <p>Erzähl mir kurz, was du vorhast — ich melde mich innerhalb von 24 Stunden mit den nächsten Schritten.</p>
+    <a href="#contact" class="btn-primary">Kostenloses Erstgespräch →</a>
+  </section>
+
   <!-- PROCESS -->
   <section id="process">
-    <p class="section-label">Ablauf</p>
+    <p class="section-label">🤝 Ablauf</p>
     <h2>So läuft die<br>Zusammenarbeit ab.</h2>
     <p class="section-intro">Vier Schritte, kein Papierkram. Von der ersten Nachricht bis zur Lieferung.</p>
     <div class="process-grid">
@@ -853,7 +913,7 @@
 
   <!-- FAQ -->
   <section id="faq">
-    <p class="section-label">Fragen &amp; Antworten</p>
+    <p class="section-label">💬 Fragen &amp; Antworten</p>
     <h2>Noch Unklarheiten?</h2>
     <p class="section-intro">Die häufigsten Fragen zu Zusammenarbeit, Preisen und Ablauf.</p>
     <div class="faq-list">
@@ -882,7 +942,7 @@
       <img class="about-img-placeholder" src="Inhalte/Bilder/pascal.jpg" alt="Pascal Oberer">
     </div>
     <div class="about-content">
-      <p class="section-label">Über mich</p>
+      <p class="section-label">👋 Über mich</p>
       <h2>Hoi, ich bin Pascal.</h2>
       <p>
         Ich führe ein Ein-Mann-Kreativstudio, das Marken dabei hilft, online zu wachsen —
@@ -907,7 +967,7 @@
   <section id="contact">
     <div class="contact-wrapper">
       <div class="contact-info">
-        <p class="section-label">Kontakt</p>
+        <p class="section-label">📩 Kontakt</p>
         <h2>Lass uns etwas aufbauen.</h2>
         <p>
           Erzähl mir von deinem Projekt — ich melde mich innerhalb von 24 Stunden.
