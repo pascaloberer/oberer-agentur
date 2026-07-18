@@ -106,11 +106,12 @@
       box-shadow: 0 0 60px rgba(232,114,42,0.12);
     }
 
-    .hero-video video {
+    .hero-video iframe {
+      position: absolute;
+      top: 0; left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      display: block;
+      border: none;
     }
 
     .hero-video::after {
@@ -711,7 +712,7 @@
       </div>
     </div>
     <div class="hero-video">
-      <video src="Inhalte/Videos/Vorstellungsvideo.mp4" autoplay loop playsinline controls></video>
+      <iframe src="https://www.youtube.com/embed/QJakCdxsYws?rel=0&modestbranding=1&loop=1&playlist=QJakCdxsYws&vq=hd720" allow="fullscreen; picture-in-picture" allowfullscreen></iframe>
     </div>
   </section>
 
@@ -768,7 +769,7 @@
     <div class="portfolio-grid">
       <div class="portfolio-card">
         <div class="portfolio-thumb">
-          <video src="Inhalte/Videos/Popcorn_Videoprojekt.mp4" controls muted playsinline style="width:100%;height:100%;object-fit:contain;background:#000;display:block;"></video>
+          <iframe src="https://www.youtube.com/embed/1lJ_PSwUl_Y?rel=0&modestbranding=1" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
         </div>
         <div class="portfolio-info">
           <h3>Markenfilm — Popcorn Brand</h3>
@@ -778,7 +779,7 @@
       </div>
       <div class="portfolio-card">
         <div class="portfolio-thumb">
-          <video src="Inhalte/Videos/We are Hiring Video.mp4" controls muted playsinline style="width:100%;height:100%;object-fit:contain;background:#000;display:block;"></video>
+          <iframe src="https://www.youtube.com/embed/5wmDb05wyLU?rel=0&modestbranding=1" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
         </div>
         <div class="portfolio-info">
           <h3>Hiring Video — IDC AG</h3>
@@ -787,11 +788,13 @@
         </div>
       </div>
       <div class="portfolio-card">
-        <div class="portfolio-thumb grad3">📱</div>
+        <div class="portfolio-thumb">
+          <iframe src="https://www.youtube.com/embed/XbhQpg1UY2U?rel=0&modestbranding=1" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+        </div>
         <div class="portfolio-info">
-          <h3>Social-Kampagne — Kunde C</h3>
-          <p>3-monatige Instagram- und TikTok-Kampagne. 2.4× Reichweitenwachstum, 18% Engagement-Rate.</p>
-          <div class="portfolio-type">Social Media</div>
+          <h3>Willkommensvideo — Blue Kosmetik</h3>
+          <p>Einladender Willkommensfilm für Blue Kosmetik — atmosphärisch inszeniert, um Besucherinnen und Besucher herzlich zu empfangen.</p>
+          <div class="portfolio-type">Videoproduktion</div>
         </div>
       </div>
       <div class="portfolio-card">
@@ -850,7 +853,7 @@
   <!-- ABOUT -->
   <section id="about">
     <div class="about-visual">
-      <img class="about-img-placeholder" src="../../Bewerbung/IMG_8100.JPG" alt="Pascal Oberer">
+      <img class="about-img-placeholder" src="Inhalte/Bilder/pascal.jpg" alt="Pascal Oberer">
     </div>
     <div class="about-content">
       <p class="section-label">Über mich</p>
