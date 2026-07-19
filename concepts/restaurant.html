@@ -138,12 +138,16 @@
     display:flex;flex-direction:column;align-items:center;justify-content:center;
     text-align:center;padding:5rem 6% 4rem;overflow:hidden;
   }
+  .hero-photo{
+    position:absolute;inset:0;z-index:-3;
+    width:100%;height:100%;object-fit:cover;object-position:center 30%;
+  }
   .hero::before{
     content:"";position:absolute;inset:0;z-index:-2;
     background:
       radial-gradient(60% 45% at 50% 12%, rgba(214,172,91,.16), transparent 70%),
       radial-gradient(80% 60% at 50% 120%, rgba(150,80,40,.14), transparent 70%),
-      linear-gradient(180deg,#15110c 0%,#12100d 55%,#100e0b 100%);
+      linear-gradient(180deg,rgba(21,17,12,.55) 0%,rgba(18,16,13,.72) 55%,rgba(16,14,11,.94) 100%);
   }
   .hero::after{
     content:"";position:absolute;inset:0;z-index:-1;opacity:.5;
@@ -208,31 +212,30 @@
   }
   .menu-note strong{color:var(--text);font-weight:500}
 
-  /* ---- Impressionen (CSS gallery) ---- */
+  /* ---- Impressionen (photo gallery) ---- */
   #impressionen{background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-  .gallery{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:180px;gap:1rem}
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:320px;gap:1rem}
   .frame{
     position:relative;border-radius:6px;overflow:hidden;border:1px solid var(--border);
     display:flex;align-items:flex-end;padding:1.25rem;
     transition:transform .5s var(--ease);
   }
   .frame:hover{transform:scale(1.015)}
-  .frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(10,8,6,.72))}
+  .frame img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    transition:transform .6s var(--ease);
+  }
+  .frame:hover img{transform:scale(1.06)}
+  .frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(10,8,6,.75))}
   .frame .caption{
     position:relative;z-index:1;font-family:'Cormorant Garamond',serif;
     font-size:1.35rem;font-weight:600;color:#fff;letter-spacing:.01em;
   }
   .frame .caption small{display:block;font-family:'Inter',sans-serif;font-size:.68rem;
     text-transform:uppercase;letter-spacing:.16em;color:rgba(255,255,255,.7);font-weight:400;margin-top:.2rem}
-  .g1{grid-column:span 2;grid-row:span 2;background:
-      radial-gradient(120% 90% at 25% 15%,rgba(255,196,120,.35),transparent 60%),
-      linear-gradient(150deg,#7a4a24,#2a1a10)}
-  .g2{background:linear-gradient(150deg,#6b2130,#301018)}
-  .g3{background:linear-gradient(150deg,#3a3220,#171208)}
-  .g4{grid-column:span 2;background:
-      radial-gradient(80% 120% at 80% 20%,rgba(214,172,91,.4),transparent 55%),
-      linear-gradient(120deg,#2a2416,#120f0a)}
-  .g5{background:linear-gradient(150deg,#4a3520,#1c130a)}
+  .photo-credit{max-width:var(--maxw);margin:2rem auto 0;color:var(--muted-2);font-size:.72rem;text-align:center;line-height:1.9}
+  .photo-credit a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+  .photo-credit a:hover{color:var(--gold)}
 
   /* ---- Reservation ---- */
   #reservieren{position:relative}
@@ -313,9 +316,7 @@
   @media (max-width:860px){
     .menu-groups{grid-template-columns:1fr;gap:2.5rem}
     .reserve-grid{grid-template-columns:1fr;gap:2.5rem}
-    .gallery{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px}
-    .g1{grid-column:span 2;grid-row:span 1}
-    .g4{grid-column:span 2}
+    .gallery{grid-template-columns:1fr;grid-auto-rows:260px}
   }
   @media (max-width:640px){
     section{padding:4.5rem 7%}
@@ -372,6 +373,7 @@
 
   <main id="hauptinhalt">
     <section class="hero" aria-labelledby="hero-title">
+      <img class="hero-photo" src="assets/hero-dining.jpg" alt="" role="presentation" fetchpriority="high">
       <p class="eyebrow">Restaurant · Bar · Weinkeller</p>
       <h1 id="hero-title">Feine Küche in <em>warmem Licht</em></h1>
       <p class="hero-sub">Französisch inspirierte Saisonküche, ein sorgfältig kuratierter Weinkeller und ein Ort, an dem der Abend niemals hetzt.</p>
@@ -540,14 +542,21 @@
         <div class="section-head reveal">
           <p class="eyebrow">Ambiente</p>
           <h2 id="imp-title">Impressionen aus dem Haus</h2>
-          <p class="section-intro">Warmes Kerzenlicht, ein offener Weinkeller und eine Küche, die man riechen kann, bevor man sie sieht.</p>
+          <p class="section-intro">Eine offene Küche, eine ruhige Terrasse am Abend und ein Tisch, der auf Sie wartet.</p>
         </div>
-        <div class="gallery reveal" role="img" aria-label="Stimmungsbilder des Restaurants: Kerzenlicht, Weinkeller, Küche, Terrasse und Tafel">
-          <div class="frame g1"><span class="caption">Kerzenlicht<small>Der Gastraum</small></span></div>
-          <div class="frame g2"><span class="caption">Der Weinkeller<small>120 Positionen</small></span></div>
-          <div class="frame g3"><span class="caption">Die Küche<small>Offen einsehbar</small></span></div>
-          <div class="frame g4"><span class="caption">Sommerterrasse<small>Ab Mai</small></span></div>
-          <div class="frame g5"><span class="caption">Die Tafel<small>Für Gesellschaften</small></span></div>
+        <div class="gallery reveal">
+          <div class="frame">
+            <img src="assets/gallery-kitchen.jpg" alt="Köche in weisser Uniform bei der Arbeit in einer offenen Restaurantküche" loading="lazy">
+            <span class="caption">Die Küche<small>Offen einsehbar</small></span>
+          </div>
+          <div class="frame">
+            <img src="assets/gallery-terrace.jpg" alt="Tischlampe auf einer Terrasse am Abend mit Blick über die beleuchtete Stadt" loading="lazy">
+            <span class="caption">Sommerterrasse<small>Ab Mai</small></span>
+          </div>
+          <div class="frame">
+            <img src="assets/gallery-table.jpg" alt="Gedeckter Tisch mit Speisekarte, Weinglas und Orchidee im warmen Licht" loading="lazy">
+            <span class="caption">Die Tafel<small>Für Gesellschaften</small></span>
+          </div>
         </div>
       </div>
     </section>
@@ -635,6 +644,13 @@
         </div>
       </div>
     </div>
+    <p class="photo-credit">
+      Fotos (lizenzfrei, mit Namensnennung, via Wikimedia Commons):
+      <a href="https://commons.wikimedia.org/wiki/File:DZ6_2648_A_cozy_candlelit_dinner_setup_a_delicate_orchid_soft_lamp_glow_and_an_empty_wine_glass_waiting_for_the_evening_to_begin.jpg" target="_blank" rel="noopener">PattayaPatrol</a>,
+      <a href="https://commons.wikimedia.org/wiki/File:Open_Kitchen_in_Action,_New_York_Grill,_Park_Hyatt_Tokyo_(8375313873).jpg" target="_blank" rel="noopener">Jun Seita</a> (CC BY 2.0),
+      <a href="https://commons.wikimedia.org/wiki/File:DFC_5212_A_cozy_rooftop_table_lit_by_a_warm_lamp_overlooking_Pattayas_night_lights.jpg" target="_blank" rel="noopener">PattayaPatrol</a>,
+      <a href="https://commons.wikimedia.org/wiki/File:DZ6_2642_An_intimate_table_for_two_soft_light_fresh_orchids_and_a_menu_waiting_to_be_opened.jpg" target="_blank" rel="noopener">PattayaPatrol</a> (CC BY-SA 4.0)
+    </p>
     <div class="footer-bottom">
       <span>Konzeptseite — kein echtes Restaurant. Gestaltet von <a href="../index.html#portfolio">Oberer Studio</a>.</span>
       <span>© 2026 Oberer Studio</span>
