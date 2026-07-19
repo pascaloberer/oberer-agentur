@@ -3,132 +3,683 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Restaurant Lumière — Konzeptseite</title>
+<title>Restaurant Lumière — Feine Küche in warmem Licht | Konzeptseite</title>
+<meta name="description" content="Restaurant Lumière — französisch inspirierte Feinschmecker-Küche in der Schweiz. Saisonale Menüs, kuratierte Weine und ein intimes Ambiente. Konzeptseite von Oberer Studio.">
+<meta name="theme-color" content="#12100d">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Restaurant Lumière — Feine Küche in warmem Licht">
+<meta property="og:description" content="Französisch inspirierte Feinschmecker-Küche in der Schweiz: saisonale Menüs, kuratierte Weine, intimes Ambiente. Eine Konzeptseite von Oberer Studio.">
+<meta property="og:locale" content="de_CH">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   :root{
-    --bg:#0f0d0a; --surface:#171310; --border:#2c251d;
-    --gold:#c9a24b; --text:#f2ece2; --muted:#a89a86;
+    --bg:#12100d;
+    --bg-2:#171310;
+    --surface:#1c1712;
+    --border:#312820;
+    --gold:#d6ac5b;
+    --gold-soft:#c9a24b;
+    --text:#f4eee2;
+    --muted:#b3a691;
+    --muted-2:#8f8371;
+    --maxw:1180px;
+    --ease:cubic-bezier(.22,1,.36,1);
   }
   html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:'Inter',system-ui,sans-serif;line-height:1.65;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  a{color:inherit}
+  img{max-width:100%}
+
+  /* ---- Accessibility ---- */
+  .skip-link{
+    position:absolute;left:1rem;top:-3rem;z-index:400;
+    background:var(--gold);color:#171310;padding:.6rem 1rem;border-radius:4px;
+    font-weight:600;text-decoration:none;transition:top .2s var(--ease);
+  }
+  .skip-link:focus{top:1rem}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
+
+  /* ---- Disclosure banner ---- */
   .demo-banner{
-    position:sticky;top:0;z-index:200;background:#c9a24b;color:#171310;
-    text-align:center;font-size:0.85rem;font-weight:600;padding:0.6rem 1rem;
+    position:sticky;top:0;z-index:300;
+    background:linear-gradient(90deg,#1c1712,#241d15);
+    border-bottom:1px solid var(--border);
+    color:var(--muted);text-align:center;
+    font-size:.8rem;letter-spacing:.01em;padding:.55rem 1rem;
   }
-  .demo-banner a{color:#171310;text-decoration:underline}
-  nav{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 6%;border-bottom:1px solid var(--border)}
-  .logo{font-family:'Playfair Display',serif;font-weight:700;font-size:1.4rem;color:var(--gold)}
-  .nav-links{display:flex;gap:2rem;list-style:none}
-  .nav-links a{color:var(--muted);text-decoration:none;font-size:0.9rem}
-  .nav-links a:hover{color:var(--text)}
-  header.hero{
-    min-height:78vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    text-align:center;padding:4rem 6%;
-    background:radial-gradient(circle at 50% 20%, rgba(201,162,75,0.12), transparent 60%);
+  .demo-banner strong{color:var(--gold);font-weight:600}
+  .demo-banner a{color:var(--text);text-decoration:underline;text-underline-offset:2px}
+  .demo-banner a:hover{color:var(--gold)}
+
+  /* ---- Nav ---- */
+  .site-header{
+    position:sticky;top:0;z-index:250;
+    background:rgba(18,16,13,.72);backdrop-filter:blur(12px);
+    border-bottom:1px solid transparent;transition:border-color .4s var(--ease),background .4s var(--ease);
   }
-  .hero p.eyebrow{color:var(--gold);text-transform:uppercase;letter-spacing:0.15em;font-size:0.8rem;margin-bottom:1rem}
-  h1{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(2.4rem,6vw,4.2rem);max-width:16ch;margin-bottom:1.25rem}
-  .hero-sub{color:var(--muted);max-width:44ch;margin:0 auto 2rem}
-  .btn{display:inline-block;background:var(--gold);color:#171310;padding:0.85rem 2rem;border-radius:2px;text-decoration:none;font-weight:600;letter-spacing:0.03em}
-  section{padding:5rem 6%}
-  h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);margin-bottom:0.75rem}
-  .section-intro{color:var(--muted);max-width:50ch;margin-bottom:3rem}
-  .menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2rem}
-  .menu-item{border-bottom:1px solid var(--border);padding-bottom:1.25rem}
-  .menu-item .row{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;margin-bottom:0.4rem}
-  .menu-item h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:600}
-  .menu-item .price{color:var(--gold);font-weight:600;white-space:nowrap}
-  .menu-item p{color:var(--muted);font-size:0.9rem}
-  #philosophy{background:var(--surface)}
-  .phil-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem}
-  .phil-card{text-align:center}
-  .phil-icon{font-size:2rem;margin-bottom:0.75rem}
-  .phil-card h3{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:0.5rem}
-  .phil-card p{color:var(--muted);font-size:0.9rem}
-  #reserve{text-align:center}
-  form{max-width:480px;margin:0 auto;display:flex;flex-direction:column;gap:1rem}
-  input,select{background:var(--surface);border:1px solid var(--border);border-radius:2px;padding:0.85rem 1rem;color:var(--text);font-family:'Inter',sans-serif}
-  footer{border-top:1px solid var(--border);padding:2rem 6%;text-align:center;color:var(--muted);font-size:0.85rem}
+  .site-header.scrolled{border-bottom-color:var(--border);background:rgba(18,16,13,.9)}
+  nav{
+    max-width:var(--maxw);margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:1.15rem 6%;gap:1.5rem;
+  }
+  .logo{
+    font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.6rem;
+    letter-spacing:.02em;color:var(--text);text-decoration:none;line-height:1;
+    display:inline-flex;align-items:baseline;gap:.5rem;
+  }
+  .logo .mark{color:var(--gold);font-style:italic}
+  .nav-links{display:flex;gap:2.25rem;list-style:none;align-items:center}
+  .nav-links a{
+    position:relative;color:var(--muted);text-decoration:none;
+    font-size:.82rem;text-transform:uppercase;letter-spacing:.11em;
+    padding:.25rem 0;transition:color .3s var(--ease);
+  }
+  .nav-links a::after{
+    content:"";position:absolute;left:0;bottom:-2px;height:1px;width:0;
+    background:var(--gold);transition:width .35s var(--ease);
+  }
+  .nav-links a:hover,.nav-links a:focus-visible{color:var(--text)}
+  .nav-links a:hover::after,.nav-links a:focus-visible::after{width:100%}
+  .nav-cta{
+    display:inline-block;border:1px solid var(--border);color:var(--text);
+    padding:.55rem 1.2rem;border-radius:999px;text-decoration:none;
+    font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;
+    transition:border-color .3s var(--ease),color .3s var(--ease),background .3s var(--ease);
+  }
+  .nav-cta:hover,.nav-cta:focus-visible{border-color:var(--gold);color:var(--gold)}
+  .nav-toggle{display:none}
+
+  /* ---- Buttons ---- */
+  .btn{
+    display:inline-block;background:var(--gold);color:#17120b;
+    padding:.9rem 2.1rem;border-radius:999px;text-decoration:none;
+    font-size:.82rem;font-weight:500;text-transform:uppercase;letter-spacing:.1em;
+    border:1px solid var(--gold);cursor:pointer;
+    transition:transform .3s var(--ease),box-shadow .3s var(--ease),background .3s var(--ease);
+  }
+  .btn:hover,.btn:focus-visible{transform:translateY(-2px);box-shadow:0 10px 30px -10px rgba(214,172,91,.5);background:#e3bd6d}
+  .btn-ghost{
+    display:inline-block;border:1px solid var(--border);color:var(--text);
+    padding:.9rem 2.1rem;border-radius:999px;text-decoration:none;
+    font-size:.82rem;text-transform:uppercase;letter-spacing:.1em;
+    transition:border-color .3s var(--ease),color .3s var(--ease);
+  }
+  .btn-ghost:hover,.btn-ghost:focus-visible{border-color:var(--gold);color:var(--gold)}
+
+  /* ---- Layout ---- */
+  main{display:block}
+  section{padding:6rem 6%}
+  .wrap{max-width:var(--maxw);margin:0 auto}
+  .eyebrow{
+    color:var(--gold);text-transform:uppercase;letter-spacing:.24em;
+    font-size:.72rem;font-weight:500;margin-bottom:1.1rem;
+    display:inline-flex;align-items:center;gap:.7rem;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--gold);opacity:.7}
+  h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:600;line-height:1.08}
+  h2{font-size:clamp(2rem,4vw,3rem);margin-bottom:1rem;letter-spacing:.005em}
+  .section-intro{color:var(--muted);max-width:52ch;margin-bottom:3.5rem;font-size:1.02rem}
+  .section-head{margin-bottom:3.5rem}
+  .section-head .section-intro{margin-bottom:0}
+
+  /* ---- Hero ---- */
+  .hero{
+    position:relative;min-height:clamp(560px,88vh,900px);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:5rem 6% 4rem;overflow:hidden;
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;z-index:-2;
+    background:
+      radial-gradient(60% 45% at 50% 12%, rgba(214,172,91,.16), transparent 70%),
+      radial-gradient(80% 60% at 50% 120%, rgba(150,80,40,.14), transparent 70%),
+      linear-gradient(180deg,#15110c 0%,#12100d 55%,#100e0b 100%);
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;z-index:-1;opacity:.5;
+    background:radial-gradient(1px 1px at 20% 30%,rgba(214,172,91,.5),transparent),
+              radial-gradient(1px 1px at 70% 60%,rgba(214,172,91,.35),transparent),
+              radial-gradient(1.5px 1.5px at 85% 25%,rgba(214,172,91,.4),transparent),
+              radial-gradient(1px 1px at 40% 75%,rgba(214,172,91,.3),transparent);
+  }
+  .hero .eyebrow{justify-content:center}
+  h1{
+    font-size:clamp(2.8rem,7.5vw,5.4rem);max-width:15ch;margin:0 auto 1.4rem;
+    letter-spacing:.01em;
+  }
+  h1 em{font-style:italic;color:var(--gold)}
+  .hero-sub{color:var(--muted);max-width:46ch;margin:0 auto 2.5rem;font-size:1.08rem}
+  .hero-actions{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+  .hero-meta{
+    margin-top:3.5rem;display:flex;gap:2.5rem;flex-wrap:wrap;justify-content:center;
+    color:var(--muted-2);font-size:.78rem;text-transform:uppercase;letter-spacing:.14em;
+  }
+  .hero-meta span{display:inline-flex;align-items:center;gap:.6rem}
+  .hero-meta span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--gold);opacity:.8}
+
+  /* ---- Philosophy / Story ---- */
+  #philosophie{background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .phil-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2.5rem}
+  .phil-card{
+    padding:2rem 1.75rem;border:1px solid var(--border);border-radius:6px;
+    background:linear-gradient(180deg,rgba(255,255,255,.015),transparent);
+    transition:border-color .4s var(--ease),transform .4s var(--ease);
+  }
+  .phil-card:hover{border-color:var(--gold-soft);transform:translateY(-4px)}
+  .phil-num{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.4rem;
+    color:var(--gold);margin-bottom:1rem;display:block;
+  }
+  .phil-card h3{font-size:1.5rem;margin-bottom:.6rem}
+  .phil-card p{color:var(--muted);font-size:.95rem}
+
+  /* ---- Menu ---- */
+  .menu-groups{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem 4.5rem}
+  .menu-group h3{
+    font-size:1.05rem;font-family:'Inter',sans-serif;font-weight:500;
+    text-transform:uppercase;letter-spacing:.18em;color:var(--gold);
+    padding-bottom:1rem;margin-bottom:1.5rem;border-bottom:1px solid var(--border);
+  }
+  .dish{padding:1.05rem 0;border-bottom:1px solid rgba(49,40,32,.55)}
+  .dish:last-child{border-bottom:none}
+  .dish-head{display:flex;align-items:baseline;gap:.75rem}
+  .dish-name{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;white-space:nowrap}
+  .dish-lead{flex:1;border-bottom:1px dotted var(--muted-2);transform:translateY(-.25rem);opacity:.5}
+  .dish-price{color:var(--gold);font-size:.95rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .dish-desc{color:var(--muted);font-size:.9rem;margin-top:.3rem;max-width:42ch}
+  .dish-tags{margin-top:.45rem;display:flex;gap:.4rem;flex-wrap:wrap}
+  .tag{
+    font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;
+    color:var(--muted-2);border:1px solid var(--border);border-radius:999px;padding:.15rem .55rem;
+  }
+  .menu-note{
+    margin-top:3.5rem;padding:1.75rem 2rem;border-left:2px solid var(--gold);
+    background:var(--surface);color:var(--muted);font-size:.92rem;border-radius:0 6px 6px 0;
+  }
+  .menu-note strong{color:var(--text);font-weight:500}
+
+  /* ---- Impressionen (CSS gallery) ---- */
+  #impressionen{background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .gallery{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:180px;gap:1rem}
+  .frame{
+    position:relative;border-radius:6px;overflow:hidden;border:1px solid var(--border);
+    display:flex;align-items:flex-end;padding:1.25rem;
+    transition:transform .5s var(--ease);
+  }
+  .frame:hover{transform:scale(1.015)}
+  .frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(10,8,6,.72))}
+  .frame .caption{
+    position:relative;z-index:1;font-family:'Cormorant Garamond',serif;
+    font-size:1.35rem;font-weight:600;color:#fff;letter-spacing:.01em;
+  }
+  .frame .caption small{display:block;font-family:'Inter',sans-serif;font-size:.68rem;
+    text-transform:uppercase;letter-spacing:.16em;color:rgba(255,255,255,.7);font-weight:400;margin-top:.2rem}
+  .g1{grid-column:span 2;grid-row:span 2;background:
+      radial-gradient(120% 90% at 25% 15%,rgba(255,196,120,.35),transparent 60%),
+      linear-gradient(150deg,#7a4a24,#2a1a10)}
+  .g2{background:linear-gradient(150deg,#6b2130,#301018)}
+  .g3{background:linear-gradient(150deg,#3a3220,#171208)}
+  .g4{grid-column:span 2;background:
+      radial-gradient(80% 120% at 80% 20%,rgba(214,172,91,.4),transparent 55%),
+      linear-gradient(120deg,#2a2416,#120f0a)}
+  .g5{background:linear-gradient(150deg,#4a3520,#1c130a)}
+
+  /* ---- Reservation ---- */
+  #reservieren{position:relative}
+  .reserve-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:4rem;align-items:start}
+  .reserve-info h2{margin-bottom:1.5rem}
+  .hours{list-style:none;margin-top:1.75rem}
+  .hours li{
+    display:flex;justify-content:space-between;gap:1rem;padding:.7rem 0;
+    border-bottom:1px solid var(--border);font-size:.92rem;
+  }
+  .hours li span:first-child{color:var(--text)}
+  .hours li span:last-child{color:var(--muted);font-variant-numeric:tabular-nums}
+  .hours li.closed span:last-child{color:var(--muted-2)}
+  .locale{margin-top:1.75rem;color:var(--muted);font-size:.92rem}
+
+  form{
+    background:var(--surface);border:1px solid var(--border);border-radius:10px;
+    padding:2.25rem;display:grid;gap:1.25rem;
+  }
+  .field{display:flex;flex-direction:column;gap:.45rem}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+  label{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
+  input,select{
+    background:var(--bg-2);border:1px solid var(--border);border-radius:6px;
+    padding:.85rem 1rem;color:var(--text);font-family:'Inter',sans-serif;font-size:.95rem;
+    width:100%;transition:border-color .25s var(--ease),box-shadow .25s var(--ease);
+  }
+  input::placeholder{color:var(--muted-2)}
+  input:focus,select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(214,172,91,.15)}
+  select{appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23b3a691' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem}
+  form .btn{width:100%;margin-top:.25rem}
+  .form-note{font-size:.78rem;color:var(--muted-2);text-align:center}
+  .form-confirm{
+    display:none;text-align:center;padding:1.5rem 1rem;border:1px solid var(--gold-soft);
+    border-radius:8px;background:rgba(214,172,91,.08);
+  }
+  .form-confirm.show{display:block;animation:fade .5s var(--ease)}
+  .form-confirm h3{color:var(--gold);font-size:1.6rem;margin-bottom:.4rem}
+  .form-confirm p{color:var(--muted);font-size:.9rem}
+  form.done .field,form.done .field-row,form.done .btn,form.done .form-note{display:none}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* ---- Footer ---- */
+  footer{
+    border-top:1px solid var(--border);padding:3.5rem 6% 2.5rem;
+    background:var(--bg-2);
+  }
+  .footer-inner{
+    max-width:var(--maxw);margin:0 auto;
+    display:flex;flex-wrap:wrap;gap:2rem;justify-content:space-between;align-items:flex-start;
+  }
+  .footer-brand .logo{font-size:1.5rem;margin-bottom:.75rem;display:inline-block}
+  .footer-brand p{color:var(--muted);font-size:.88rem;max-width:32ch}
+  .footer-cols{display:flex;gap:3.5rem;flex-wrap:wrap}
+  .footer-col h4{font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;color:var(--gold);margin-bottom:.9rem;font-family:'Inter',sans-serif;font-weight:500}
+  .footer-col ul{list-style:none;display:grid;gap:.5rem}
+  .footer-col a,.footer-col li{color:var(--muted);font-size:.88rem;text-decoration:none}
+  .footer-col a:hover{color:var(--text)}
+  .footer-bottom{
+    max-width:var(--maxw);margin:2.5rem auto 0;padding-top:1.75rem;border-top:1px solid var(--border);
+    display:flex;flex-wrap:wrap;gap:.75rem;justify-content:space-between;
+    color:var(--muted-2);font-size:.78rem;
+  }
+  .footer-bottom a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+  .footer-bottom a:hover{color:var(--gold)}
+
+  /* ---- Reveal on scroll ---- */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+  .reveal.visible{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    .btn,.phil-card,.frame,.nav-links a::after{transition:none}
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width:860px){
+    .menu-groups{grid-template-columns:1fr;gap:2.5rem}
+    .reserve-grid{grid-template-columns:1fr;gap:2.5rem}
+    .gallery{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px}
+    .g1{grid-column:span 2;grid-row:span 1}
+    .g4{grid-column:span 2}
+  }
+  @media (max-width:640px){
+    section{padding:4.5rem 7%}
+    .nav-links,.nav-cta{display:none}
+    .nav-toggle{
+      display:inline-flex;background:none;border:1px solid var(--border);
+      color:var(--text);border-radius:6px;padding:.5rem .9rem;font-size:.75rem;
+      text-transform:uppercase;letter-spacing:.1em;cursor:pointer;
+    }
+    .field-row{grid-template-columns:1fr}
+    .hero-meta{gap:1.25rem}
+    .footer-cols{gap:2rem}
+  }
+  /* Mobile menu (checkbox-free, JS toggled) */
+  .mobile-menu{display:none}
+  .mobile-menu.open{
+    display:block;background:var(--bg-2);border-bottom:1px solid var(--border);
+  }
+  .mobile-menu ul{list-style:none;padding:1rem 7% 1.5rem;display:grid;gap:.25rem}
+  .mobile-menu a{
+    display:block;color:var(--text);text-decoration:none;padding:.7rem 0;
+    font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid var(--border);
+  }
 </style>
 </head>
 <body>
-  <div class="demo-banner">Konzept-/Beispielseite von <a href="../index.html#portfolio">Oberer Studio</a> — kein echter Betrieb</div>
-  <nav>
-    <span class="logo">Lumière</span>
-    <ul class="nav-links">
-      <li><a href="#menu">Menü</a></li>
-      <li><a href="#philosophy">Philosophie</a></li>
-      <li><a href="#reserve">Reservieren</a></li>
-    </ul>
-  </nav>
+  <a class="skip-link" href="#hauptinhalt">Zum Inhalt springen</a>
 
-  <header class="hero">
-    <p class="eyebrow">Restaurant · Bar · Weinkeller</p>
-    <h1>Feine Küche in warmem Licht.</h1>
-    <p class="hero-sub">Saisonale Gerichte, handverlesene Weine und ein Ort, an dem man gerne verweilt.</p>
-    <a href="#reserve" class="btn">Tisch reservieren</a>
+  <div class="demo-banner">
+    <strong>Konzept-Demo</strong> — Beispielarbeit von <a href="../index.html#portfolio">Oberer Studio</a>, kein echter Gastrobetrieb.
+  </div>
+
+  <header class="site-header" id="top">
+    <nav aria-label="Hauptnavigation">
+      <a class="logo" href="#top" aria-label="Restaurant Lumière — Startseite">Restaurant <span class="mark">Lumière</span></a>
+      <ul class="nav-links">
+        <li><a href="#philosophie">Philosophie</a></li>
+        <li><a href="#menu">Menü</a></li>
+        <li><a href="#impressionen">Impressionen</a></li>
+        <li><a href="#reservieren">Kontakt</a></li>
+      </ul>
+      <a class="nav-cta" href="#reservieren">Reservieren</a>
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobileMenu">Menü</button>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+      <ul>
+        <li><a href="#philosophie">Philosophie</a></li>
+        <li><a href="#menu">Menü</a></li>
+        <li><a href="#impressionen">Impressionen</a></li>
+        <li><a href="#reservieren">Reservieren</a></li>
+      </ul>
+    </div>
   </header>
 
-  <section id="menu">
-    <h2>Ausgewählte Gerichte</h2>
-    <p class="section-intro">Ein Auszug aus unserer saisonalen Karte — sie wechselt alle sechs Wochen.</p>
-    <div class="menu-grid">
-      <div class="menu-item">
-        <div class="row"><h3>Kalbstatar</h3><span class="price">CHF 24</span></div>
-        <p>Mit eingelegten Kapern, Wachtelei und geröstetem Sauerteigbrot.</p>
+  <main id="hauptinhalt">
+    <section class="hero" aria-labelledby="hero-title">
+      <p class="eyebrow">Restaurant · Bar · Weinkeller</p>
+      <h1 id="hero-title">Feine Küche in <em>warmem Licht</em></h1>
+      <p class="hero-sub">Französisch inspirierte Saisonküche, ein sorgfältig kuratierter Weinkeller und ein Ort, an dem der Abend niemals hetzt.</p>
+      <div class="hero-actions">
+        <a href="#reservieren" class="btn">Tisch reservieren</a>
+        <a href="#menu" class="btn-ghost">Menü ansehen</a>
       </div>
-      <div class="menu-item">
-        <div class="row"><h3>Risotto ai Funghi</h3><span class="price">CHF 28</span></div>
-        <p>Waldpilze, Parmesan und ein Hauch Trüffelöl.</p>
+      <div class="hero-meta">
+        <span>Saisonale Küche</span>
+        <span>Abends geöffnet</span>
+        <span>Im Herzen der Altstadt</span>
       </div>
-      <div class="menu-item">
-        <div class="row"><h3>Confierte Ente</h3><span class="price">CHF 39</span></div>
-        <p>Mit Randensalat, Orangenjus und Kartoffelgratin.</p>
+    </section>
+
+    <section id="philosophie" aria-labelledby="phil-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Unsere Philosophie</p>
+          <h2 id="phil-title">Drei Überzeugungen, jeden Abend am Teller</h2>
+          <p class="section-intro">Lumière ist keine Bühne für Effekte, sondern ein Handwerk. Was uns leitet, lässt sich in drei Gedanken fassen.</p>
+        </div>
+        <div class="phil-grid">
+          <div class="phil-card reveal">
+            <span class="phil-num">01</span>
+            <h3>Saisonal &amp; regional</h3>
+            <p>Wir kochen mit dem, was gerade reif ist — von Produzentinnen und Produzenten aus der Umgebung, in kurzen Wegen.</p>
+          </div>
+          <div class="phil-card reveal">
+            <span class="phil-num">02</span>
+            <h3>Kuratiert statt beliebig</h3>
+            <p>Ein kompakter Weinkeller, jede Flasche persönlich verkostet. Lieber weniger Auswahl, dafür jede mit Bedacht.</p>
+          </div>
+          <div class="phil-card reveal">
+            <span class="phil-num">03</span>
+            <h3>Zeit zum Verweilen</h3>
+            <p>Warmes Licht, ruhige Tische, kein Takt von aussen. Ein Abend bei uns gehört Ihnen und Ihren Gästen.</p>
+          </div>
+        </div>
       </div>
-      <div class="menu-item">
-        <div class="row"><h3>Schokoladentarte</h3><span class="price">CHF 14</span></div>
-        <p>Dunkle Valrhona-Schokolade mit Meersalz und Vanilleeis.</p>
+    </section>
+
+    <section id="menu" aria-labelledby="menu-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Die Karte</p>
+          <h2 id="menu-title">Ein Auszug aus unserer Saisonkarte</h2>
+          <p class="section-intro">Die Karte wechselt alle sechs Wochen mit der Saison. Ein Blick auf das, was Sie derzeit erwartet.</p>
+        </div>
+
+        <div class="menu-groups">
+          <div class="menu-group reveal">
+            <h3>Vorspeisen</h3>
+            <div class="dish">
+              <div class="dish-head">
+                <span class="dish-name">Kalbstatar</span>
+                <span class="dish-lead"></span>
+                <span class="dish-price">CHF 24</span>
+              </div>
+              <p class="dish-desc">Handgeschnitten, eingelegte Kapern, Wachtelei und geröstetes Sauerteigbrot.</p>
+            </div>
+            <div class="dish">
+              <div class="dish-head">
+                <span class="dish-name">Kürbisvelouté</span>
+                <span class="dish-lead"></span>
+                <span class="dish-price">CHF 18</span>
+              </div>
+              <p class="dish-desc">Muskatkürbis, geröstete Kürbiskerne, ein Faden Haselnussöl.</p>
+              <div class="dish-tags"><span class="tag">Vegetarisch</span></div>
+            </div>
+            <div class="dish">
+              <div class="dish-head">
+                <span class="dish-name">Jakobsmuscheln</span>
+                <span class="dish-lead"></span>
+                <span class="dish-price">CHF 29</span>
+              </div>
+              <p class="dish-desc">Kurz gebraten, Blumenkohl in zwei Texturen, Beurre blanc.</p>
+            </div>
+          </div>
+
+          <div class="menu-group reveal">
+            <h3>Hauptgänge</h3>
+            <div class="dish">
+              <div class="dish-head">
+                <span class="dish-name">Confierte Ente</span>
+                <span class="dish-lead"></span>
+                <span class="dish-price">CHF 39</span>
+              </div>
+              <p class="dish-desc">Randensalat, Orangenjus und ein Gratin von der Kartoffel.</p>
+            </div>
+            <div class="dish">
+              <div class="dish-head">
+                <span class="dish-name">Risotto ai Funghi</span>
+                <span class="dish-lead"></span>
+                <span class="dish-price">CHF 28</span>
+              </div>
+              <p class="dish-desc">Waldpilze, gereifter Parmesan und ein Hauch Trüffelöl.</p>
+              <div class="dish-tags"><span class="tag">Vegetarisch</span></div>
+            </div>
+            <div class="dish">
+              <div class="dish-head">
+                <span class="dish-name">Zanderfilet</span>
+                <span class="dish-lead"></span>
+                <span class="dish-price">CHF 42</span>
+              </div>
+              <p class="dish-desc">Auf der Haut gebraten, Fenchel, Safran-Muschelsud.</p>
+            </div>
+          </div>
+
+          <div class="menu-group reveal">
+            <h3>Desserts</h3>
+            <div class="dish">
+              <div class="dish-head">
+                <span class="dish-name">Schokoladentarte</span>
+                <span class="dish-lead"></span>
+                <span class="dish-price">CHF 14</span>
+              </div>
+              <p class="dish-desc">Dunkle Valrhona-Schokolade, Meersalz, Vanilleeis.</p>
+            </div>
+            <div class="dish">
+              <div class="dish-head">
+                <span class="dish-name">Birne &amp; Honig</span>
+                <span class="dish-lead"></span>
+                <span class="dish-price">CHF 13</span>
+              </div>
+              <p class="dish-desc">Pochierte Birne, Thymianhonig, Crème fraîche.</p>
+            </div>
+            <div class="dish">
+              <div class="dish-head">
+                <span class="dish-name">Käseauswahl</span>
+                <span class="dish-lead"></span>
+                <span class="dish-price">CHF 19</span>
+              </div>
+              <p class="dish-desc">Drei Schweizer Affineur-Käse, Feigensenf, Nussbrot.</p>
+            </div>
+          </div>
+
+          <div class="menu-group reveal">
+            <h3>Menü Découverte</h3>
+            <div class="dish">
+              <div class="dish-head">
+                <span class="dish-name">Fünf Gänge</span>
+                <span class="dish-lead"></span>
+                <span class="dish-price">CHF 98</span>
+              </div>
+              <p class="dish-desc">Ein Querschnitt der Saison, vom Küchenchef zusammengestellt.</p>
+            </div>
+            <div class="dish">
+              <div class="dish-head">
+                <span class="dish-name">Weinbegleitung</span>
+                <span class="dish-lead"></span>
+                <span class="dish-price">CHF 68</span>
+              </div>
+              <p class="dish-desc">Fünf Gläser, auf jeden Gang abgestimmt.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-note reveal">
+          <strong>Allergien &amp; Ernährungsweisen:</strong> Fast alle Gerichte lassen sich anpassen — vegetarisch, vegan oder glutenfrei. Sprechen Sie uns bei der Reservierung darauf an, wir richten uns gerne danach.
+        </div>
+      </div>
+    </section>
+
+    <section id="impressionen" aria-labelledby="imp-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Ambiente</p>
+          <h2 id="imp-title">Impressionen aus dem Haus</h2>
+          <p class="section-intro">Warmes Kerzenlicht, ein offener Weinkeller und eine Küche, die man riechen kann, bevor man sie sieht.</p>
+        </div>
+        <div class="gallery reveal" role="img" aria-label="Stimmungsbilder des Restaurants: Kerzenlicht, Weinkeller, Küche, Terrasse und Tafel">
+          <div class="frame g1"><span class="caption">Kerzenlicht<small>Der Gastraum</small></span></div>
+          <div class="frame g2"><span class="caption">Der Weinkeller<small>120 Positionen</small></span></div>
+          <div class="frame g3"><span class="caption">Die Küche<small>Offen einsehbar</small></span></div>
+          <div class="frame g4"><span class="caption">Sommerterrasse<small>Ab Mai</small></span></div>
+          <div class="frame g5"><span class="caption">Die Tafel<small>Für Gesellschaften</small></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="reservieren" aria-labelledby="res-title">
+      <div class="wrap reserve-grid">
+        <div class="reserve-info reveal">
+          <p class="eyebrow">Reservieren</p>
+          <h2 id="res-title">Ein Tisch für Ihren Abend</h2>
+          <p class="section-intro">Reservieren Sie bequem über das Formular. Für Gesellschaften ab acht Personen stimmen wir Menü und Ablauf gerne persönlich mit Ihnen ab.</p>
+          <ul class="hours">
+            <li><span>Dienstag – Donnerstag</span><span>18:00 – 23:00</span></li>
+            <li><span>Freitag – Samstag</span><span>17:30 – 00:00</span></li>
+            <li class="closed"><span>Sonntag – Montag</span><span>Ruhetag</span></li>
+          </ul>
+          <p class="locale">Im Herzen der Schweizer Altstadt · Küche bis 22:00 Uhr</p>
+        </div>
+
+        <form id="reserveForm" novalidate>
+          <div class="field">
+            <label for="r-name">Name</label>
+            <input type="text" id="r-name" name="name" placeholder="Ihr Name" autocomplete="name" required>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="r-date">Datum</label>
+              <input type="date" id="r-date" name="datum" required>
+            </div>
+            <div class="field">
+              <label for="r-time">Uhrzeit</label>
+              <input type="time" id="r-time" name="zeit" required>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="r-guests">Personen</label>
+              <select id="r-guests" name="personen">
+                <option>2 Personen</option>
+                <option>3 Personen</option>
+                <option>4 Personen</option>
+                <option>5 Personen</option>
+                <option>6 Personen</option>
+                <option>7+ Personen</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="r-mail">E-Mail</label>
+              <input type="email" id="r-mail" name="email" placeholder="name@beispiel.ch" autocomplete="email" required>
+            </div>
+          </div>
+          <button type="submit" class="btn">Reservierung anfragen</button>
+          <p class="form-note">Demo-Formular — es wird nichts gesendet oder gespeichert.</p>
+          <div class="form-confirm" id="formConfirm" role="status" aria-live="polite">
+            <h3>Merci vielmal!</h3>
+            <p>Ihre Anfrage wäre nun unterwegs — dies ist eine Konzeptseite, daher wird nichts wirklich versendet.</p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="logo">Restaurant <span class="mark">Lumière</span></span>
+        <p>Französisch inspirierte Saisonküche in warmem Licht. Ein Konzept, gestaltet von Oberer Studio.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Entdecken</h4>
+          <ul>
+            <li><a href="#philosophie">Philosophie</a></li>
+            <li><a href="#menu">Menü</a></li>
+            <li><a href="#impressionen">Impressionen</a></li>
+            <li><a href="#reservieren">Reservieren</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Öffnungszeiten</h4>
+          <ul>
+            <li>Di – Do · 18:00 – 23:00</li>
+            <li>Fr – Sa · 17:30 – 00:00</li>
+            <li>So – Mo · Ruhetag</li>
+          </ul>
+        </div>
       </div>
     </div>
-  </section>
-
-  <section id="philosophy">
-    <h2>Unsere Philosophie</h2>
-    <p class="section-intro">Drei Dinge sind uns wichtig — bei jedem Teller, jeden Abend.</p>
-    <div class="phil-grid">
-      <div class="phil-card">
-        <div class="phil-icon">🌾</div>
-        <h3>Saisonal &amp; regional</h3>
-        <p>Zutaten von Produzenten aus der Umgebung, nach Jahreszeit.</p>
-      </div>
-      <div class="phil-card">
-        <div class="phil-icon">🍷</div>
-        <h3>Sorgfältig ausgewählt</h3>
-        <p>Ein kompakter Weinkeller, kuratiert statt beliebig.</p>
-      </div>
-      <div class="phil-card">
-        <div class="phil-icon">🕯️</div>
-        <h3>Ruhige Atmosphäre</h3>
-        <p>Ein Ort zum Ankommen, nicht zum Durchhetzen.</p>
-      </div>
+    <div class="footer-bottom">
+      <span>Konzeptseite — kein echtes Restaurant. Gestaltet von <a href="../index.html#portfolio">Oberer Studio</a>.</span>
+      <span>© 2026 Oberer Studio</span>
     </div>
-  </section>
+  </footer>
 
-  <section id="reserve">
-    <h2>Tisch reservieren</h2>
-    <p class="section-intro">Für Gruppen ab 8 Personen kontaktieren Sie uns bitte telefonisch.</p>
-    <form onsubmit="event.preventDefault(); this.querySelector('button').textContent='Danke! (Demo — keine echte Reservierung)';">
-      <input type="text" placeholder="Name" required>
-      <input type="text" placeholder="Datum &amp; Uhrzeit" required>
-      <select><option>2 Personen</option><option>3 Personen</option><option>4 Personen</option><option>5+ Personen</option></select>
-      <button type="submit" class="btn" style="border:none;cursor:pointer">Reservierung anfragen</button>
-    </form>
-  </section>
+  <script>
+    // Sticky header state
+    const header = document.getElementById('top');
+    const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, {passive:true});
 
-  <footer>Konzeptseite von Oberer Studio · nicht das Design eines echten Restaurants</footer>
+    // Mobile menu toggle
+    const toggle = document.getElementById('navToggle');
+    const mobile = document.getElementById('mobileMenu');
+    toggle.addEventListener('click', () => {
+      const open = mobile.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open);
+    });
+    mobile.addEventListener('click', e => {
+      if (e.target.tagName === 'A') { mobile.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); }
+    });
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) { entry.target.classList.add('visible'); io.unobserve(entry.target); }
+        });
+      }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+      reveals.forEach(el => io.observe(el));
+    } else {
+      reveals.forEach(el => el.classList.add('visible'));
+    }
+
+    // Reservation form — graceful inline confirmation, no backend
+    const form = document.getElementById('reserveForm');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      form.classList.add('done');
+      document.getElementById('formConfirm').classList.add('show');
+    });
+  </script>
 </body>
 </html>
