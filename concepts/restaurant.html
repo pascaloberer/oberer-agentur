@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Restaurant Lumière — Konzeptseite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0f0d0a; --surface:#171310; --border:#2c251d;
+    --gold:#c9a24b; --text:#f2ece2; --muted:#a89a86;
+  }
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6}
+  .demo-banner{
+    position:sticky;top:0;z-index:200;background:#c9a24b;color:#171310;
+    text-align:center;font-size:0.85rem;font-weight:600;padding:0.6rem 1rem;
+  }
+  .demo-banner a{color:#171310;text-decoration:underline}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 6%;border-bottom:1px solid var(--border)}
+  .logo{font-family:'Playfair Display',serif;font-weight:700;font-size:1.4rem;color:var(--gold)}
+  .nav-links{display:flex;gap:2rem;list-style:none}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:0.9rem}
+  .nav-links a:hover{color:var(--text)}
+  header.hero{
+    min-height:78vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:4rem 6%;
+    background:radial-gradient(circle at 50% 20%, rgba(201,162,75,0.12), transparent 60%);
+  }
+  .hero p.eyebrow{color:var(--gold);text-transform:uppercase;letter-spacing:0.15em;font-size:0.8rem;margin-bottom:1rem}
+  h1{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(2.4rem,6vw,4.2rem);max-width:16ch;margin-bottom:1.25rem}
+  .hero-sub{color:var(--muted);max-width:44ch;margin:0 auto 2rem}
+  .btn{display:inline-block;background:var(--gold);color:#171310;padding:0.85rem 2rem;border-radius:2px;text-decoration:none;font-weight:600;letter-spacing:0.03em}
+  section{padding:5rem 6%}
+  h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);margin-bottom:0.75rem}
+  .section-intro{color:var(--muted);max-width:50ch;margin-bottom:3rem}
+  .menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2rem}
+  .menu-item{border-bottom:1px solid var(--border);padding-bottom:1.25rem}
+  .menu-item .row{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;margin-bottom:0.4rem}
+  .menu-item h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:600}
+  .menu-item .price{color:var(--gold);font-weight:600;white-space:nowrap}
+  .menu-item p{color:var(--muted);font-size:0.9rem}
+  #philosophy{background:var(--surface)}
+  .phil-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem}
+  .phil-card{text-align:center}
+  .phil-icon{font-size:2rem;margin-bottom:0.75rem}
+  .phil-card h3{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:0.5rem}
+  .phil-card p{color:var(--muted);font-size:0.9rem}
+  #reserve{text-align:center}
+  form{max-width:480px;margin:0 auto;display:flex;flex-direction:column;gap:1rem}
+  input,select{background:var(--surface);border:1px solid var(--border);border-radius:2px;padding:0.85rem 1rem;color:var(--text);font-family:'Inter',sans-serif}
+  footer{border-top:1px solid var(--border);padding:2rem 6%;text-align:center;color:var(--muted);font-size:0.85rem}
+</style>
+</head>
+<body>
+  <div class="demo-banner">Konzept-/Beispielseite von <a href="../index.html#portfolio">Oberer Studio</a> — kein echter Betrieb</div>
+  <nav>
+    <span class="logo">Lumière</span>
+    <ul class="nav-links">
+      <li><a href="#menu">Menü</a></li>
+      <li><a href="#philosophy">Philosophie</a></li>
+      <li><a href="#reserve">Reservieren</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <p class="eyebrow">Restaurant · Bar · Weinkeller</p>
+    <h1>Feine Küche in warmem Licht.</h1>
+    <p class="hero-sub">Saisonale Gerichte, handverlesene Weine und ein Ort, an dem man gerne verweilt.</p>
+    <a href="#reserve" class="btn">Tisch reservieren</a>
+  </header>
+
+  <section id="menu">
+    <h2>Ausgewählte Gerichte</h2>
+    <p class="section-intro">Ein Auszug aus unserer saisonalen Karte — sie wechselt alle sechs Wochen.</p>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="row"><h3>Kalbstatar</h3><span class="price">CHF 24</span></div>
+        <p>Mit eingelegten Kapern, Wachtelei und geröstetem Sauerteigbrot.</p>
+      </div>
+      <div class="menu-item">
+        <div class="row"><h3>Risotto ai Funghi</h3><span class="price">CHF 28</span></div>
+        <p>Waldpilze, Parmesan und ein Hauch Trüffelöl.</p>
+      </div>
+      <div class="menu-item">
+        <div class="row"><h3>Confierte Ente</h3><span class="price">CHF 39</span></div>
+        <p>Mit Randensalat, Orangenjus und Kartoffelgratin.</p>
+      </div>
+      <div class="menu-item">
+        <div class="row"><h3>Schokoladentarte</h3><span class="price">CHF 14</span></div>
+        <p>Dunkle Valrhona-Schokolade mit Meersalz und Vanilleeis.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="philosophy">
+    <h2>Unsere Philosophie</h2>
+    <p class="section-intro">Drei Dinge sind uns wichtig — bei jedem Teller, jeden Abend.</p>
+    <div class="phil-grid">
+      <div class="phil-card">
+        <div class="phil-icon">🌾</div>
+        <h3>Saisonal &amp; regional</h3>
+        <p>Zutaten von Produzenten aus der Umgebung, nach Jahreszeit.</p>
+      </div>
+      <div class="phil-card">
+        <div class="phil-icon">🍷</div>
+        <h3>Sorgfältig ausgewählt</h3>
+        <p>Ein kompakter Weinkeller, kuratiert statt beliebig.</p>
+      </div>
+      <div class="phil-card">
+        <div class="phil-icon">🕯️</div>
+        <h3>Ruhige Atmosphäre</h3>
+        <p>Ein Ort zum Ankommen, nicht zum Durchhetzen.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="reserve">
+    <h2>Tisch reservieren</h2>
+    <p class="section-intro">Für Gruppen ab 8 Personen kontaktieren Sie uns bitte telefonisch.</p>
+    <form onsubmit="event.preventDefault(); this.querySelector('button').textContent='Danke! (Demo — keine echte Reservierung)';">
+      <input type="text" placeholder="Name" required>
+      <input type="text" placeholder="Datum &amp; Uhrzeit" required>
+      <select><option>2 Personen</option><option>3 Personen</option><option>4 Personen</option><option>5+ Personen</option></select>
+      <button type="submit" class="btn" style="border:none;cursor:pointer">Reservierung anfragen</button>
+    </form>
+  </section>
+
+  <footer>Konzeptseite von Oberer Studio · nicht das Design eines echten Restaurants</footer>
+</body>
+</html>

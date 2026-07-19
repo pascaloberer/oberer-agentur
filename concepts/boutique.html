@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAISON RAVEL — Konzeptseite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#faf7f4; --surface:#f1ebe4; --border:#e3d9cd;
+    --text:#221f1c; --muted:#847d74; --blush:#c98f7c;
+  }
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6}
+  .demo-banner{
+    position:sticky;top:0;z-index:200;background:#221f1c;color:#faf7f4;
+    text-align:center;font-size:0.85rem;font-weight:600;padding:0.6rem 1rem;
+  }
+  .demo-banner a{color:#faf7f4;text-decoration:underline}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 6%}
+  .logo{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.6rem;letter-spacing:0.08em}
+  .nav-links{display:flex;gap:2rem;list-style:none}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.06em}
+  header.hero{
+    min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:4rem 6%;background:var(--surface);
+  }
+  .hero p.eyebrow{color:var(--blush);text-transform:uppercase;letter-spacing:0.2em;font-size:0.75rem;margin-bottom:1rem}
+  h1{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(2.6rem,6.5vw,4.6rem);max-width:16ch;margin-bottom:1.25rem}
+  .hero-sub{color:var(--muted);max-width:44ch;margin:0 auto 2rem}
+  .btn{display:inline-block;background:var(--text);color:#faf7f4;padding:0.85rem 2.2rem;text-decoration:none;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.08em}
+  section{padding:5rem 6%}
+  h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.9rem,3.5vw,2.6rem);margin-bottom:0.75rem}
+  .section-intro{color:var(--muted);max-width:50ch;margin-bottom:3rem}
+  .product-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.75rem}
+  .product-card{cursor:default}
+  .product-thumb{
+    aspect-ratio:3/4;border-radius:2px;margin-bottom:0.9rem;
+    display:flex;align-items:center;justify-content:center;font-size:2.2rem;color:#fff;
+  }
+  .p1{background:linear-gradient(160deg,#d8beac,#a97c68)}
+  .p2{background:linear-gradient(160deg,#c9a3a8,#8a5a5f)}
+  .p3{background:linear-gradient(160deg,#b8b0a4,#6f675c)}
+  .p4{background:linear-gradient(160deg,#ddd0c2,#a68f77)}
+  .product-card h3{font-size:0.95rem;font-weight:500;margin-bottom:0.2rem}
+  .product-card .price{color:var(--muted);font-size:0.9rem}
+  #collections{background:var(--surface)}
+  .col-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem}
+  .col-card{
+    aspect-ratio:4/3;border-radius:2px;display:flex;align-items:flex-end;padding:1.5rem;
+    color:#fff;font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;
+  }
+  .c1{background:linear-gradient(160deg,#3d332c,#221f1c)}
+  .c2{background:linear-gradient(160deg,#8a5a5f,#5c3a3d)}
+  .c3{background:linear-gradient(160deg,#a97c68,#6f4a3a)}
+  #newsletter{text-align:center}
+  form{max-width:420px;margin:0 auto;display:flex;gap:0.75rem}
+  input{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:2px;padding:0.85rem 1rem;color:var(--text);font-family:'Inter',sans-serif}
+  footer{border-top:1px solid var(--border);padding:2rem 6%;text-align:center;color:var(--muted);font-size:0.85rem}
+</style>
+</head>
+<body>
+  <div class="demo-banner">Konzept-/Beispielseite von <a href="../index.html#portfolio">Oberer Studio</a> — kein echtes Label</div>
+  <nav>
+    <span class="logo">MAISON RAVEL</span>
+    <ul class="nav-links">
+      <li><a href="#shop">Shop</a></li>
+      <li><a href="#collections">Kollektionen</a></li>
+      <li><a href="#newsletter">Newsletter</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <p class="eyebrow">Herbst/Winter Kollektion</p>
+    <h1>Zeitlose Stücke für den Alltag.</h1>
+    <p class="hero-sub">Reduzierte Formen, natürliche Materialien, in kleinen Auflagen produziert.</p>
+    <a href="#shop" class="btn">Kollektion entdecken</a>
+  </header>
+
+  <section id="shop">
+    <h2>Neu eingetroffen</h2>
+    <p class="section-intro">Eine kleine Auswahl aus der aktuellen Kollektion.</p>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-thumb p1">👜</div>
+        <h3>Wollmantel „Camel“</h3>
+        <span class="price">CHF 340</span>
+      </div>
+      <div class="product-card">
+        <div class="product-thumb p2">🧣</div>
+        <h3>Seidenschal „Terracotta“</h3>
+        <span class="price">CHF 95</span>
+      </div>
+      <div class="product-card">
+        <div class="product-thumb p3">👗</div>
+        <h3>Leinenkleid „Noir“</h3>
+        <span class="price">CHF 180</span>
+      </div>
+      <div class="product-card">
+        <div class="product-thumb p4">👞</div>
+        <h3>Lederstiefel „Sable“</h3>
+        <span class="price">CHF 260</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="collections">
+    <h2>Kollektionen</h2>
+    <p class="section-intro">Nach Anlass und Saison sortiert.</p>
+    <div class="col-grid">
+      <div class="col-card c1">Business</div>
+      <div class="col-card c2">Abend</div>
+      <div class="col-card c3">Alltag</div>
+    </div>
+  </section>
+
+  <section id="newsletter">
+    <h2>Bleiben Sie informiert</h2>
+    <p class="section-intro">Neue Kollektionen und limitierte Stücke zuerst erfahren.</p>
+    <form onsubmit="event.preventDefault(); this.querySelector('button').textContent='Danke! (Demo)';">
+      <input type="email" placeholder="E-Mail-Adresse" required>
+      <button type="submit" class="btn" style="border:none;cursor:pointer">Anmelden</button>
+    </form>
+  </section>
+
+  <footer>Konzeptseite von Oberer Studio · kein echtes Modelabel</footer>
+</body>
+</html>

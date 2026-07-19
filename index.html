@@ -380,14 +380,11 @@
       margin-top: 0.5rem;
     }
 
-    .portfolio-thumb.grad1 { background: linear-gradient(135deg, #1a2a1c, #16332a, #0f3d38); }
-    .portfolio-thumb.grad2 { background: linear-gradient(135deg, #1c1a2a, #241633, #2e0f3d); }
-    .portfolio-thumb.grad3 { background: linear-gradient(135deg, #2a1c0a, #331e08, #3d2500); }
-
     .concept-badge {
       position: absolute;
       top: 0.75rem;
       left: 0.75rem;
+      z-index: 2;
       background: rgba(0,0,0,0.55);
       border: 1px solid rgba(255,255,255,0.25);
       color: #fff;
@@ -399,6 +396,28 @@
       font-weight: 600;
       backdrop-filter: blur(4px);
     }
+
+    .portfolio-thumb iframe.site-preview {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 400%;
+      height: 400%;
+      transform: scale(0.25);
+      transform-origin: top left;
+      pointer-events: none;
+    }
+
+    .portfolio-link {
+      display: inline-block;
+      margin-top: 0.75rem;
+      color: var(--accent2);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .portfolio-link:hover { text-decoration: underline; }
 
     /* CTA BAND */
     .cta-band {
@@ -845,36 +864,39 @@
     <p class="portfolio-subhead">Webdesign</p>
     <div class="portfolio-grid">
       <div class="portfolio-card">
-        <div class="portfolio-thumb grad1">
+        <div class="portfolio-thumb">
           <span class="concept-badge">Konzept</span>
-          🍽️
+          <iframe class="site-preview" src="concepts/restaurant.html" loading="lazy" tabindex="-1"></iframe>
         </div>
         <div class="portfolio-info">
           <h3>Restaurant-Website — Konzept</h3>
           <p>Beispielarbeit für einen gehobenen Gastrobetrieb: Menükarte, Reservierung und Bildergalerie in einem ruhigen, appetitlichen Design.</p>
           <div class="portfolio-type">Webdesign</div>
+          <a href="concepts/restaurant.html" target="_blank" rel="noopener" class="portfolio-link">Website ansehen →</a>
         </div>
       </div>
       <div class="portfolio-card">
-        <div class="portfolio-thumb grad2">
+        <div class="portfolio-thumb">
           <span class="concept-badge">Konzept</span>
-          🛍️
+          <iframe class="site-preview" src="concepts/boutique.html" loading="lazy" tabindex="-1"></iframe>
         </div>
         <div class="portfolio-info">
           <h3>Boutique-Onlineshop — Konzept</h3>
           <p>Beispielarbeit für ein kleines Modelabel: klare Produktdarstellung, schneller Checkout und ein Design, das die Marke in den Vordergrund stellt.</p>
           <div class="portfolio-type">Webdesign</div>
+          <a href="concepts/boutique.html" target="_blank" rel="noopener" class="portfolio-link">Website ansehen →</a>
         </div>
       </div>
       <div class="portfolio-card">
-        <div class="portfolio-thumb grad3">
+        <div class="portfolio-thumb">
           <span class="concept-badge">Konzept</span>
-          🏋️
+          <iframe class="site-preview" src="concepts/fitness.html" loading="lazy" tabindex="-1"></iframe>
         </div>
         <div class="portfolio-info">
           <h3>Fitness-Studio Landingpage — Konzept</h3>
           <p>Beispielarbeit für ein Fitnessstudio: Kursplan, Probetraining-Anmeldung und Mitgliedschaften auf einer schnellen, mobilfreundlichen Landingpage.</p>
           <div class="portfolio-type">Webdesign</div>
+          <a href="concepts/fitness.html" target="_blank" rel="noopener" class="portfolio-link">Website ansehen →</a>
         </div>
       </div>
     </div>

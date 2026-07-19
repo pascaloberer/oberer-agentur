@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PULSE Fitness — Konzeptseite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0a0a0b; --surface:#141416; --border:#26262a;
+    --lime:#c6ff3d; --text:#f4f4f2; --muted:#94918c;
+  }
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6}
+  .demo-banner{
+    position:sticky;top:0;z-index:200;background:var(--lime);color:#0a0a0b;
+    text-align:center;font-size:0.85rem;font-weight:700;padding:0.6rem 1rem;
+  }
+  .demo-banner a{color:#0a0a0b;text-decoration:underline}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 6%;border-bottom:1px solid var(--border)}
+  .logo{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:0.03em;color:var(--lime)}
+  .nav-links{display:flex;gap:2rem;list-style:none}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500}
+  header.hero{
+    min-height:76vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:4rem 6%;
+    background:radial-gradient(circle at 50% 25%, rgba(198,255,61,0.1), transparent 60%);
+  }
+  .hero p.eyebrow{color:var(--lime);text-transform:uppercase;letter-spacing:0.15em;font-size:0.8rem;font-weight:700;margin-bottom:1rem}
+  h1{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(3rem,9vw,6.5rem);line-height:0.95;max-width:16ch;margin-bottom:1.25rem}
+  h1 span{color:var(--lime)}
+  .hero-sub{color:var(--muted);max-width:44ch;margin:0 auto 2rem}
+  .btn{display:inline-block;background:var(--lime);color:#0a0a0b;padding:0.9rem 2.2rem;border-radius:999px;text-decoration:none;font-weight:700}
+  .btn-outline{display:inline-block;border:1px solid var(--border);color:var(--text);padding:0.9rem 2.2rem;border-radius:999px;text-decoration:none;font-weight:600;margin-left:0.75rem}
+  section{padding:5rem 6%}
+  h2{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(2rem,4.5vw,3rem);margin-bottom:0.75rem}
+  .section-intro{color:var(--muted);max-width:50ch;margin-bottom:3rem}
+  #schedule{background:var(--surface)}
+  table{width:100%;border-collapse:collapse}
+  th,td{text-align:left;padding:0.9rem 1rem;border-bottom:1px solid var(--border);font-size:0.9rem}
+  th{color:var(--lime);text-transform:uppercase;letter-spacing:0.05em;font-size:0.75rem}
+  td.time{color:var(--muted);white-space:nowrap}
+  .pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem}
+  .price-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:2rem;text-align:center}
+  .price-card.featured{border-color:var(--lime)}
+  .price-card h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:0.02em;margin-bottom:0.5rem}
+  .price-card .amount{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;color:var(--lime);margin-bottom:1rem}
+  .price-card .amount span{font-size:1rem;color:var(--muted);font-family:'Inter',sans-serif}
+  .price-card ul{list-style:none;color:var(--muted);font-size:0.85rem;margin-bottom:1.5rem;text-align:left}
+  .price-card li{padding:0.35rem 0}
+  #trial{text-align:center}
+  form{max-width:420px;margin:0 auto;display:flex;flex-direction:column;gap:1rem}
+  input{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:0.85rem 1rem;color:var(--text);font-family:'Inter',sans-serif}
+  footer{border-top:1px solid var(--border);padding:2rem 6%;text-align:center;color:var(--muted);font-size:0.85rem}
+</style>
+</head>
+<body>
+  <div class="demo-banner">Konzept-/Beispielseite von <a href="../index.html#portfolio">Oberer Studio</a> — kein echtes Studio</div>
+  <nav>
+    <span class="logo">PULSE</span>
+    <ul class="nav-links">
+      <li><a href="#schedule">Kursplan</a></li>
+      <li><a href="#pricing">Mitgliedschaft</a></li>
+      <li><a href="#trial">Probetraining</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <p class="eyebrow">Functional Training · Kraft · Ausdauer</p>
+    <h1>Trainiere <span>härter.</span><br>Werde <span>stärker.</span></h1>
+    <p class="hero-sub">Kleine Gruppen, individuelle Betreuung, Trainingspläne, die wirklich zu deinen Zielen passen.</p>
+    <a href="#trial" class="btn">Gratis Probetraining</a>
+    <a href="#pricing" class="btn-outline">Preise ansehen</a>
+  </header>
+
+  <section id="schedule">
+    <h2>Kursplan</h2>
+    <p class="section-intro">Ein Ausschnitt aus unserem wöchentlichen Kursangebot.</p>
+    <table>
+      <tr><th>Kurs</th><th>Tag</th><th>Zeit</th></tr>
+      <tr><td>HIIT Circuit</td><td class="time">Montag</td><td class="time">18:00 – 19:00</td></tr>
+      <tr><td>Krafttraining Grundlagen</td><td class="time">Dienstag</td><td class="time">07:00 – 08:00</td></tr>
+      <tr><td>Mobility &amp; Recovery</td><td class="time">Mittwoch</td><td class="time">19:30 – 20:15</td></tr>
+      <tr><td>Functional Strength</td><td class="time">Freitag</td><td class="time">17:30 – 18:30</td></tr>
+    </table>
+  </section>
+
+  <section id="pricing">
+    <h2>Mitgliedschaften</h2>
+    <p class="section-intro">Faire Preise, keine versteckten Gebühren, monatlich kündbar.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <h3>Basic</h3>
+        <div class="amount">49<span>/Mt.</span></div>
+        <ul><li>Freies Training</li><li>Zugang Geräteraum</li></ul>
+      </div>
+      <div class="price-card featured">
+        <h3>Pulse+</h3>
+        <div class="amount">89<span>/Mt.</span></div>
+        <ul><li>Alle Kurse inklusive</li><li>1 Personal-Training/Monat</li><li>Ernährungsberatung</li></ul>
+      </div>
+      <div class="price-card">
+        <h3>Team</h3>
+        <div class="amount">149<span>/Mt.</span></div>
+        <ul><li>Unlimitierte Kurse</li><li>4 Personal-Trainings/Monat</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="trial">
+    <h2>Gratis Probetraining sichern</h2>
+    <p class="section-intro">Unverbindlich, keine Kreditkarte nötig.</p>
+    <form onsubmit="event.preventDefault(); this.querySelector('button').textContent='Danke! (Demo)';">
+      <input type="text" placeholder="Name" required>
+      <input type="email" placeholder="E-Mail-Adresse" required>
+      <button type="submit" class="btn" style="border:none;cursor:pointer">Termin anfragen</button>
+    </form>
+  </section>
+
+  <footer>Konzeptseite von Oberer Studio · kein echtes Fitnessstudio</footer>
+</body>
+</html>
