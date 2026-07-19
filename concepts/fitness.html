@@ -3,123 +3,771 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PULSE Fitness — Konzeptseite</title>
+<title>GRANIT — Dein Kraftraum. 24/7 offen. | Konzeptseite</title>
+<meta name="description" content="GRANIT — ein Schweizer Fitnessstudio für Kraft, Bewegung und Wellness. 24/7 Zugang, Kurse inklusive, App und moderne Geräte. Eine Konzeptseite von Oberer Studio.">
+<meta name="theme-color" content="#000000">
+<meta property="og:type" content="website">
+<meta property="og:title" content="GRANIT — Dein Kraftraum. 24/7 offen.">
+<meta property="og:description" content="Kraft, Bewegung und Wellness in einem Schweizer Studio: 24/7 Zugang, Kurse inklusive, App und moderne Geräte. Eine Konzeptseite von Oberer Studio.">
+<meta property="og:locale" content="de_CH">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   :root{
-    --bg:#0a0a0b; --surface:#141416; --border:#26262a;
-    --lime:#c6ff3d; --text:#f4f4f2; --muted:#94918c;
+    --bg:#000000;
+    --bg-2:#0a0c0b;
+    --surface:#101312;
+    --surface-2:#161a18;
+    --border:#242a26;
+    --border-2:#333a35;
+    --sage:#7fbca7;
+    --sage-bright:#97ceb9;
+    --sage-deep:#5f9d88;
+    --terra:#c05530;
+    --terra-bright:#d16b46;
+    --olive:#627d47;
+    --alert:#b20000;
+    --text:#ffffff;
+    --muted:#abb4ae;
+    --muted-2:#7e867f;
+    --maxw:1200px;
+    --ease:cubic-bezier(.22,1,.36,1);
   }
   html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:'Inter',system-ui,sans-serif;line-height:1.65;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  a{color:inherit}
+  img{max-width:100%;display:block}
+
+  /* ---- Accessibility ---- */
+  .skip-link{
+    position:absolute;left:1rem;top:-3.5rem;z-index:400;
+    background:var(--sage);color:#04110c;padding:.6rem 1rem;border-radius:6px;
+    font-weight:600;text-decoration:none;transition:top .2s var(--ease);
+  }
+  .skip-link:focus{top:1rem}
+  :focus-visible{outline:2px solid var(--sage);outline-offset:3px;border-radius:3px}
+
+  /* ---- Disclosure banner ---- */
   .demo-banner{
-    position:sticky;top:0;z-index:200;background:var(--lime);color:#0a0a0b;
-    text-align:center;font-size:0.85rem;font-weight:700;padding:0.6rem 1rem;
+    position:sticky;top:0;z-index:300;
+    background:linear-gradient(90deg,#0c1210,#0e1512);
+    border-bottom:1px solid var(--border);
+    color:var(--muted);text-align:center;
+    font-size:.8rem;letter-spacing:.01em;padding:.55rem 1rem;
   }
-  .demo-banner a{color:#0a0a0b;text-decoration:underline}
-  nav{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 6%;border-bottom:1px solid var(--border)}
-  .logo{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:0.03em;color:var(--lime)}
-  .nav-links{display:flex;gap:2rem;list-style:none}
-  .nav-links a{color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500}
-  header.hero{
-    min-height:76vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    text-align:center;padding:4rem 6%;
-    background:radial-gradient(circle at 50% 25%, rgba(198,255,61,0.1), transparent 60%);
+  .demo-banner strong{color:var(--sage);font-weight:600;letter-spacing:.03em;text-transform:uppercase}
+  .demo-banner a{color:var(--text);text-decoration:underline;text-underline-offset:2px}
+  .demo-banner a:hover{color:var(--sage)}
+
+  /* ---- Nav ---- */
+  .site-header{
+    position:sticky;top:0;z-index:250;
+    background:rgba(0,0,0,.6);backdrop-filter:blur(12px);
+    border-bottom:1px solid transparent;transition:border-color .4s var(--ease),background .4s var(--ease);
   }
-  .hero p.eyebrow{color:var(--lime);text-transform:uppercase;letter-spacing:0.15em;font-size:0.8rem;font-weight:700;margin-bottom:1rem}
-  h1{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(3rem,9vw,6.5rem);line-height:0.95;max-width:16ch;margin-bottom:1.25rem}
-  h1 span{color:var(--lime)}
-  .hero-sub{color:var(--muted);max-width:44ch;margin:0 auto 2rem}
-  .btn{display:inline-block;background:var(--lime);color:#0a0a0b;padding:0.9rem 2.2rem;border-radius:999px;text-decoration:none;font-weight:700}
-  .btn-outline{display:inline-block;border:1px solid var(--border);color:var(--text);padding:0.9rem 2.2rem;border-radius:999px;text-decoration:none;font-weight:600;margin-left:0.75rem}
-  section{padding:5rem 6%}
-  h2{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(2rem,4.5vw,3rem);margin-bottom:0.75rem}
-  .section-intro{color:var(--muted);max-width:50ch;margin-bottom:3rem}
-  #schedule{background:var(--surface)}
-  table{width:100%;border-collapse:collapse}
-  th,td{text-align:left;padding:0.9rem 1rem;border-bottom:1px solid var(--border);font-size:0.9rem}
-  th{color:var(--lime);text-transform:uppercase;letter-spacing:0.05em;font-size:0.75rem}
-  td.time{color:var(--muted);white-space:nowrap}
-  .pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem}
-  .price-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:2rem;text-align:center}
-  .price-card.featured{border-color:var(--lime)}
-  .price-card h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:0.02em;margin-bottom:0.5rem}
-  .price-card .amount{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;color:var(--lime);margin-bottom:1rem}
-  .price-card .amount span{font-size:1rem;color:var(--muted);font-family:'Inter',sans-serif}
-  .price-card ul{list-style:none;color:var(--muted);font-size:0.85rem;margin-bottom:1.5rem;text-align:left}
-  .price-card li{padding:0.35rem 0}
-  #trial{text-align:center}
-  form{max-width:420px;margin:0 auto;display:flex;flex-direction:column;gap:1rem}
-  input{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:0.85rem 1rem;color:var(--text);font-family:'Inter',sans-serif}
-  footer{border-top:1px solid var(--border);padding:2rem 6%;text-align:center;color:var(--muted);font-size:0.85rem}
+  .site-header.scrolled{border-bottom-color:var(--border);background:rgba(0,0,0,.86)}
+  nav{
+    max-width:var(--maxw);margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:1rem 6%;gap:1.5rem;
+  }
+  .logo{
+    font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.7rem;
+    letter-spacing:.18em;color:var(--text);text-decoration:none;line-height:1;
+    text-transform:uppercase;display:inline-flex;align-items:center;gap:.05em;
+  }
+  .logo .dot{color:var(--sage)}
+  .nav-links{display:flex;gap:2.1rem;list-style:none;align-items:center}
+  .nav-links a{
+    position:relative;color:var(--muted);text-decoration:none;
+    font-size:.78rem;text-transform:uppercase;letter-spacing:.13em;font-weight:500;
+    padding:.25rem 0;transition:color .3s var(--ease);
+  }
+  .nav-links a::after{
+    content:"";position:absolute;left:0;bottom:-3px;height:2px;width:0;
+    background:var(--sage);transition:width .35s var(--ease);
+  }
+  .nav-links a:hover,.nav-links a:focus-visible{color:var(--text)}
+  .nav-links a:hover::after,.nav-links a:focus-visible::after{width:100%}
+  .nav-cta{
+    display:inline-block;background:var(--sage);color:#04110c;
+    padding:.6rem 1.35rem;border-radius:999px;text-decoration:none;
+    font-size:.76rem;text-transform:uppercase;letter-spacing:.1em;font-weight:600;
+    border:1px solid var(--sage);
+    transition:background .3s var(--ease),transform .3s var(--ease),box-shadow .3s var(--ease);
+  }
+  .nav-cta:hover,.nav-cta:focus-visible{background:var(--sage-bright);transform:translateY(-1px);box-shadow:0 8px 22px -10px rgba(127,188,167,.6)}
+  .nav-toggle{display:none}
+
+  /* ---- Buttons ---- */
+  .btn{
+    display:inline-block;background:var(--sage);color:#04110c;
+    padding:.95rem 2.1rem;border-radius:999px;text-decoration:none;
+    font-size:.82rem;font-weight:600;text-transform:uppercase;letter-spacing:.09em;
+    border:1px solid var(--sage);cursor:pointer;font-family:'Inter',sans-serif;
+    transition:transform .3s var(--ease),box-shadow .3s var(--ease),background .3s var(--ease);
+  }
+  .btn:hover,.btn:focus-visible{transform:translateY(-2px);box-shadow:0 14px 34px -12px rgba(127,188,167,.55);background:var(--sage-bright)}
+  .btn-ghost{
+    display:inline-block;border:1px solid var(--border-2);color:var(--text);background:transparent;
+    padding:.95rem 2.1rem;border-radius:999px;text-decoration:none;cursor:pointer;
+    font-size:.82rem;font-weight:500;text-transform:uppercase;letter-spacing:.09em;font-family:'Inter',sans-serif;
+    transition:border-color .3s var(--ease),color .3s var(--ease),background .3s var(--ease);
+  }
+  .btn-ghost:hover,.btn-ghost:focus-visible{border-color:var(--sage);color:var(--sage)}
+
+  /* ---- Layout ---- */
+  section{padding:6rem 6%}
+  .wrap{max-width:var(--maxw);margin:0 auto}
+  .eyebrow{
+    color:var(--sage);text-transform:uppercase;letter-spacing:.22em;
+    font-size:.72rem;font-weight:600;margin-bottom:1.15rem;
+    display:inline-flex;align-items:center;gap:.7rem;
+  }
+  .eyebrow::before{content:"";width:26px;height:2px;background:var(--sage);opacity:.8}
+  h1,h2,h3,h4{font-family:'Barlow Condensed',sans-serif;font-weight:700;line-height:1.02;text-transform:uppercase;letter-spacing:.01em}
+  h2{font-size:clamp(2.3rem,5vw,3.6rem);margin-bottom:1rem}
+  h2 em{font-style:normal;color:var(--sage)}
+  .section-intro{color:var(--muted);max-width:56ch;margin-bottom:3.5rem;font-size:1.03rem;line-height:1.7}
+  .section-head{margin-bottom:3.5rem;max-width:var(--maxw)}
+  .section-head .section-intro{margin-bottom:0}
+
+  /* ---- Hero ---- */
+  .hero{
+    position:relative;min-height:clamp(600px,92vh,960px);
+    display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;
+    padding:6rem 6% 4.5rem;overflow:hidden;
+  }
+  .hero-photo{
+    position:absolute;inset:0;z-index:-2;
+    width:100%;height:100%;object-fit:cover;object-position:60% 28%;
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;z-index:-1;
+    background:
+      linear-gradient(90deg,rgba(0,0,0,.92) 0%,rgba(0,0,0,.6) 42%,rgba(0,0,0,.28) 72%,rgba(0,0,0,.55) 100%),
+      linear-gradient(180deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,.1) 40%,rgba(0,0,0,.85) 100%),
+      radial-gradient(60% 50% at 12% 88%, rgba(127,188,167,.22), transparent 70%);
+  }
+  .hero-inner{max-width:var(--maxw);margin:0 auto;width:100%}
+  .badge{
+    display:inline-flex;align-items:center;gap:.55rem;
+    background:rgba(127,188,167,.12);border:1px solid rgba(127,188,167,.5);
+    color:var(--sage-bright);border-radius:999px;padding:.4rem 1rem;
+    font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;margin-bottom:1.5rem;
+  }
+  .badge::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--sage);box-shadow:0 0 0 4px rgba(127,188,167,.2)}
+  h1{
+    font-size:clamp(3.2rem,9vw,7rem);max-width:15ch;margin:0 0 1.3rem;line-height:.92;
+  }
+  h1 em{font-style:normal;color:var(--sage)}
+  .hero-sub{color:#dfe6e1;max-width:48ch;margin:0 0 2.4rem;font-size:1.12rem;line-height:1.6}
+  .hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+  .hero-meta{
+    margin-top:3.2rem;display:flex;gap:2.5rem;flex-wrap:wrap;
+    color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.13em;font-weight:500;
+  }
+  .hero-meta span{display:inline-flex;align-items:center;gap:.6rem}
+  .hero-meta span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--sage)}
+
+  /* ---- Advantages (icon grid) ---- */
+  #vorteile{background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .icon-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;
+  }
+  .tile{
+    padding:1.85rem 1.6rem;border:1px solid var(--border);border-radius:10px;
+    background:linear-gradient(180deg,rgba(255,255,255,.022),transparent);
+    transition:border-color .4s var(--ease),transform .4s var(--ease),background .4s var(--ease);
+  }
+  .tile:hover{border-color:var(--sage-deep);transform:translateY(-4px);background:linear-gradient(180deg,rgba(127,188,167,.06),transparent)}
+  .tile .ico{
+    width:44px;height:44px;border-radius:9px;display:grid;place-items:center;margin-bottom:1.1rem;
+    background:rgba(127,188,167,.1);border:1px solid rgba(127,188,167,.22);color:var(--sage);
+  }
+  .tile .ico svg{width:22px;height:22px;stroke:currentColor;stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .tile h3{font-size:1.28rem;margin-bottom:.4rem;letter-spacing:.02em}
+  .tile p{color:var(--muted);font-size:.9rem;line-height:1.6}
+
+  /* ---- Classes ---- */
+  .class-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+  .class-card{
+    position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--border);
+    background:var(--surface);
+  }
+  .class-media{position:relative;overflow:hidden;aspect-ratio:4/5}
+  .class-media img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
+  .class-card:hover .class-media img{transform:scale(1.05)}
+  .class-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.85))}
+  .class-tagline{
+    position:absolute;top:1.1rem;left:1.1rem;z-index:2;
+    font-size:.66rem;text-transform:uppercase;letter-spacing:.14em;font-weight:600;
+    background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.18);color:#fff;
+    padding:.3rem .7rem;border-radius:999px;backdrop-filter:blur(4px);
+  }
+  .class-body{position:absolute;bottom:0;left:0;right:0;z-index:2;padding:1.5rem}
+  .class-body h3{font-size:1.7rem;margin-bottom:.35rem;letter-spacing:.02em}
+  .class-body p{color:#d3dbd6;font-size:.9rem;line-height:1.55}
+  .class-note{margin-top:2.5rem;color:var(--muted-2);font-size:.84rem;max-width:62ch}
+  .class-note em{font-style:normal;color:var(--muted)}
+
+  /* ---- Pricing ---- */
+  #preise{background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .billing-toggle{
+    display:inline-flex;background:var(--surface);border:1px solid var(--border);border-radius:999px;
+    padding:.3rem;margin-bottom:3rem;gap:.25rem;
+  }
+  .billing-toggle button{
+    border:none;background:transparent;color:var(--muted);cursor:pointer;
+    font-family:'Inter',sans-serif;font-size:.8rem;font-weight:500;letter-spacing:.04em;
+    padding:.55rem 1.25rem;border-radius:999px;transition:background .3s var(--ease),color .3s var(--ease);
+  }
+  .billing-toggle button.active{background:var(--sage);color:#04110c;font-weight:600}
+  .billing-toggle .save{color:var(--sage);font-size:.7rem;margin-left:.35rem}
+  .billing-toggle button.active .save{color:#04110c}
+  .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;align-items:stretch}
+  .plan{
+    display:flex;flex-direction:column;padding:2.2rem 1.9rem;border:1px solid var(--border);border-radius:14px;
+    background:var(--surface);transition:border-color .4s var(--ease),transform .4s var(--ease)}
+  .plan:hover{border-color:var(--border-2);transform:translateY(-4px)}
+  .plan.featured{border-color:var(--sage);background:linear-gradient(180deg,rgba(127,188,167,.07),transparent 60%);position:relative}
+  .plan-badge{
+    position:absolute;top:-.85rem;left:50%;transform:translateX(-50%);
+    background:var(--sage);color:#04110c;font-size:.66rem;font-weight:600;text-transform:uppercase;
+    letter-spacing:.12em;padding:.3rem .85rem;border-radius:999px;white-space:nowrap;
+  }
+  .plan-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;font-size:1.5rem;letter-spacing:.04em}
+  .plan-desc{color:var(--muted);font-size:.86rem;margin:.35rem 0 1.5rem;min-height:2.4em}
+  .plan-price{display:flex;align-items:baseline;gap:.35rem;margin-bottom:.35rem}
+  .plan-price .amount{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:3rem;line-height:1;letter-spacing:.01em}
+  .plan-price .per{color:var(--muted);font-size:.85rem}
+  .plan-sub{color:var(--muted-2);font-size:.78rem;margin-bottom:1.6rem}
+  .plan ul{list-style:none;display:grid;gap:.7rem;margin-bottom:1.9rem}
+  .plan li{display:flex;gap:.65rem;align-items:flex-start;color:var(--muted);font-size:.9rem}
+  .plan li svg{width:17px;height:17px;flex:none;margin-top:.15rem;stroke:var(--sage);stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .plan li.off{color:var(--muted-2)}
+  .plan li.off svg{stroke:var(--muted-2)}
+  .plan .btn,.plan .btn-ghost{width:100%;margin-top:auto;text-align:center}
+  .price-note{margin-top:2rem;color:var(--muted-2);font-size:.82rem;text-align:center}
+  .price-note b{color:var(--terra-bright);font-weight:600}
+
+  /* ---- Inclusivity band ---- */
+  #jedes-alter{position:relative;overflow:hidden}
+  #jedes-alter::before{
+    content:"";position:absolute;inset:0;z-index:-1;
+    background:radial-gradient(70% 80% at 85% 20%,rgba(127,188,167,.1),transparent 65%),
+              radial-gradient(60% 70% at 10% 90%,rgba(192,85,48,.08),transparent 65%);
+  }
+  .incl-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:4rem;align-items:center}
+  .incl-copy h2{margin-bottom:1.25rem}
+  .incl-copy p{color:var(--muted);margin-bottom:1.1rem;max-width:52ch;font-size:1.03rem}
+  .incl-stats{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem 1rem}
+  .stat{padding:1.5rem 1.4rem;border:1px solid var(--border);border-radius:12px;background:var(--surface)}
+  .stat .num{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:2.6rem;line-height:1;color:var(--sage);letter-spacing:.01em}
+  .stat .lbl{color:var(--muted);font-size:.86rem;margin-top:.4rem}
+
+  /* ---- Testimonials ---- */
+  .quote-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+  .quote{
+    display:flex;flex-direction:column;padding:2rem 1.8rem;border:1px solid var(--border);border-radius:12px;
+    background:linear-gradient(180deg,rgba(255,255,255,.02),transparent);
+  }
+  .quote .stars{color:var(--sage);letter-spacing:.15em;font-size:.85rem;margin-bottom:1rem}
+  .quote blockquote{margin:0 0 1.5rem;flex:1}
+  .quote p{color:#dfe6e1;font-size:1rem;line-height:1.65}
+  .quote .who{display:flex;align-items:center;gap:.85rem}
+  .avatar{
+    width:42px;height:42px;border-radius:50%;flex:none;display:grid;place-items:center;
+    background:rgba(127,188,167,.14);border:1px solid rgba(127,188,167,.3);color:var(--sage);
+    font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.05rem;letter-spacing:.03em;
+  }
+  .who .name{font-weight:500;font-size:.92rem}
+  .who .role{color:var(--muted-2);font-size:.8rem}
+
+  /* ---- Final CTA / trial ---- */
+  #starten{border-top:1px solid var(--border);text-align:center;background:var(--bg-2)}
+  #starten .wrap{max-width:680px}
+  #starten .eyebrow{justify-content:center}
+  #starten h2{margin-bottom:1rem}
+  #starten .section-intro{margin:0 auto 2.5rem;max-width:46ch}
+  .trial-form{margin:0 auto;max-width:520px;display:flex;gap:.75rem}
+  .trial-form input{
+    flex:1;background:var(--surface);border:1px solid var(--border-2);border-radius:999px;
+    padding:.95rem 1.5rem;color:var(--text);font-family:'Inter',sans-serif;font-size:.95rem;
+    transition:border-color .25s var(--ease),box-shadow .25s var(--ease);
+  }
+  .trial-form input::placeholder{color:var(--muted-2)}
+  .trial-form input:focus{outline:none;border-color:var(--sage);box-shadow:0 0 0 3px rgba(127,188,167,.16)}
+  .trial-form .btn{white-space:nowrap}
+  .form-note{font-size:.78rem;color:var(--muted-2);margin-top:1.1rem}
+  .form-confirm{
+    display:none;margin:2.25rem auto 0;max-width:520px;text-align:center;
+    padding:1.7rem 1.3rem;border:1px solid var(--sage-deep);border-radius:12px;
+    background:rgba(127,188,167,.08);
+  }
+  .form-confirm.show{display:block;animation:fade .5s var(--ease)}
+  .form-confirm h3{color:var(--sage);font-size:1.7rem;margin-bottom:.35rem;letter-spacing:.02em}
+  .form-confirm p{color:var(--muted);font-size:.92rem}
+  form.done .trial-form,form.done .form-note{display:none}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* ---- Footer ---- */
+  footer{border-top:1px solid var(--border);padding:3.5rem 6% 2.5rem;background:var(--bg)}
+  .footer-inner{
+    max-width:var(--maxw);margin:0 auto;
+    display:flex;flex-wrap:wrap;gap:2rem;justify-content:space-between;align-items:flex-start;
+  }
+  .footer-brand .logo{font-size:1.6rem;margin-bottom:.75rem}
+  .footer-brand p{color:var(--muted);font-size:.88rem;max-width:34ch;margin-top:.75rem}
+  .footer-cols{display:flex;gap:3.5rem;flex-wrap:wrap}
+  .footer-col h4{font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;color:var(--sage);margin-bottom:.9rem;font-family:'Inter',sans-serif;font-weight:600}
+  .footer-col ul{list-style:none;display:grid;gap:.5rem}
+  .footer-col a,.footer-col li{color:var(--muted);font-size:.88rem;text-decoration:none}
+  .footer-col a:hover{color:var(--text)}
+  .photo-credit{
+    max-width:var(--maxw);margin:2.75rem auto 0;padding-top:1.75rem;border-top:1px solid var(--border);
+    color:var(--muted-2);font-size:.72rem;line-height:1.9;
+  }
+  .photo-credit a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+  .photo-credit a:hover{color:var(--sage)}
+  .footer-bottom{
+    max-width:var(--maxw);margin:1.75rem auto 0;padding-top:1.5rem;border-top:1px solid var(--border);
+    display:flex;flex-wrap:wrap;gap:.75rem;justify-content:space-between;
+    color:var(--muted-2);font-size:.78rem;
+  }
+  .footer-bottom a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+  .footer-bottom a:hover{color:var(--sage)}
+
+  /* ---- Reveal on scroll ---- */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+  .reveal.visible{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    .btn,.tile,.class-media img,.plan,.nav-links a::after{transition:none}
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width:1000px){
+    .icon-grid{grid-template-columns:repeat(2,1fr)}
+    .class-grid{grid-template-columns:1fr 1fr}
+    .price-grid{grid-template-columns:1fr;max-width:460px;margin:0 auto}
+    .plan.featured{order:-1}
+    .incl-grid{grid-template-columns:1fr;gap:2.5rem}
+    .quote-grid{grid-template-columns:1fr}
+  }
+  @media (max-width:640px){
+    section{padding:4.5rem 7%}
+    .nav-links,.nav-cta{display:none}
+    .nav-toggle{
+      display:inline-flex;background:none;border:1px solid var(--border-2);
+      color:var(--text);border-radius:8px;padding:.5rem .9rem;font-size:.72rem;
+      text-transform:uppercase;letter-spacing:.1em;cursor:pointer;font-family:'Inter',sans-serif;
+    }
+    .icon-grid{grid-template-columns:1fr}
+    .class-grid{grid-template-columns:1fr}
+    .incl-stats{grid-template-columns:1fr 1fr}
+    .trial-form{flex-direction:column}
+    .trial-form .btn{width:100%}
+    .hero-meta{gap:1.25rem}
+    .footer-cols{gap:2rem}
+  }
+  .mobile-menu{display:none}
+  .mobile-menu.open{display:block;background:var(--bg-2);border-bottom:1px solid var(--border)}
+  .mobile-menu ul{list-style:none;padding:1rem 7% 1.5rem;display:grid;gap:.25rem}
+  .mobile-menu a{
+    display:block;color:var(--text);text-decoration:none;padding:.7rem 0;
+    font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid var(--border);
+  }
 </style>
 </head>
 <body>
-  <div class="demo-banner">Konzept-/Beispielseite von <a href="../index.html#portfolio">Oberer Studio</a> — kein echtes Studio</div>
-  <nav>
-    <span class="logo">PULSE</span>
-    <ul class="nav-links">
-      <li><a href="#schedule">Kursplan</a></li>
-      <li><a href="#pricing">Mitgliedschaft</a></li>
-      <li><a href="#trial">Probetraining</a></li>
-    </ul>
-  </nav>
+  <a class="skip-link" href="#hauptinhalt">Zum Inhalt springen</a>
 
-  <header class="hero">
-    <p class="eyebrow">Functional Training · Kraft · Ausdauer</p>
-    <h1>Trainiere <span>härter.</span><br>Werde <span>stärker.</span></h1>
-    <p class="hero-sub">Kleine Gruppen, individuelle Betreuung, Trainingspläne, die wirklich zu deinen Zielen passen.</p>
-    <a href="#trial" class="btn">Gratis Probetraining</a>
-    <a href="#pricing" class="btn-outline">Preise ansehen</a>
+  <div class="demo-banner">
+    <strong>Konzept-Demo</strong> — fiktives Fitnessstudio, Beispielarbeit von <a href="../index.html#portfolio">Oberer Studio</a>.
+  </div>
+
+  <header class="site-header" id="top">
+    <nav aria-label="Hauptnavigation">
+      <a class="logo" href="#top" aria-label="GRANIT — Startseite">GRANIT<span class="dot">.</span></a>
+      <ul class="nav-links">
+        <li><a href="#vorteile">Vorteile</a></li>
+        <li><a href="#kurse">Kurse</a></li>
+        <li><a href="#preise">Preise</a></li>
+        <li><a href="#jedes-alter">Für alle</a></li>
+      </ul>
+      <a class="nav-cta" href="#starten">Mitglied werden</a>
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobileMenu">Menü</button>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+      <ul>
+        <li><a href="#vorteile">Vorteile</a></li>
+        <li><a href="#kurse">Kurse</a></li>
+        <li><a href="#preise">Preise</a></li>
+        <li><a href="#jedes-alter">Für alle</a></li>
+        <li><a href="#starten">Mitglied werden</a></li>
+      </ul>
+    </div>
   </header>
 
-  <section id="schedule">
-    <h2>Kursplan</h2>
-    <p class="section-intro">Ein Ausschnitt aus unserem wöchentlichen Kursangebot.</p>
-    <table>
-      <tr><th>Kurs</th><th>Tag</th><th>Zeit</th></tr>
-      <tr><td>HIIT Circuit</td><td class="time">Montag</td><td class="time">18:00 – 19:00</td></tr>
-      <tr><td>Krafttraining Grundlagen</td><td class="time">Dienstag</td><td class="time">07:00 – 08:00</td></tr>
-      <tr><td>Mobility &amp; Recovery</td><td class="time">Mittwoch</td><td class="time">19:30 – 20:15</td></tr>
-      <tr><td>Functional Strength</td><td class="time">Freitag</td><td class="time">17:30 – 18:30</td></tr>
-    </table>
-  </section>
+  <main id="hauptinhalt">
+    <section class="hero" aria-labelledby="hero-title">
+      <img class="hero-photo" src="assets/hero-fitness.jpg" alt="Athletin führt konzentriert eine Schulterdrück-Übung mit zwei Kurzhanteln in einem abgedunkelten Kraftraum aus" fetchpriority="high" width="1500" height="2248">
+      <div class="hero-inner">
+        <span class="badge">Neu eröffnet · Erste Woche gratis</span>
+        <h1 id="hero-title">Dein <em>Kraftraum.</em><br>24/7 offen.</h1>
+        <p class="hero-sub">GRANIT ist ein Schweizer Studio für Kraft, Bewegung und Erholung — mit modernen Geräten, Kursen inklusive und einer App, die dich durch jedes Training führt.</p>
+        <div class="hero-actions">
+          <a href="#starten" class="btn">Mitglied werden</a>
+          <a href="#kurse" class="btn-ghost">Kurse ansehen</a>
+        </div>
+        <div class="hero-meta">
+          <span>24/7 Zugang</span>
+          <span>Kurse inklusive</span>
+          <span>Keine Vertragsbindung</span>
+        </div>
+      </div>
+    </section>
 
-  <section id="pricing">
-    <h2>Mitgliedschaften</h2>
-    <p class="section-intro">Faire Preise, keine versteckten Gebühren, monatlich kündbar.</p>
-    <div class="pricing-grid">
-      <div class="price-card">
-        <h3>Basic</h3>
-        <div class="amount">49<span>/Mt.</span></div>
-        <ul><li>Freies Training</li><li>Zugang Geräteraum</li></ul>
+    <section id="vorteile" aria-labelledby="vorteile-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Warum GRANIT</p>
+          <h2 id="vorteile-title">Alles dabei, was ein <em>gutes Training</em> braucht</h2>
+          <p class="section-intro">Ein Preis, kein Kleingedrucktes. Von der App über die Kurse bis zur Sauna ist alles inbegriffen — du kommst einfach vorbei und legst los.</p>
+        </div>
+        <div class="icon-grid">
+          <div class="tile reveal">
+            <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+            <h3>24/7 Zugang</h3>
+            <p>Trainiere, wann es dir passt — mit deinem Badge kommst du rund um die Uhr rein, auch nachts und am Wochenende.</p>
+          </div>
+          <div class="tile reveal">
+            <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2"/></svg></span>
+            <h3>GRANIT App</h3>
+            <p>Trainingspläne, Kursbuchung und Check-in in einer App. Deine Fortschritte immer in der Tasche.</p>
+          </div>
+          <div class="tile reveal">
+            <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M17 20v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="3.2"/><path d="M21 20v-2a4 4 0 0 0-3-3.8"/><path d="M16 3.8a4 4 0 0 1 0 6.4"/></svg></span>
+            <h3>Kurse inklusive</h3>
+            <p>Über 40 Kurse pro Woche — von HIIT über Yoga bis Indoor Cycling, alle ohne Aufpreis buchbar.</p>
+          </div>
+          <div class="tile reveal">
+            <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.5 8.5v7M17.5 8.5v7M4 10v4M20 10v4M6.5 12h11"/></svg></span>
+            <h3>Moderne Geräte</h3>
+            <p>Freihanteln, Kraftmaschinen und Cardio auf aktuellem Stand — gewartet, sauber und nie überfüllt.</p>
+          </div>
+          <div class="tile reveal">
+            <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3c3 3.5 4.5 6 4.5 8.5a4.5 4.5 0 0 1-9 0C7.5 9 9 6.5 12 3Z"/></svg></span>
+            <h3>Wellness &amp; Sauna</h3>
+            <p>Finnische Sauna und ein ruhiger Erholungsbereich, um nach dem Training wirklich abzuschalten.</p>
+          </div>
+          <div class="tile reveal">
+            <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0"/><path d="m15.5 12.5 1.4 1.4 2.6-2.6"/></svg></span>
+            <h3>Persönliche Beratung</h3>
+            <p>Ein kostenloses Startgespräch mit Plan, plus Coaches auf der Fläche, die dir bei der Technik helfen.</p>
+          </div>
+          <div class="tile reveal">
+            <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 11h16v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8Z"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/><path d="M9 15v2M15 15v2"/></svg></span>
+            <h3>Duschen &amp; Spinde</h3>
+            <p>Grosszügige Garderoben, Tagesspinde und heisse Duschen — Handtuchservice gibt es dazu.</p>
+          </div>
+          <div class="tile reveal">
+            <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4 3 7 7 8 4-1 7-4 7-8V6l-7-3Z"/><path d="m9.5 12 1.8 1.8 3.5-3.6"/></svg></span>
+            <h3>Fair &amp; flexibel</h3>
+            <p>Monatlich kündbar, keine Anschlussgebühr. Bleib, weil es dir gefällt — nicht wegen eines Vertrags.</p>
+          </div>
+        </div>
       </div>
-      <div class="price-card featured">
-        <h3>Pulse+</h3>
-        <div class="amount">89<span>/Mt.</span></div>
-        <ul><li>Alle Kurse inklusive</li><li>1 Personal-Training/Monat</li><li>Ernährungsberatung</li></ul>
+    </section>
+
+    <section id="kurse" aria-labelledby="kurse-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Kurse &amp; Training</p>
+          <h2 id="kurse-title">Drei Wege, stärker zu werden</h2>
+          <p class="section-intro">Ob du Gewichte bewegen, ausser Atem kommen oder beweglicher werden willst — unsere Kursformate decken jedes Ziel ab. Alle sind im Abo enthalten.</p>
+        </div>
+        <div class="class-grid reveal">
+          <article class="class-card">
+            <div class="class-media">
+              <img src="assets/fitness-strength.jpg" alt="Langhantel mit gestapelten Gewichtsscheiben auf einer Ablage in einem Kraftraum, in Schwarzweiss" loading="lazy" width="1200" height="900">
+              <span class="class-tagline">Kraft</span>
+            </div>
+            <div class="class-body">
+              <h3>Kraft &amp; Aufbau</h3>
+              <p>Strukturierte Programme an Langhantel und Maschine — vom ersten Kniebeugen bis zum persönlichen Rekord.</p>
+            </div>
+          </article>
+          <article class="class-card">
+            <div class="class-media">
+              <img src="assets/fitness-functional.jpg" alt="Hand mit Trainingshandschuh umgreift eine Haltestange an einem Fitnessgerät, Nahaufnahme" loading="lazy" width="1200" height="798">
+              <span class="class-tagline">Intensität</span>
+            </div>
+            <div class="class-body">
+              <h3>Functional &amp; HIIT</h3>
+              <p>Kurze, knackige Einheiten mit Kettlebells, Seilen und Körpergewicht. Viel Schweiss in wenig Zeit.</p>
+            </div>
+          </article>
+          <article class="class-card">
+            <div class="class-media">
+              <img src="assets/fitness-mobility.jpg" alt="Frau streckt lächelnd beide Arme über den Kopf während einer Yoga-Einheit auf einer Matte" loading="lazy" width="1200" height="1798">
+              <span class="class-tagline">Balance</span>
+            </div>
+            <div class="class-body">
+              <h3>Yoga &amp; Mobility</h3>
+              <p>Ruhige Formate für Beweglichkeit, Haltung und Erholung — der Ausgleich zu den harten Tagen.</p>
+            </div>
+          </article>
+        </div>
+        <p class="class-note reveal"><em>Hinweis:</em> Die gezeigten Fotografien sind frei lizenzierte Aufnahmen und dienen als Stimmungsbilder für dieses Konzept. Kursangebot, Namen und Preise sind fiktiv.</p>
       </div>
-      <div class="price-card">
-        <h3>Team</h3>
-        <div class="amount">149<span>/Mt.</span></div>
-        <ul><li>Unlimitierte Kurse</li><li>4 Personal-Trainings/Monat</li></ul>
+    </section>
+
+    <section id="preise" aria-labelledby="preise-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Mitgliedschaft</p>
+          <h2 id="preise-title">Ein Abo, das <em>zu dir passt</em></h2>
+          <p class="section-intro">Alle Abos beinhalten Geräte, Kurse und App. Du wählst nur, wie viel Wellness und Betreuung du dazu möchtest — jederzeit wechselbar.</p>
+        </div>
+
+        <div class="billing-toggle reveal" role="group" aria-label="Abrechnungszeitraum wählen">
+          <button type="button" id="billMonthly" class="active" aria-pressed="true">Monatlich</button>
+          <button type="button" id="billYearly" aria-pressed="false">Jährlich<span class="save">−15%</span></button>
+        </div>
+
+        <div class="price-grid">
+          <div class="plan reveal">
+            <span class="plan-name">Flex</span>
+            <p class="plan-desc">Der unkomplizierte Einstieg für ein Studio.</p>
+            <div class="plan-price"><span class="amount" data-m="49" data-y="42">49</span><span class="per">CHF / Monat</span></div>
+            <p class="plan-sub">Monatlich kündbar</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 6"/></svg>Zugang zu einem Studio</li>
+              <li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 6"/></svg>Geräte &amp; Freihanteln</li>
+              <li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 6"/></svg>GRANIT App inklusive</li>
+              <li class="off"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>Kurse &amp; Wellness</li>
+            </ul>
+            <a href="#starten" class="btn-ghost">Flex wählen</a>
+          </div>
+
+          <div class="plan featured reveal">
+            <span class="plan-badge">Am beliebtesten</span>
+            <span class="plan-name">Aktiv</span>
+            <p class="plan-desc">Alle Studios, alle Kurse, volle Wellness.</p>
+            <div class="plan-price"><span class="amount" data-m="69" data-y="59">69</span><span class="per">CHF / Monat</span></div>
+            <p class="plan-sub">Monatlich kündbar</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 6"/></svg>Zugang zu allen Studios</li>
+              <li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 6"/></svg>Alle Kurse inklusive</li>
+              <li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 6"/></svg>Sauna &amp; Wellnessbereich</li>
+              <li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 6"/></svg>Startgespräch mit Plan</li>
+            </ul>
+            <a href="#starten" class="btn">Aktiv wählen</a>
+          </div>
+
+          <div class="plan reveal">
+            <span class="plan-name">Premium</span>
+            <p class="plan-desc">Persönliche Betreuung und volle Freiheit.</p>
+            <div class="plan-price"><span class="amount" data-m="99" data-y="84">99</span><span class="per">CHF / Monat</span></div>
+            <p class="plan-sub">Monatlich kündbar</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 6"/></svg>Alles aus Aktiv</li>
+              <li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 6"/></svg>2 Personal-Trainings / Monat</li>
+              <li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 6"/></svg>Gast kostenlos mitbringen</li>
+              <li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 6"/></svg>Getränke &amp; Handtücher gratis</li>
+            </ul>
+            <a href="#starten" class="btn-ghost">Premium wählen</a>
+          </div>
+        </div>
+        <p class="price-note reveal"><b>Erste Woche gratis</b> — teste GRANIT unverbindlich, bevor du dich entscheidest.</p>
+      </div>
+    </section>
+
+    <section id="jedes-alter" aria-labelledby="alter-title">
+      <div class="wrap incl-grid">
+        <div class="incl-copy reveal">
+          <p class="eyebrow">Für alle gemacht</p>
+          <h2 id="alter-title">Fit in jedem Alter, auf jedem Level</h2>
+          <p>Bei GRANIT trainieren 16-Jährige neben 70-Jährigen, Anfängerinnen neben Wettkampfathleten. Niemand muss sich erst „in Form bringen“, um anzufangen — der erste Schritt zählt, egal von wo aus.</p>
+          <p>Unsere Coaches passen jede Übung an dich an, statt umgekehrt. Ruhige Zeiten, sanfte Kursformate und barrierearme Geräte gehören genauso dazu wie das schwere Eisen.</p>
+        </div>
+        <div class="incl-stats reveal">
+          <div class="stat">
+            <div class="num">16–75</div>
+            <div class="lbl">Jahre — jedes Alter willkommen</div>
+          </div>
+          <div class="stat">
+            <div class="num">40+</div>
+            <div class="lbl">Kurse pro Woche, für jedes Level</div>
+          </div>
+          <div class="stat">
+            <div class="num">7&nbsp;Tage</div>
+            <div class="lbl">Gratis testen, ohne Verpflichtung</div>
+          </div>
+          <div class="stat">
+            <div class="num">0</div>
+            <div class="lbl">Franken Anschlussgebühr</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="stimmen" aria-labelledby="stimmen-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Stimmen</p>
+          <h2 id="stimmen-title">Was Mitglieder erzählen würden</h2>
+          <p class="section-intro">Beispielhafte Stimmen für dieses Konzept — sie zeigen den Ton, in dem GRANIT über sich selbst spricht.</p>
+        </div>
+        <div class="quote-grid">
+          <figure class="quote reveal">
+            <div class="stars" aria-hidden="true">★★★★★</div>
+            <blockquote><p>„Ich komme meist um sechs Uhr morgens, bevor die Kinder wach sind. Dass immer offen ist, hat mein Training überhaupt erst möglich gemacht.“</p></blockquote>
+            <figcaption class="who">
+              <span class="avatar" aria-hidden="true">LM</span>
+              <span><span class="name">Lena M.</span><br><span class="role">Mitglied seit einem Jahr</span></span>
+            </figcaption>
+          </figure>
+          <figure class="quote reveal">
+            <div class="stars" aria-hidden="true">★★★★★</div>
+            <blockquote><p>„Mit 54 wieder anzufangen war ein Schritt. Die Coaches haben mir nie das Gefühl gegeben, fehl am Platz zu sein — im Gegenteil.“</p></blockquote>
+            <figcaption class="who">
+              <span class="avatar" aria-hidden="true">MR</span>
+              <span><span class="name">Marco R.</span><br><span class="role">Aktiv-Mitglied</span></span>
+            </figcaption>
+          </figure>
+          <figure class="quote reveal">
+            <div class="stars" aria-hidden="true">★★★★★</div>
+            <blockquote><p>„Die App plant meine Woche, ich muss nur auftauchen. Kraft am Montag, Yoga am Donnerstag — alles im selben Abo.“</p></blockquote>
+            <figcaption class="who">
+              <span class="avatar" aria-hidden="true">SB</span>
+              <span><span class="name">Sofia B.</span><br><span class="role">Premium-Mitglied</span></span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="starten" aria-labelledby="starten-title">
+      <div class="wrap">
+        <p class="eyebrow">Jetzt starten</p>
+        <h2 id="starten-title">Erste Woche gratis — <em>ohne Haken</em></h2>
+        <p class="section-intro">Trag dich ein und wir halten deinen Gratis-Pass bereit. Kein Vertrag, keine Kreditkarte, einfach vorbeikommen und trainieren.</p>
+        <form id="trialForm" novalidate>
+          <div class="trial-form">
+            <input type="email" id="trial-mail" name="email" placeholder="E-Mail-Adresse" autocomplete="email" aria-label="E-Mail-Adresse" required>
+            <button type="submit" class="btn">Gratis-Pass sichern</button>
+          </div>
+          <p class="form-note">Demo-Formular — es wird nichts gesendet oder gespeichert.</p>
+          <div class="form-confirm" id="formConfirm" role="status" aria-live="polite">
+            <h3>Bis gleich im Studio!</h3>
+            <p>Dein Gratis-Pass wäre nun unterwegs — dies ist eine Konzeptseite, daher wird nichts wirklich versendet.</p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="logo">GRANIT<span class="dot">.</span></span>
+        <p>Kraft, Bewegung und Erholung in einem Schweizer Studio. Ein Konzept, gestaltet von Oberer Studio.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Entdecken</h4>
+          <ul>
+            <li><a href="#vorteile">Vorteile</a></li>
+            <li><a href="#kurse">Kurse</a></li>
+            <li><a href="#preise">Preise</a></li>
+            <li><a href="#jedes-alter">Für alle</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <ul>
+            <li>24/7 geöffnet</li>
+            <li>Kurse inklusive</li>
+            <li>Monatlich kündbar</li>
+          </ul>
+        </div>
       </div>
     </div>
-  </section>
+    <p class="photo-credit">
+      Fotos (frei lizenziert, via Wikimedia Commons) — als Stimmungsbilder verwendet:
+      Hero-Aufnahme von <a href="https://commons.wikimedia.org/wiki/File:Strong_woman_performs_shoulder_press_exercise_in_fitness_gym_during_afternoon_workout_session.jpg" target="_blank" rel="noopener">Shixart1985</a> (CC BY 2.0);
+      Trainingsgriff-Nahaufnahme von <a href="https://commons.wikimedia.org/wiki/File:Fitness_enthusiast_prepares_for_strength_training_workout_in_modern_gym_environment_closeup.jpg" target="_blank" rel="noopener">Shixart1985</a> (CC BY 2.0);
+      Yoga-Übung von <a href="https://commons.wikimedia.org/wiki/File:Woman_with_curly_hair_stretching_on_a_yoga_mat.jpg" target="_blank" rel="noopener">Shixart1985</a> (CC BY 2.0);
+      Langhantel in Schwarzweiss von <a href="https://commons.wikimedia.org/wiki/File:Bench_Press.jpg" target="_blank" rel="noopener">Aditya Oberai</a> (CC BY-SA 4.0).
+    </p>
+    <div class="footer-bottom">
+      <span>Konzeptseite — kein echtes Fitnessstudio. Gestaltet von <a href="../index.html#portfolio">Oberer Studio</a>.</span>
+      <span>© 2026 Oberer Studio</span>
+    </div>
+  </footer>
 
-  <section id="trial">
-    <h2>Gratis Probetraining sichern</h2>
-    <p class="section-intro">Unverbindlich, keine Kreditkarte nötig.</p>
-    <form onsubmit="event.preventDefault(); this.querySelector('button').textContent='Danke! (Demo)';">
-      <input type="text" placeholder="Name" required>
-      <input type="email" placeholder="E-Mail-Adresse" required>
-      <button type="submit" class="btn" style="border:none;cursor:pointer">Termin anfragen</button>
-    </form>
-  </section>
+  <script>
+    // Sticky header state
+    const header = document.getElementById('top');
+    const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, {passive:true});
 
-  <footer>Konzeptseite von Oberer Studio · kein echtes Fitnessstudio</footer>
+    // Mobile menu toggle
+    const toggle = document.getElementById('navToggle');
+    const mobile = document.getElementById('mobileMenu');
+    toggle.addEventListener('click', () => {
+      const open = mobile.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open);
+    });
+    mobile.addEventListener('click', e => {
+      if (e.target.tagName === 'A') { mobile.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); }
+    });
+
+    // Pricing billing toggle
+    const bm = document.getElementById('billMonthly');
+    const by = document.getElementById('billYearly');
+    const amounts = document.querySelectorAll('.amount');
+    function setBilling(yearly){
+      amounts.forEach(a => { a.textContent = yearly ? a.dataset.y : a.dataset.m; });
+      bm.classList.toggle('active', !yearly); by.classList.toggle('active', yearly);
+      bm.setAttribute('aria-pressed', String(!yearly)); by.setAttribute('aria-pressed', String(yearly));
+    }
+    bm.addEventListener('click', () => setBilling(false));
+    by.addEventListener('click', () => setBilling(true));
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) { entry.target.classList.add('visible'); io.unobserve(entry.target); }
+        });
+      }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+      reveals.forEach(el => io.observe(el));
+    } else {
+      reveals.forEach(el => el.classList.add('visible'));
+    }
+
+    // Trial form — graceful inline confirmation, no backend
+    const form = document.getElementById('trialForm');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      form.classList.add('done');
+      document.getElementById('formConfirm').classList.add('show');
+    });
+  </script>
 </body>
 </html>
