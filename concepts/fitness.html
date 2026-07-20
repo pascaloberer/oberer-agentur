@@ -10,6 +10,7 @@
 <meta property="og:title" content="GRANIT — Dein Kraftraum. 24/7 offen.">
 <meta property="og:description" content="Kraft, Bewegung und Wellness in einem Schweizer Studio: 24/7 Zugang, Kurse inklusive, App und moderne Geräte. Eine Konzeptseite von Oberer Studio.">
 <meta property="og:locale" content="de_CH">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23000000'/%3E%3Cg fill='none' stroke='%237fbca7' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6.5 8.5v7M17.5 8.5v7M4 10v4M20 10v4M6.5 12h11'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
@@ -54,6 +55,10 @@
   }
   .skip-link:focus{top:1rem}
   :focus-visible{outline:2px solid var(--sage);outline-offset:3px;border-radius:3px}
+  /* On sage-filled controls, add a dark separator so the ring stays legible against any surface */
+  .btn:focus-visible,.nav-cta:focus-visible,.billing-toggle button.active:focus-visible{
+    outline-color:var(--sage-bright);box-shadow:0 0 0 3px #04110c
+  }
 
   /* ---- Disclosure banner ---- */
   .demo-banner{
@@ -133,10 +138,10 @@
     display:inline-flex;align-items:center;gap:.7rem;
   }
   .eyebrow::before{content:"";width:26px;height:2px;background:var(--sage);opacity:.8}
-  h1,h2,h3,h4{font-family:'Barlow Condensed',sans-serif;font-weight:700;line-height:1.02;text-transform:uppercase;letter-spacing:.01em}
+  h1,h2,h3,h4{font-family:'Barlow Condensed',sans-serif;font-weight:700;line-height:1.02;text-transform:uppercase;letter-spacing:.01em;text-wrap:balance}
   h2{font-size:clamp(2.3rem,5vw,3.6rem);margin-bottom:1rem}
   h2 em{font-style:normal;color:var(--sage)}
-  .section-intro{color:var(--muted);max-width:56ch;margin-bottom:3.5rem;font-size:1.03rem;line-height:1.7}
+  .section-intro{color:var(--muted);max-width:56ch;margin-bottom:3.5rem;font-size:1.03rem;line-height:1.7;text-wrap:pretty}
   .section-head{margin-bottom:3.5rem;max-width:var(--maxw)}
   .section-head .section-intro{margin-bottom:0}
 
@@ -169,7 +174,7 @@
     font-size:clamp(3.2rem,9vw,7rem);max-width:15ch;margin:0 0 1.3rem;line-height:.92;
   }
   h1 em{font-style:normal;color:var(--sage)}
-  .hero-sub{color:#dfe6e1;max-width:48ch;margin:0 0 2.4rem;font-size:1.12rem;line-height:1.6}
+  .hero-sub{color:#dfe6e1;max-width:48ch;margin:0 0 2.4rem;font-size:1.12rem;line-height:1.6;text-wrap:pretty}
   .hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
   .hero-meta{
     margin-top:3.2rem;display:flex;gap:2.5rem;flex-wrap:wrap;
@@ -192,7 +197,9 @@
   .tile .ico{
     width:44px;height:44px;border-radius:9px;display:grid;place-items:center;margin-bottom:1.1rem;
     background:rgba(127,188,167,.1);border:1px solid rgba(127,188,167,.22);color:var(--sage);
+    transition:background .4s var(--ease),border-color .4s var(--ease),color .4s var(--ease);
   }
+  .tile:hover .ico{background:rgba(127,188,167,.17);border-color:rgba(127,188,167,.42);color:var(--sage-bright)}
   .tile .ico svg{width:22px;height:22px;stroke:currentColor;stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}
   .tile h3{font-size:1.28rem;margin-bottom:.4rem;letter-spacing:.02em}
   .tile p{color:var(--muted);font-size:.9rem;line-height:1.6}
@@ -202,7 +209,9 @@
   .class-card{
     position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--border);
     background:var(--surface);
+    transition:border-color .4s var(--ease),transform .4s var(--ease),box-shadow .4s var(--ease);
   }
+  .class-card:hover{border-color:var(--sage-deep);transform:translateY(-4px);box-shadow:0 22px 50px -30px rgba(0,0,0,.9)}
   .class-media{position:relative;overflow:hidden;aspect-ratio:4/5}
   .class-media img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
   .class-card:hover .class-media img{transform:scale(1.05)}
@@ -228,17 +237,23 @@
   .billing-toggle button{
     border:none;background:transparent;color:var(--muted);cursor:pointer;
     font-family:'Inter',sans-serif;font-size:.8rem;font-weight:500;letter-spacing:.04em;
-    padding:.55rem 1.25rem;border-radius:999px;transition:background .3s var(--ease),color .3s var(--ease);
+    padding:.55rem 1.25rem;border-radius:999px;transition:background .35s var(--ease),color .35s var(--ease),box-shadow .35s var(--ease);
   }
-  .billing-toggle button.active{background:var(--sage);color:#04110c;font-weight:600}
+  .billing-toggle button:hover:not(.active){color:var(--text)}
+  .billing-toggle button.active{background:var(--sage);color:#04110c;font-weight:600;box-shadow:0 6px 18px -8px rgba(127,188,167,.55)}
   .billing-toggle .save{color:var(--sage);font-size:.7rem;margin-left:.35rem}
   .billing-toggle button.active .save{color:#04110c}
   .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;align-items:stretch}
   .plan{
     display:flex;flex-direction:column;padding:2.2rem 1.9rem;border:1px solid var(--border);border-radius:14px;
-    background:var(--surface);transition:border-color .4s var(--ease),transform .4s var(--ease)}
+    background:var(--surface);transition:border-color .4s var(--ease),transform .4s var(--ease),box-shadow .4s var(--ease)}
   .plan:hover{border-color:var(--border-2);transform:translateY(-4px)}
-  .plan.featured{border-color:var(--sage);background:linear-gradient(180deg,rgba(127,188,167,.07),transparent 60%);position:relative}
+  .plan.featured{
+    border-color:var(--sage);position:relative;
+    background:linear-gradient(180deg,rgba(127,188,167,.09),transparent 62%);
+    box-shadow:0 24px 60px -30px rgba(127,188,167,.5),0 2px 0 0 rgba(127,188,167,.12) inset;
+  }
+  .plan.featured:hover{border-color:var(--sage-bright);transform:translateY(-6px);box-shadow:0 34px 70px -28px rgba(127,188,167,.6)}
   .plan-badge{
     position:absolute;top:-.85rem;left:50%;transform:translateX(-50%);
     background:var(--sage);color:#04110c;font-size:.66rem;font-weight:600;text-transform:uppercase;
@@ -349,9 +364,15 @@
   /* ---- Reveal on scroll ---- */
   .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
   .reveal.visible{opacity:1;transform:none}
+  /* Gentle left-to-right cascade within grids — delay only, never leaves anything hidden */
+  .icon-grid .reveal:nth-child(4n+2){transition-delay:.07s}
+  .icon-grid .reveal:nth-child(4n+3){transition-delay:.14s}
+  .icon-grid .reveal:nth-child(4n+4){transition-delay:.21s}
+  .price-grid .reveal:nth-child(2),.quote-grid .reveal:nth-child(2){transition-delay:.09s}
+  .price-grid .reveal:nth-child(3),.quote-grid .reveal:nth-child(3){transition-delay:.18s}
   @media (prefers-reduced-motion:reduce){
     .reveal{opacity:1;transform:none;transition:none}
-    .btn,.tile,.class-media img,.plan,.nav-links a::after{transition:none}
+    .btn,.tile,.tile .ico,.class-card,.class-media img,.plan,.nav-links a::after{transition:none}
   }
 
   /* ---- Responsive ---- */
@@ -426,7 +447,7 @@
         <h1 id="hero-title">Dein <em>Kraftraum.</em><br>24/7 offen.</h1>
         <p class="hero-sub">GRANIT ist ein Schweizer Studio für Kraft, Bewegung und Erholung — mit modernen Geräten, Kursen inklusive und einer App, die dich durch jedes Training führt.</p>
         <div class="hero-actions">
-          <a href="#starten" class="btn">Mitglied werden</a>
+          <a href="#starten" class="btn">Gratis-Woche starten</a>
           <a href="#kurse" class="btn-ghost">Kurse ansehen</a>
         </div>
         <div class="hero-meta">

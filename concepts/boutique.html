@@ -6,6 +6,7 @@
 <title>Maison Ravel — Zeitlose Mode in kleinen Auflagen | Konzeptseite</title>
 <meta name="description" content="Maison Ravel — ein feines Modehaus für zeitlose Stücke aus natürlichen Materialien, in kleinen Auflagen gefertigt. Lookbook, Atelier und Journal. Eine Konzeptseite von Oberer Studio.">
 <meta name="theme-color" content="#f7f3ee">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232a2521'/><text x='16' y='23' text-anchor='middle' font-family='Georgia,serif' font-style='italic' font-size='21' fill='%23e7b48f'>R</text></svg>">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Maison Ravel — Zeitlose Mode in kleinen Auflagen">
 <meta property="og:description" content="Reduzierte Formen, natürliche Materialien, in kleinen Auflagen gefertigt. Eine Konzeptseite von Oberer Studio.">
@@ -23,12 +24,16 @@
     --border-2:#d8cbb8;
     --ink:#2a2521;
     --muted:#6e645a;
-    --muted-2:#736858;
+    --muted-2:#665c50;
     --terra:#b06848;
     --terra-ink:#a1502f;
     --blush:#c98f7c;
     --maxw:1180px;
     --ease:cubic-bezier(.22,1,.36,1);
+    --r-sm:4px;
+    --r-md:6px;
+    --r-lg:12px;
+    --r-pill:999px;
   }
   html{scroll-behavior:smooth}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
@@ -40,19 +45,23 @@
   }
   a{color:inherit}
   img{max-width:100%;display:block}
+  p{text-wrap:pretty}
 
   /* ---- Accessibility ---- */
   .skip-link{
     position:absolute;left:1rem;top:-3rem;z-index:400;
-    background:var(--ink);color:var(--bg);padding:.6rem 1rem;border-radius:4px;
+    background:var(--ink);color:var(--bg);padding:.6rem 1rem;border-radius:var(--r-sm);
     font-weight:500;text-decoration:none;transition:top .2s var(--ease);
   }
   .skip-link:focus{top:1rem}
   :focus-visible{outline:2px solid var(--terra);outline-offset:3px;border-radius:2px}
 
+  /* ---- Sticky topbar (banner + nav pinned together) ---- */
+  .topbar{position:sticky;top:0;z-index:250}
+
   /* ---- Disclosure banner ---- */
   .demo-banner{
-    position:sticky;top:0;z-index:300;
+    position:relative;z-index:1;
     background:var(--ink);color:#e9e0d3;text-align:center;
     font-size:.8rem;letter-spacing:.01em;padding:.55rem 1rem;
   }
@@ -62,7 +71,7 @@
 
   /* ---- Nav ---- */
   .site-header{
-    position:sticky;top:0;z-index:250;
+    position:relative;z-index:0;
     background:rgba(247,243,238,.72);backdrop-filter:blur(12px);
     border-bottom:1px solid transparent;transition:border-color .4s var(--ease),background .4s var(--ease);
   }
@@ -92,7 +101,7 @@
   .nav-links a:hover::after,.nav-links a:focus-visible::after{width:100%}
   .nav-cta{
     display:inline-block;border:1px solid var(--border-2);color:var(--ink);
-    padding:.5rem 1.2rem;border-radius:999px;text-decoration:none;
+    padding:.5rem 1.2rem;border-radius:var(--r-pill);text-decoration:none;
     font-size:.74rem;text-transform:uppercase;letter-spacing:.12em;
     transition:border-color .3s var(--ease),color .3s var(--ease),background .3s var(--ease);
   }
@@ -102,7 +111,7 @@
   /* ---- Buttons ---- */
   .btn{
     display:inline-block;background:var(--ink);color:#f7f3ee;
-    padding:.9rem 2.1rem;border-radius:999px;text-decoration:none;
+    padding:.9rem 2.1rem;border-radius:var(--r-pill);text-decoration:none;
     font-size:.78rem;font-weight:500;text-transform:uppercase;letter-spacing:.1em;
     border:1px solid var(--ink);cursor:pointer;
     transition:transform .3s var(--ease),box-shadow .3s var(--ease),background .3s var(--ease),border-color .3s var(--ease);
@@ -110,14 +119,14 @@
   .btn:hover,.btn:focus-visible{transform:translateY(-2px);box-shadow:0 12px 28px -14px rgba(42,37,33,.55);background:var(--terra);border-color:var(--terra)}
   .btn-ghost{
     display:inline-block;border:1px solid var(--border-2);color:var(--ink);
-    padding:.9rem 2.1rem;border-radius:999px;text-decoration:none;
+    padding:.9rem 2.1rem;border-radius:var(--r-pill);text-decoration:none;
     font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;background:transparent;
     transition:border-color .3s var(--ease),color .3s var(--ease);
   }
   .btn-ghost:hover,.btn-ghost:focus-visible{border-color:var(--terra);color:var(--terra-ink)}
 
   /* ---- Layout ---- */
-  section{padding:6rem 6%}
+  section{padding:clamp(4.75rem,8.5vw,7.5rem) 6%;scroll-margin-top:6.5rem}
   .wrap{max-width:var(--maxw);margin:0 auto}
   .eyebrow{
     color:var(--terra-ink);text-transform:uppercase;letter-spacing:.24em;
@@ -125,7 +134,7 @@
     display:inline-flex;align-items:center;gap:.7rem;
   }
   .eyebrow::before{content:"";width:26px;height:1px;background:var(--terra);opacity:.8}
-  h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:600;line-height:1.08;color:var(--ink)}
+  h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:600;line-height:1.08;color:var(--ink);text-wrap:balance}
   h2{font-size:clamp(2rem,4vw,3rem);margin-bottom:1rem;letter-spacing:.005em}
   .section-intro{color:var(--muted);max-width:54ch;margin-bottom:3.5rem;font-size:1.02rem}
   .section-head{margin-bottom:3.5rem}
@@ -152,10 +161,10 @@
   .hero .eyebrow::before{background:#e7b48f}
   h1{
     font-size:clamp(2.7rem,7vw,5.2rem);max-width:16ch;margin:0 0 1.4rem;
-    letter-spacing:.01em;color:#fbf6ef;
+    letter-spacing:.01em;color:#fbf6ef;text-shadow:0 1px 34px rgba(24,16,10,.35);
   }
   h1 em{font-style:italic;color:#f0c9a8}
-  .hero-sub{color:#e7ddce;max-width:46ch;margin:0 0 2.4rem;font-size:1.08rem}
+  .hero-sub{color:#f0e8db;max-width:46ch;margin:0 0 2.4rem;font-size:1.08rem;text-shadow:0 1px 20px rgba(24,16,10,.3)}
   .hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
   .hero .btn{background:#faf6f0;color:#2a2521;border-color:#faf6f0}
   .hero .btn:hover,.hero .btn:focus-visible{background:var(--terra);color:#fff;border-color:var(--terra)}
@@ -172,7 +181,7 @@
   #haus{background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
   .phil-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2.5rem}
   .phil-card{
-    padding:2rem 1.75rem;border:1px solid var(--border);border-radius:6px;
+    padding:2rem 1.75rem;border:1px solid var(--border);border-radius:var(--r-md);
     background:linear-gradient(180deg,rgba(255,255,255,.5),rgba(255,255,255,.15));
     transition:border-color .4s var(--ease),transform .4s var(--ease),box-shadow .4s var(--ease);
   }
@@ -188,16 +197,23 @@
   #lookbook .section-head{max-width:var(--maxw)}
   .look-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
   .look{
-    position:relative;border-radius:6px;overflow:hidden;border:1px solid var(--border);
+    position:relative;border-radius:var(--r-md);overflow:hidden;border:1px solid var(--border);
     background:var(--surface);
+    transition:transform .55s var(--ease),box-shadow .55s var(--ease),border-color .55s var(--ease);
+  }
+  .look:hover{
+    transform:translateY(-6px);border-color:var(--blush);
+    box-shadow:0 28px 52px -34px rgba(120,70,45,.55);
   }
   .look-media{position:relative;overflow:hidden}
   .look-media img{
     width:100%;height:100%;object-fit:cover;aspect-ratio:4/5;
-    transition:transform .7s var(--ease);
+    transition:transform .85s var(--ease);
   }
-  .look:hover .look-media img{transform:scale(1.04)}
+  .look:hover .look-media img{transform:scale(1.055)}
   .look-body{padding:1.4rem 1.5rem 1.6rem}
+  .look-body h3{transition:color .45s var(--ease)}
+  .look:hover .look-body h3{color:var(--terra-ink)}
   .look-cat{
     font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--terra-ink);
     display:block;margin-bottom:.5rem;
@@ -225,13 +241,18 @@
 
   /* ---- Newsletter ---- */
   #journal{text-align:center}
-  #journal .wrap{max-width:640px}
+  #journal .wrap{
+    max-width:660px;background:var(--surface);
+    border:1px solid var(--border);border-radius:var(--r-lg);
+    padding:clamp(2.5rem,5vw,4rem) clamp(1.5rem,5vw,3.5rem);
+    box-shadow:0 34px 74px -52px rgba(120,70,45,.42);
+  }
   #journal .eyebrow{justify-content:center}
   .news-form{
     margin:2.5rem auto 0;max-width:480px;display:flex;gap:.75rem;
   }
   .news-form input{
-    flex:1;background:var(--surface);border:1px solid var(--border-2);border-radius:999px;
+    flex:1;background:var(--bg);border:1px solid var(--border-2);border-radius:var(--r-pill);
     padding:.9rem 1.4rem;color:var(--ink);font-family:'Inter',sans-serif;font-size:.95rem;
     transition:border-color .25s var(--ease),box-shadow .25s var(--ease);
   }
@@ -241,7 +262,7 @@
   .form-note{font-size:.76rem;color:var(--muted-2);margin-top:1.1rem}
   .form-confirm{
     display:none;margin:2.25rem auto 0;max-width:480px;text-align:center;
-    padding:1.6rem 1.25rem;border:1px solid var(--blush);border-radius:10px;
+    padding:1.6rem 1.25rem;border:1px solid var(--blush);border-radius:var(--r-lg);
     background:rgba(201,143,124,.1);
   }
   .form-confirm.show{display:block;animation:fade .5s var(--ease)}
@@ -282,7 +303,7 @@
   .reveal.visible{opacity:1;transform:none}
   @media (prefers-reduced-motion:reduce){
     .reveal{opacity:1;transform:none;transition:none}
-    .btn,.phil-card,.look-media img,.nav-links a::after{transition:none}
+    .btn,.phil-card,.look,.look-media img,.look-body h3,.nav-links a::after{transition:none}
   }
 
   /* ---- Responsive ---- */
@@ -319,6 +340,7 @@
 <body>
   <a class="skip-link" href="#hauptinhalt">Zum Inhalt springen</a>
 
+  <div class="topbar">
   <div class="demo-banner">
     <strong>Konzept-Demo</strong> — fiktives Modehaus, Beispielarbeit von <a href="../index.html#portfolio">Oberer Studio</a>.
   </div>
@@ -344,6 +366,7 @@
       </ul>
     </div>
   </header>
+  </div>
 
   <main id="hauptinhalt">
     <section class="hero" aria-labelledby="hero-title">
