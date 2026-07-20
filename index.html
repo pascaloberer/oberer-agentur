@@ -668,6 +668,23 @@
 
     select option { background: var(--surface2); }
 
+    .form-consent {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.5;
+      cursor: pointer;
+    }
+
+    .form-consent input {
+      width: auto;
+      margin-top: 0.2rem;
+      accent-color: var(--accent);
+      flex-shrink: 0;
+    }
+
     .form-submit {
       background: var(--accent);
       color: #fff;
@@ -993,15 +1010,33 @@
           <input type="text" name="name" placeholder="Ihr Name" required>
           <input type="email" name="email" placeholder="E-Mail-Adresse" required>
         </div>
-        <select name="leistung">
-          <option value="" disabled selected>Was brauchen Sie?</option>
-          <option>Social-Media-Management</option>
-          <option>Videoproduktion</option>
-          <option>Webdesign</option>
-          <option>Mehrere Leistungen</option>
-          <option>Noch nicht sicher</option>
-        </select>
+        <div class="form-row">
+          <input type="text" name="firma" placeholder="Unternehmen (optional)">
+          <input type="tel" name="telefon" placeholder="Telefon (optional)">
+        </div>
+        <div class="form-row">
+          <select name="leistung">
+            <option value="" disabled selected>Was brauchen Sie?</option>
+            <option>Social-Media-Management</option>
+            <option>Videoproduktion</option>
+            <option>Webdesign</option>
+            <option>Mehrere Leistungen</option>
+            <option>Noch nicht sicher</option>
+          </select>
+          <select name="budget">
+            <option value="" disabled selected>Budget (optional)</option>
+            <option>Unter CHF 1'000</option>
+            <option>CHF 1'000 – 3'000</option>
+            <option>CHF 3'000 – 10'000</option>
+            <option>Über CHF 10'000</option>
+            <option>Noch nicht sicher</option>
+          </select>
+        </div>
         <textarea name="nachricht" placeholder="Erzählen Sie mir von Ihrem Projekt…"></textarea>
+        <label class="form-consent">
+          <input type="checkbox" name="einwilligung" required>
+          Ich bin damit einverstanden, dass meine Angaben zur Bearbeitung dieser Anfrage gespeichert und verwendet werden.
+        </label>
         <button type="submit" class="form-submit">Nachricht senden →</button>
       </form>
     </div>
