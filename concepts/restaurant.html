@@ -27,10 +27,14 @@
     --text:#f4eee2;
     --muted:#b3a691;
     --muted-2:#8f8371;
+    --rule:rgba(214,172,91,.26);
     --maxw:1180px;
     --ease:cubic-bezier(.22,1,.36,1);
+    /* short, slightly snappy curve reserved for micro-interactions (150–300ms) */
+    --ease-micro:cubic-bezier(.33,.86,.35,1);
+    --section-y:clamp(4.5rem,8.5vw,7rem);
     --shadow-card:0 22px 48px -28px rgba(0,0,0,.75);
-    --shadow-btn:0 12px 28px -12px rgba(214,172,91,.55);
+    --shadow-btn:0 10px 24px -12px rgba(214,172,91,.5);
   }
   html{scroll-behavior:smooth}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
@@ -98,55 +102,85 @@
   .nav-links a:hover::after,.nav-links a:focus-visible::after,.nav-links a.active::after{width:100%}
   .nav-cta{
     display:inline-block;border:1px solid var(--border);color:var(--text);
-    padding:.55rem 1.2rem;border-radius:999px;text-decoration:none;
-    font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;
+    padding:.6rem 1.2rem;border-radius:2px;text-decoration:none;
+    font-size:.74rem;text-transform:uppercase;letter-spacing:.16em;
     transition:border-color .3s var(--ease),color .3s var(--ease),background .3s var(--ease);
   }
   .nav-cta:hover,.nav-cta:focus-visible{border-color:var(--gold);color:var(--gold)}
   .nav-toggle{display:none}
 
   /* ---- Buttons ---- */
+  /* Squared-off buttons: a printed-menu detail rather than the usual pill */
   .btn{
-    display:inline-block;background:var(--gold);color:#17120b;
-    padding:.9rem 2.1rem;border-radius:999px;text-decoration:none;
-    font-size:.82rem;font-weight:500;text-transform:uppercase;letter-spacing:.1em;
+    display:inline-flex;align-items:center;justify-content:center;
+    min-height:48px;background:var(--gold);color:#17120b;
+    padding:.85rem 2.1rem;border-radius:2px;text-decoration:none;
+    font-size:.78rem;font-weight:500;text-transform:uppercase;letter-spacing:.14em;
     border:1px solid var(--gold);cursor:pointer;
-    transition:transform .3s var(--ease),box-shadow .3s var(--ease),background .3s var(--ease);
+    transition:transform .2s var(--ease-micro),box-shadow .2s var(--ease-micro),background .2s var(--ease-micro);
   }
   .btn:hover,.btn:focus-visible{transform:translateY(-2px);box-shadow:var(--shadow-btn);background:#e3bd6d}
-  .btn:active{transform:translateY(0);box-shadow:0 4px 14px -8px rgba(214,172,91,.5)}
+  .btn:active{transform:translateY(0);box-shadow:0 3px 10px -8px rgba(214,172,91,.5)}
   .btn-ghost{
-    display:inline-block;border:1px solid var(--border);color:var(--text);
-    padding:.9rem 2.1rem;border-radius:999px;text-decoration:none;
-    font-size:.82rem;text-transform:uppercase;letter-spacing:.1em;
-    transition:border-color .3s var(--ease),color .3s var(--ease);
+    display:inline-flex;align-items:center;justify-content:center;
+    min-height:48px;border:1px solid var(--border);color:var(--text);
+    padding:.85rem 2.1rem;border-radius:2px;text-decoration:none;
+    font-size:.78rem;text-transform:uppercase;letter-spacing:.14em;
+    transition:border-color .2s var(--ease-micro),color .2s var(--ease-micro),background .2s var(--ease-micro);
   }
-  .btn-ghost:hover,.btn-ghost:focus-visible{border-color:var(--gold);color:var(--gold)}
+  .btn-ghost:hover,.btn-ghost:focus-visible{border-color:var(--gold);color:var(--gold);background:rgba(214,172,91,.06)}
 
   /* ---- Layout ---- */
   main{display:block}
-  section{padding:6rem 6%}
-  section[id]{scroll-margin-top:5.5rem}
+  /* scoped to top level: the carte nests <section> elements of its own */
+  main > section{padding:var(--section-y) 6%}
+  main > section[id]{scroll-margin-top:5.5rem}
   .wrap{max-width:var(--maxw);margin:0 auto}
-  .eyebrow{
-    color:var(--gold);text-transform:uppercase;letter-spacing:.24em;
-    font-size:.72rem;font-weight:500;margin-bottom:1.1rem;
-    display:inline-flex;align-items:center;gap:.7rem;
+
+  /* Chapter mark — numeral first, hairline trailing off to the right */
+  .chapter{
+    display:flex;align-items:center;gap:.85rem;
+    color:var(--gold);text-transform:uppercase;letter-spacing:.26em;
+    font-size:.7rem;font-weight:500;margin-bottom:1.15rem;
   }
-  .eyebrow::before{content:"";width:26px;height:1px;background:var(--gold);opacity:.7}
+  .chapter .num{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;
+    letter-spacing:0;text-transform:none;line-height:1;opacity:.9;
+  }
+  .chapter::after{
+    content:"";flex:0 1 auto;width:clamp(24px,7vw,84px);height:1px;
+    background:linear-gradient(90deg,var(--gold),rgba(214,172,91,0));
+  }
+  .chapter.centered{justify-content:center}
+  .chapter.centered::before{
+    content:"";flex:0 1 auto;width:clamp(24px,7vw,84px);height:1px;
+    background:linear-gradient(270deg,var(--gold),rgba(214,172,91,0));
+  }
+
   h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:600;line-height:1.08;text-wrap:balance}
-  .section-intro,.hero-sub,.dish-desc,.phil-card p{text-wrap:pretty}
-  h2{font-size:clamp(2rem,4vw,3rem);margin-bottom:1rem;letter-spacing:.005em}
-  .section-intro{color:var(--muted);max-width:52ch;margin-bottom:3.5rem;font-size:1.02rem}
-  .section-head{margin-bottom:3.5rem}
-  .section-head .section-intro{margin-bottom:0}
+  .lede,.hero-sub,.dish-desc,.credo-list p,.t-desc,.locale{text-wrap:pretty}
+  h2{font-size:clamp(2rem,4.2vw,3.15rem);margin-bottom:0;letter-spacing:.005em}
+
+  /* Asymmetric head: title left, lede set in a narrower right column under a rule */
+  .head{
+    display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+    gap:clamp(1.25rem,4vw,4.5rem);align-items:end;
+    margin-bottom:clamp(2.5rem,5vw,4rem);
+  }
+  .head .lede{
+    color:var(--muted);font-size:1rem;max-width:46ch;
+    padding-top:1.1rem;border-top:1px solid var(--border);
+  }
+  .head-center{text-align:center;max-width:56ch;margin:0 auto clamp(2.5rem,5vw,3.75rem)}
+  .head-center .lede{color:var(--muted);font-size:1.02rem;margin-top:1.1rem}
 
   /* ---- Hero ---- */
   .hero{
-    position:relative;min-height:clamp(560px,88vh,900px);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    text-align:center;padding:5rem 6% 4rem;overflow:hidden;
+    position:relative;min-height:clamp(600px,92vh,940px);
+    display:flex;flex-direction:column;justify-content:flex-end;
+    padding:7rem 6% 0;overflow:hidden;
   }
+  .hero-inner{max-width:var(--maxw);margin:0 auto;width:100%}
   .hero-photo{
     position:absolute;inset:0;z-index:-3;
     width:100%;height:100%;object-fit:cover;object-position:center 30%;
@@ -154,153 +188,305 @@
   .hero::before{
     content:"";position:absolute;inset:0;z-index:-2;
     background:
-      radial-gradient(60% 45% at 50% 12%, rgba(214,172,91,.16), transparent 70%),
-      radial-gradient(80% 60% at 50% 120%, rgba(150,80,40,.14), transparent 70%),
-      radial-gradient(125% 120% at 50% 42%, transparent 52%, rgba(9,7,5,.6) 100%),
-      linear-gradient(180deg,rgba(21,17,12,.5) 0%,rgba(18,16,13,.7) 55%,rgba(16,14,11,.94) 100%);
+      radial-gradient(70% 55% at 22% 78%, rgba(214,172,91,.14), transparent 72%),
+      radial-gradient(90% 65% at 60% 120%, rgba(150,80,40,.12), transparent 72%),
+      linear-gradient(180deg,rgba(20,17,12,.34) 0%,rgba(18,16,13,.66) 46%,rgba(14,12,9,.96) 100%),
+      linear-gradient(90deg,rgba(14,12,9,.82) 0%,rgba(14,12,9,.34) 46%,transparent 78%);
   }
-  .hero::after{
-    content:"";position:absolute;inset:0;z-index:-1;opacity:.38;
-    background:radial-gradient(1px 1px at 20% 30%,rgba(214,172,91,.5),transparent),
-              radial-gradient(1px 1px at 70% 60%,rgba(214,172,91,.35),transparent),
-              radial-gradient(1.5px 1.5px at 85% 25%,rgba(214,172,91,.4),transparent),
-              radial-gradient(1px 1px at 40% 75%,rgba(214,172,91,.3),transparent);
+  /* Candle: one warm, slowly breathing pool of light behind the headline */
+  .candle{
+    position:absolute;z-index:-1;left:-6%;bottom:8%;width:min(760px,86vw);aspect-ratio:1;
+    background:radial-gradient(closest-side,rgba(226,180,96,.20),rgba(226,180,96,.07) 46%,transparent 72%);
+    pointer-events:none;will-change:opacity,transform;
+    animation:candle 7.5s ease-in-out infinite alternate;
   }
-  .hero .eyebrow{justify-content:center}
+  @keyframes candle{
+    0%{opacity:.72;transform:scale(1)}
+    38%{opacity:.95;transform:scale(1.035)}
+    61%{opacity:.8;transform:scale(1.01)}
+    100%{opacity:1;transform:scale(1.05)}
+  }
   h1{
-    font-size:clamp(2.8rem,7.5vw,5.4rem);max-width:15ch;margin:0 auto 1.4rem;
-    letter-spacing:.01em;
+    font-size:clamp(2.7rem,7vw,5.25rem);max-width:13ch;margin:0 0 1.35rem;
+    letter-spacing:.005em;
   }
   h1 em{font-style:italic;color:var(--gold)}
-  .hero-sub{color:var(--muted);max-width:46ch;margin:0 auto 2.5rem;font-size:1.08rem}
-  .hero-actions{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
-  .hero-meta{
-    margin-top:3.5rem;display:flex;gap:2.5rem;flex-wrap:wrap;justify-content:center;
-    color:var(--muted-2);font-size:.78rem;text-transform:uppercase;letter-spacing:.14em;
+  .hero-sub{color:var(--muted);max-width:43ch;margin:0 0 2.25rem;font-size:1.08rem}
+  .hero-actions{display:flex;gap:.9rem;flex-wrap:wrap}
+  /* Meta reads as a hairline ledger across the foot of the frame, not a row of pills */
+  .hero-strip{
+    margin-top:clamp(2.75rem,7vw,5rem);
+    display:grid;grid-template-columns:repeat(3,1fr);
+    border-top:1px solid rgba(214,172,91,.22);
   }
-  .hero-meta span{display:inline-flex;align-items:center;gap:.6rem}
-  .hero-meta span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--gold);opacity:.8}
+  .hero-strip div{
+    padding:1.1rem 1.25rem 1.6rem 0;
+    color:var(--muted-2);font-size:.72rem;text-transform:uppercase;letter-spacing:.18em;
+  }
+  .hero-strip div + div{border-left:1px solid rgba(214,172,91,.13);padding-left:1.5rem}
+  .hero-strip b{display:block;color:var(--text);font-family:'Cormorant Garamond',serif;
+    font-size:1.3rem;font-weight:600;letter-spacing:.01em;text-transform:none;margin-top:.3rem}
 
-  /* ---- Philosophy / Story ---- */
-  #philosophie{background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-  .phil-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2.5rem}
-  .phil-card{
-    padding:2.25rem 1.9rem;border:1px solid var(--border);border-radius:8px;
-    background:linear-gradient(180deg,rgba(255,255,255,.02),transparent);
-    transition:border-color .4s var(--ease),transform .4s var(--ease),box-shadow .4s var(--ease);
+  /* ---- Haltung / credo (editorial, not a card grid) ---- */
+  #philosophie{
+    background:var(--bg-2);
+    border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+    padding-block:clamp(5rem,10vw,8rem);
   }
-  .phil-card:hover{border-color:var(--gold-soft);transform:translateY(-5px);box-shadow:var(--shadow-card)}
-  .phil-grid .phil-card:nth-child(2){transition-delay:.07s}
-  .phil-grid .phil-card:nth-child(3){transition-delay:.14s}
-  .phil-card:hover{transition-delay:0s}
-  .phil-num{
-    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.4rem;
-    color:var(--gold);margin-bottom:1rem;display:block;
+  .credo{
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);
+    gap:clamp(2.25rem,6vw,5.5rem);align-items:start;
   }
-  .phil-card h3{font-size:1.5rem;margin-bottom:.6rem}
-  .phil-card p{color:var(--muted);font-size:.95rem}
+  .credo-lede{
+    display:flow-root; /* contains the floated drop cap */
+    font-family:'Cormorant Garamond',serif;font-weight:500;
+    font-size:clamp(1.45rem,2.3vw,1.95rem);line-height:1.42;color:var(--text);
+    max-width:26ch;
+  }
+  .credo-lede::first-letter{
+    float:left;font-size:3.5em;line-height:.78;color:var(--gold);
+    padding:.05em .1em 0 0;font-style:italic;
+  }
+  .credo-lede + p{margin-top:1.5rem;color:var(--muted);font-size:.95rem;max-width:38ch}
+  .credo-list{list-style:none;border-top:1px solid var(--border)}
+  .credo-list li{
+    display:grid;grid-template-columns:2.5rem minmax(0,1fr);gap:clamp(.9rem,2vw,1.5rem);
+    padding:1.5rem .9rem 1.5rem 0;border-bottom:1px solid var(--border);
+    transition:background .22s var(--ease-micro),padding-left .22s var(--ease-micro);
+  }
+  .credo-list li:hover{background:rgba(214,172,91,.045);padding-left:.75rem}
+  .credo-list .n{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.55rem;
+    color:var(--gold);line-height:1.1;
+  }
+  .credo-list h3{font-size:1.4rem;margin-bottom:.35rem}
+  .credo-list p{color:var(--muted);font-size:.95rem;max-width:48ch}
 
-  /* ---- Menu ---- */
-  .menu-groups{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem 4.5rem}
-  .menu-groups .menu-group:nth-child(2){transition-delay:.06s}
-  .menu-groups .menu-group:nth-child(3){transition-delay:.12s}
-  .menu-groups .menu-group:nth-child(4){transition-delay:.18s}
-  .menu-group.featured{
-    border:1px solid var(--border);border-radius:10px;padding:1.9rem 2rem;
-    background:linear-gradient(180deg,rgba(214,172,91,.055),rgba(214,172,91,0));
-    align-self:start;
+  /* ---- Die Karte — set as one printed menu column, not a grid of boxes ---- */
+  #menu{padding-block:clamp(5.5rem,11vw,9rem)}
+  .carte{max-width:760px;margin:0 auto}
+  .course + .course{margin-top:clamp(3rem,5.5vw,4.25rem)}
+  .course-title{
+    display:flex;align-items:center;gap:1.15rem;
+    font-family:'Inter',sans-serif;font-weight:500;font-size:.76rem;
+    text-transform:uppercase;letter-spacing:.3em;color:var(--gold);
+    margin-bottom:1.5rem;
   }
-  .menu-group.featured h3{border-bottom-color:var(--gold-soft)}
-  .menu-group h3{
-    font-size:1.05rem;font-family:'Inter',sans-serif;font-weight:500;
-    text-transform:uppercase;letter-spacing:.18em;color:var(--gold);
-    padding-bottom:1rem;margin-bottom:1.5rem;border-bottom:1px solid var(--border);
+  .course-title::before,.course-title::after{
+    content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--rule),transparent);
   }
-  .dish{padding:1.05rem 0;border-bottom:1px solid rgba(49,40,32,.55)}
+  .dish{padding:1.15rem 0;border-bottom:1px solid rgba(49,40,32,.5)}
   .dish:last-child{border-bottom:none}
   .dish-head{display:flex;align-items:baseline;gap:.75rem}
-  .dish-name{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;white-space:nowrap}
-  .dish-lead{flex:1;border-bottom:1px dotted var(--muted-2);transform:translateY(-.25rem);opacity:.5}
+  .dish-name{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;white-space:nowrap}
+  .dish-lead{flex:1;border-bottom:1px dotted var(--muted-2);transform:translateY(-.25rem);opacity:.45}
   .dish-price{color:var(--gold);font-size:.95rem;white-space:nowrap;font-variant-numeric:tabular-nums}
-  .dish-desc{color:var(--muted);font-size:.9rem;margin-top:.3rem;max-width:42ch}
-  .dish-tags{margin-top:.45rem;display:flex;gap:.4rem;flex-wrap:wrap}
+  .dish-desc{color:var(--muted);font-size:.9rem;margin-top:.3rem;max-width:52ch}
+  .dish-tags{margin-top:.5rem;display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}
   .tag{
     font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;
-    color:var(--muted-2);border:1px solid var(--border);border-radius:999px;padding:.15rem .55rem;
+    color:var(--muted-2);border:1px solid var(--border);border-radius:2px;padding:.2rem .55rem;
+  }
+  .tag.chef{color:var(--gold);border-color:var(--rule);background:rgba(214,172,91,.07)}
+  /* Chef's pick: a lozenge in the margin, so the eye finds it before the copy does */
+  .dish.chef{position:relative}
+  .dish.chef .mark{
+    position:absolute;left:-1.6rem;top:1.5rem;color:var(--gold);
+    font-size:.5rem;line-height:1;opacity:.9;
   }
   .menu-note{
-    margin-top:3.5rem;padding:1.75rem 2rem;border-left:2px solid var(--gold);
-    background:var(--surface);color:var(--muted);font-size:.92rem;border-radius:0 6px 6px 0;
+    margin-top:clamp(2.5rem,5vw,3.5rem);padding:1.5rem 0 0;
+    border-top:1px solid var(--border);
+    color:var(--muted);font-size:.88rem;
   }
   .menu-note strong{color:var(--text);font-weight:500}
 
-  /* ---- Impressionen (photo gallery) ---- */
-  #impressionen{background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-  .gallery{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:320px;gap:1rem}
-  .frame{
-    position:relative;border-radius:6px;overflow:hidden;border:1px solid var(--border);
-    display:flex;align-items:flex-end;padding:1.25rem;
-    transition:transform .5s var(--ease);
+  /* Marktkorb — the ingredient the kitchen is currently building around */
+  .market{
+    display:inline-flex;align-items:center;gap:.8rem;
+    border:1px solid var(--border);border-radius:2px;padding:.55rem 1.1rem;
+    color:var(--muted);font-size:.82rem;margin-bottom:1.5rem;
+    background:linear-gradient(180deg,rgba(214,172,91,.05),transparent);
   }
-  .frame:hover{transform:scale(1.015)}
+  .market .dot{
+    width:6px;height:6px;border-radius:50%;background:var(--gold);flex:none;
+    box-shadow:0 0 0 4px rgba(214,172,91,.11);
+  }
+  .market strong{color:var(--gold);font-weight:500}
+
+  /* Menü Découverte — double-ruled card, the way a real carte prints its tasting menu */
+  .decouverte{
+    position:relative;margin-top:clamp(3rem,6vw,4.5rem);
+    border:1px solid var(--rule);border-radius:2px;text-align:center;
+    padding:clamp(2rem,4.5vw,3rem) clamp(1.5rem,4vw,3rem);
+    background:linear-gradient(180deg,rgba(214,172,91,.07),rgba(214,172,91,0) 72%);
+  }
+  .decouverte::before{
+    content:"";position:absolute;inset:7px;border:1px solid rgba(214,172,91,.14);
+    border-radius:1px;pointer-events:none;
+  }
+  .decouverte h3{font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:.5rem}
+  .decouverte h3 em{font-style:italic;color:var(--gold)}
+  .decouverte .sub{color:var(--muted);font-size:.92rem;max-width:44ch;margin:0 auto 1.75rem}
+  .dec-lines{
+    display:grid;gap:.85rem;max-width:26rem;margin:0 auto;
+    padding-top:1.5rem;border-top:1px solid rgba(214,172,91,.16);
+  }
+  .dec-lines div{display:flex;align-items:baseline;gap:.75rem;text-align:left}
+  .dec-lines span:first-child{font-family:'Cormorant Garamond',serif;font-size:1.25rem}
+  .dec-lines .lead{flex:1;border-bottom:1px dotted var(--muted-2);transform:translateY(-.25rem);opacity:.45}
+  .dec-lines .price{color:var(--gold);font-size:.95rem;font-variant-numeric:tabular-nums}
+  .dec-foot{margin-top:1.5rem;color:var(--muted-2);font-size:.78rem;letter-spacing:.06em}
+
+  /* ---- Der Abend — chef's note + the evening as a timeline ---- */
+  #abend{
+    background:var(--bg-2);position:relative;overflow:hidden;
+    border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+    padding-block:clamp(4.5rem,9vw,7.5rem);
+  }
+  #abend::before{
+    content:"";position:absolute;inset:auto auto -30% -12%;width:520px;height:520px;border-radius:50%;
+    background:radial-gradient(closest-side,rgba(214,172,91,.09),transparent 70%);pointer-events:none;
+  }
+  .abend-grid{
+    position:relative;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+    gap:clamp(2.5rem,6vw,5.5rem);align-items:start;
+  }
+  .note{
+    border-left:1px solid var(--rule);padding-left:clamp(1.25rem,2.5vw,2rem);
+  }
+  .note p{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;
+    font-size:clamp(1.3rem,2vw,1.6rem);line-height:1.5;color:var(--text);
+  }
+  .note p + p{margin-top:1rem;font-size:1rem;font-style:normal;font-family:'Inter',sans-serif;color:var(--muted);line-height:1.7}
+  .note .sig{margin-top:1.75rem;display:flex;align-items:center;gap:.9rem}
+  .note .sig::before{content:"";width:34px;height:1px;background:var(--gold);opacity:.7;flex:none}
+  .sig-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.35rem;color:var(--gold);line-height:1.2}
+  .sig-role{display:block;font-family:'Inter',sans-serif;font-style:normal;font-size:.7rem;
+    text-transform:uppercase;letter-spacing:.18em;color:var(--muted-2);margin-top:.25rem}
+
+  .timeline{list-style:none;position:relative;padding-left:2.35rem}
+  .timeline::before{
+    content:"";position:absolute;left:5px;top:.55rem;bottom:.9rem;width:1px;
+    background:linear-gradient(180deg,rgba(214,172,91,0),var(--rule) 10%,var(--rule) 88%,rgba(214,172,91,0));
+  }
+  .timeline li{position:relative;padding-bottom:clamp(1.6rem,3vw,2.25rem)}
+  .timeline li:last-child{padding-bottom:0}
+  .timeline li::before{
+    content:"";position:absolute;left:-2.35rem;top:.5rem;width:9px;height:9px;border-radius:50%;
+    background:var(--bg-2);border:1px solid var(--gold-soft);
+    transition:background .2s var(--ease-micro),box-shadow .2s var(--ease-micro);
+  }
+  .timeline li:hover::before{background:var(--gold);box-shadow:0 0 0 5px rgba(214,172,91,.15)}
+  .t-time{
+    color:var(--gold);font-size:.74rem;letter-spacing:.2em;
+    font-variant-numeric:tabular-nums;display:block;margin-bottom:.3rem;
+  }
+  .t-title{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:600;line-height:1.15}
+  .t-desc{color:var(--muted);font-size:.93rem;margin-top:.3rem;max-width:46ch}
+
+  /* ---- Impressionen (asymmetric photo wall) ---- */
+  #impressionen{padding-block:clamp(4.5rem,9vw,7rem)}
+  .gallery{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:clamp(120px,15vw,180px);gap:.9rem}
+  .frame{
+    position:relative;border-radius:2px;overflow:hidden;border:1px solid var(--border);
+    display:flex;align-items:flex-end;padding:1.35rem;
+    transition:border-color .25s var(--ease-micro);
+  }
+  .frame:hover{border-color:var(--rule)}
   .frame img{
     position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-    transition:transform .6s var(--ease);
+    filter:saturate(.82) brightness(.86);
+    transition:transform .3s var(--ease-micro),filter .25s var(--ease-micro);
   }
-  .frame:hover img{transform:scale(1.06)}
-  .frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(10,8,6,.75))}
+  .frame:hover img{transform:scale(1.035);filter:saturate(1) brightness(1)}
+  .frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 42%,rgba(10,8,6,.78))}
   .frame .caption{
     position:relative;z-index:1;font-family:'Cormorant Garamond',serif;
     font-size:1.35rem;font-weight:600;color:#fff;letter-spacing:.01em;
   }
   .frame .caption small{display:block;font-family:'Inter',sans-serif;font-size:.68rem;
-    text-transform:uppercase;letter-spacing:.16em;color:rgba(255,255,255,.7);font-weight:400;margin-top:.2rem}
+    text-transform:uppercase;letter-spacing:.16em;color:rgba(255,255,255,.82);font-weight:400;margin-top:.2rem}
+  .frame .caption::after{
+    content:"";display:block;width:26px;height:1px;background:var(--gold);
+    margin-top:.7rem;transition:width .25s var(--ease-micro);
+  }
+  .frame:hover .caption::after{width:64px}
+  /* One tile is not a photograph but a line of type — it breaks the grid's rhythm */
+  .quote-tile{
+    display:flex;flex-direction:column;justify-content:center;gap:.9rem;
+    border:1px solid var(--rule);border-radius:2px;padding:clamp(1.25rem,2.5vw,1.75rem);
+    background:linear-gradient(160deg,rgba(214,172,91,.08),transparent 70%);
+  }
+  .quote-tile p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.25rem;line-height:1.4;color:var(--text)}
+  .quote-tile cite{font-style:normal;font-size:.68rem;text-transform:uppercase;letter-spacing:.16em;color:var(--muted-2)}
+  @media (min-width:861px){
+    .g-tall{grid-column:span 2;grid-row:span 3}
+    .g-wide{grid-column:span 4;grid-row:span 2}
+    .g-half{grid-column:span 2;grid-row:span 1}
+  }
   .photo-credit{max-width:var(--maxw);margin:2rem auto 0;color:var(--muted-2);font-size:.72rem;text-align:center;line-height:1.9}
   .photo-credit a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
   .photo-credit a:hover{color:var(--gold)}
 
   /* ---- Reservation ---- */
-  #reservieren{position:relative}
-  .reserve-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:4rem;align-items:start}
-  .reserve-info h2{margin-bottom:1.5rem}
-  .hours{list-style:none;margin-top:1.75rem}
+  #reservieren{position:relative;padding-block:clamp(5rem,10vw,8rem);border-top:1px solid var(--border)}
+  .reserve-grid{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:clamp(2.5rem,5vw,4.5rem);align-items:start}
+  .hours{list-style:none;margin-top:.5rem}
   .hours li{
-    display:flex;justify-content:space-between;gap:1rem;padding:.7rem 0;
+    display:flex;justify-content:space-between;gap:1rem;padding:.75rem 0;
     border-bottom:1px solid var(--border);font-size:.92rem;
   }
+  .hours li:first-child{border-top:1px solid var(--border)}
   .hours li span:first-child{color:var(--text)}
   .hours li span:last-child{color:var(--muted);font-variant-numeric:tabular-nums}
   .hours li.closed span:last-child{color:var(--muted-2)}
-  .locale{margin-top:1.75rem;color:var(--muted);font-size:.92rem}
+  .locale{margin-top:1.5rem;color:var(--muted);font-size:.92rem;max-width:34ch}
+  .reserve-info h3{
+    font-family:'Inter',sans-serif;font-weight:500;font-size:.72rem;
+    text-transform:uppercase;letter-spacing:.2em;color:var(--gold);margin-bottom:.9rem;
+  }
+  .phone-line{margin-top:1.75rem;font-family:'Cormorant Garamond',serif;font-size:1.45rem;color:var(--text)}
+  .phone-line small{display:block;font-family:'Inter',sans-serif;font-size:.72rem;
+    text-transform:uppercase;letter-spacing:.18em;color:var(--muted-2);margin-bottom:.3rem}
 
   form{
-    background:var(--surface);border:1px solid var(--border);border-radius:12px;
-    padding:2.25rem;display:grid;gap:1.25rem;box-shadow:var(--shadow-card);
+    background:var(--surface);border:1px solid var(--border);border-radius:2px;
+    padding:clamp(1.5rem,3.5vw,2.5rem);display:grid;gap:1.15rem;box-shadow:var(--shadow-card);
+    border-top:2px solid var(--gold-soft);
   }
+  .form-title{
+    font-family:'Cormorant Garamond',serif;font-size:1.75rem;font-weight:600;line-height:1.15;
+    padding-bottom:1.15rem;border-bottom:1px solid var(--border);
+  }
+  .form-title small{display:block;font-family:'Inter',sans-serif;font-size:.8rem;color:var(--muted);margin-top:.4rem;line-height:1.6}
   .field{display:flex;flex-direction:column;gap:.45rem}
-  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
-  label{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
-  input,select{
-    background:var(--bg-2);border:1px solid var(--border);border-radius:6px;
-    padding:.85rem 1rem;color:var(--text);font-family:'Inter',sans-serif;font-size:.95rem;
-    width:100%;transition:border-color .25s var(--ease),box-shadow .25s var(--ease);
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:1.15rem}
+  label{font-size:.7rem;text-transform:uppercase;letter-spacing:.16em;color:var(--muted)}
+  input,select,textarea{
+    background:var(--bg-2);border:1px solid var(--border);border-radius:2px;
+    padding:.8rem 1rem;min-height:48px;color:var(--text);
+    font-family:'Inter',sans-serif;font-size:.95rem;
+    width:100%;transition:border-color .2s var(--ease-micro),box-shadow .2s var(--ease-micro);
   }
-  input::placeholder{color:var(--muted-2)}
-  input:focus,select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(214,172,91,.15)}
+  textarea{resize:vertical;min-height:88px;line-height:1.6}
+  input::placeholder,textarea::placeholder{color:var(--muted-2)}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(214,172,91,.16)}
   select{appearance:none;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23b3a691' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
     background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem}
   form .btn{width:100%;margin-top:.25rem}
-  .form-note{font-size:.78rem;color:var(--muted-2);text-align:center}
+  .form-note{font-size:.78rem;color:var(--muted-2);text-align:center;line-height:1.6}
   .form-confirm{
-    display:none;text-align:center;padding:1.5rem 1rem;border:1px solid var(--gold-soft);
-    border-radius:8px;background:rgba(214,172,91,.08);
+    display:none;text-align:center;padding:1.75rem 1rem;border:1px solid var(--gold-soft);
+    border-radius:2px;background:rgba(214,172,91,.08);
   }
-  .form-confirm.show{display:block;animation:fade .5s var(--ease)}
-  .form-confirm h3{color:var(--gold);font-size:1.6rem;margin-bottom:.4rem}
-  .form-confirm p{color:var(--muted);font-size:.9rem}
-  form.done .field,form.done .field-row,form.done .btn,form.done .form-note{display:none}
-  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .form-confirm.show{display:block;animation:fade .3s var(--ease-micro)}
+  .form-confirm h3{color:var(--gold);font-size:1.7rem;margin-bottom:.4rem}
+  .form-confirm p{color:var(--muted);font-size:.9rem;max-width:38ch;margin:0 auto}
+  form.done .field,form.done .field-row,form.done .btn,form.done .form-note,form.done .form-title{display:none}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
   /* ---- Footer ---- */
   footer{
@@ -326,30 +512,50 @@
   .footer-bottom a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
   .footer-bottom a:hover{color:var(--gold)}
 
-  /* ---- Reveal on scroll ---- */
-  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
-  .reveal.visible{opacity:1;transform:none}
-  @media (prefers-reduced-motion:reduce){
-    .reveal{opacity:1;transform:none;transition:none}
-    .btn,.phil-card,.frame,.nav-links a::after{transition:none}
+  /* ---- Reveal on scroll — shorter travel, gentle stagger set from JS ---- */
+  .reveal{
+    opacity:0;transform:translateY(16px);
+    transition:opacity .6s var(--ease),transform .6s var(--ease);
+    transition-delay:var(--rd,0s);
   }
+  .reveal.visible{opacity:1;transform:none}
 
   /* ---- Responsive ---- */
+  @media (max-width:1040px){
+    /* five chapters in the bar: tighten before anything wraps */
+    .nav-links{gap:1.5rem}
+    .nav-links a{font-size:.76rem;letter-spacing:.08em}
+    .nav-cta{padding:.55rem .95rem;font-size:.7rem;letter-spacing:.12em}
+    .logo{font-size:1.45rem}
+  }
+  @media (max-width:960px){
+    .credo{grid-template-columns:1fr;gap:2.25rem}
+    .credo-lede{max-width:34ch}
+    .abend-grid{grid-template-columns:1fr;gap:2.75rem}
+  }
   @media (max-width:860px){
-    .menu-groups{grid-template-columns:1fr;gap:2.5rem}
+    .head{grid-template-columns:1fr;align-items:start;gap:1.25rem}
     .reserve-grid{grid-template-columns:1fr;gap:2.5rem}
-    .gallery{grid-template-columns:1fr;grid-auto-rows:260px}
+    .gallery{grid-template-columns:1fr;grid-auto-rows:250px}
+    .quote-tile{min-height:250px}
+    .hero-strip{grid-template-columns:1fr;border-top:none}
+    .hero-strip div{border-top:1px solid rgba(214,172,91,.15);padding:.9rem 0}
+    .hero-strip div + div{border-left:none;padding-left:0}
   }
   @media (max-width:640px){
-    section{padding:4.5rem 7%}
+    main > section{padding:4.25rem 7%}
     .nav-links,.nav-cta{display:none}
     .nav-toggle{
-      display:inline-flex;background:none;border:1px solid var(--border);
-      color:var(--text);border-radius:6px;padding:.5rem .9rem;font-size:.75rem;
-      text-transform:uppercase;letter-spacing:.1em;cursor:pointer;
+      display:inline-flex;align-items:center;min-height:44px;
+      background:none;border:1px solid var(--border);
+      color:var(--text);border-radius:2px;padding:.5rem .9rem;font-size:.75rem;
+      text-transform:uppercase;letter-spacing:.12em;cursor:pointer;
     }
-    .field-row{grid-template-columns:1fr}
-    .hero-meta{gap:1.25rem}
+    .field-row{grid-template-columns:1fr;gap:1.15rem}
+    .credo-list li{grid-template-columns:2rem minmax(0,1fr)}
+    .dish.chef .mark{display:none} /* no margin left to hang it in — the tag carries it */
+    .timeline{padding-left:1.9rem}
+    .timeline li::before{left:-1.9rem}
     .footer-cols{gap:2rem}
   }
   /* Mobile menu (checkbox-free, JS toggled) */
@@ -357,10 +563,20 @@
   .mobile-menu.open{
     display:block;background:var(--bg-2);border-bottom:1px solid var(--border);
   }
-  .mobile-menu ul{list-style:none;padding:1rem 7% 1.5rem;display:grid;gap:.25rem}
+  .mobile-menu ul{list-style:none;padding:1rem 7% 1.5rem;display:grid;gap:.15rem}
   .mobile-menu a{
-    display:block;color:var(--text);text-decoration:none;padding:.7rem 0;
-    font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid var(--border);
+    display:flex;align-items:center;min-height:48px;
+    color:var(--text);text-decoration:none;padding:.6rem 0;
+    font-size:.9rem;text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid var(--border);
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    .btn,.btn-ghost,.frame,.frame img,.frame .caption::after,.credo-list li,
+    .timeline li::before,.nav-links a::after,input,select,textarea{transition:none}
+    .candle{animation:none;opacity:.85}
+    .form-confirm.show{animation:none}
+    .frame:hover img{transform:none}
   }
 </style>
 </head>
@@ -375,79 +591,105 @@
     <nav aria-label="Hauptnavigation">
       <a class="logo" href="#top" aria-label="Restaurant Lumière — Startseite">Restaurant <span class="mark">Lumière</span></a>
       <ul class="nav-links">
-        <li><a href="#philosophie">Philosophie</a></li>
-        <li><a href="#menu">Menü</a></li>
+        <li><a href="#philosophie">Haltung</a></li>
+        <li><a href="#menu">Die Karte</a></li>
+        <li><a href="#abend">Der Abend</a></li>
         <li><a href="#impressionen">Impressionen</a></li>
-        <li><a href="#reservieren">Kontakt</a></li>
       </ul>
       <a class="nav-cta" href="#reservieren">Reservieren</a>
       <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobileMenu">Menü</button>
     </nav>
     <div class="mobile-menu" id="mobileMenu">
       <ul>
-        <li><a href="#philosophie">Philosophie</a></li>
-        <li><a href="#menu">Menü</a></li>
+        <li><a href="#philosophie">Haltung</a></li>
+        <li><a href="#menu">Die Karte</a></li>
+        <li><a href="#abend">Der Abend</a></li>
         <li><a href="#impressionen">Impressionen</a></li>
-        <li><a href="#reservieren">Reservieren</a></li>
+        <li><a href="#reservieren">Tisch reservieren</a></li>
       </ul>
     </div>
   </header>
 
   <main id="hauptinhalt">
     <section class="hero" aria-labelledby="hero-title">
-      <img class="hero-photo" src="assets/hero-dining.jpg" alt="" role="presentation" fetchpriority="high">
-      <p class="eyebrow">Restaurant · Bar · Weinkeller</p>
-      <h1 id="hero-title">Feine Küche in <em>warmem Licht</em></h1>
-      <p class="hero-sub">Französisch inspirierte Saisonküche, ein sorgfältig kuratierter Weinkeller und ein Ort, an dem der Abend niemals hetzt.</p>
-      <div class="hero-actions">
-        <a href="#reservieren" class="btn">Tisch reservieren</a>
-        <a href="#menu" class="btn-ghost">Menü ansehen</a>
-      </div>
-      <div class="hero-meta">
-        <span>Saisonale Küche</span>
-        <span>Abends geöffnet</span>
-        <span>Im Herzen der Altstadt</span>
+      <img class="hero-photo" src="assets/hero-dining.jpg"
+           alt="Gedeckter Tisch am Abend: eine goldene Tischleuchte, eine Orchidee und ein leeres Weinglas vor dem warm beleuchteten Gastraum"
+           fetchpriority="high">
+      <span class="candle" aria-hidden="true"></span>
+      <div class="hero-inner">
+        <p class="chapter">Restaurant · Bar · Weinkeller</p>
+        <h1 id="hero-title">Feine Küche in <em>warmem Licht</em></h1>
+        <p class="hero-sub">Französisch inspirierte Saisonküche, ein sorgfältig kuratierter Weinkeller und ein Ort, an dem der Abend niemals hetzt.</p>
+        <div class="hero-actions">
+          <a href="#reservieren" class="btn">Tisch reservieren</a>
+          <a href="#menu" class="btn-ghost">Die Karte lesen</a>
+        </div>
+        <div class="hero-strip">
+          <div>Küche<b>Saisonal, französisch</b></div>
+          <div>Geöffnet<b>Di – Sa, ab 17:30</b></div>
+          <div>Lage<b>Im Herzen der Altstadt</b></div>
+        </div>
       </div>
     </section>
 
     <section id="philosophie" aria-labelledby="phil-title">
       <div class="wrap">
-        <div class="section-head reveal">
-          <p class="eyebrow">Unsere Philosophie</p>
-          <h2 id="phil-title">Drei Überzeugungen, jeden Abend am Teller</h2>
-          <p class="section-intro">Lumière ist keine Bühne für Effekte, sondern ein Handwerk. Was uns leitet, lässt sich in drei Gedanken fassen.</p>
+        <div class="head reveal">
+          <div>
+            <p class="chapter"><span class="num" aria-hidden="true">I</span> Haltung</p>
+            <h2 id="phil-title">Ein Haus mit wenigen, festen Regeln</h2>
+          </div>
+          <p class="lede">Lumière ist keine Bühne für Effekte, sondern ein Handwerk. Drei Sätze, an die wir uns halten — auch wenn es dadurch länger dauert.</p>
         </div>
-        <div class="phil-grid">
-          <div class="phil-card reveal">
-            <span class="phil-num">01</span>
-            <h3>Saisonal &amp; regional</h3>
-            <p>Wir kochen mit dem, was gerade reif ist — von Produzentinnen und Produzenten aus der Umgebung, in kurzen Wegen.</p>
+
+        <div class="credo">
+          <div class="reveal">
+            <p class="credo-lede">Wir kochen für zweiunddreissig Gäste pro Abend. Nicht mehr, weil ein Teller Zeit braucht und ein Abend ebenso.</p>
+            <p>Was daraus folgt, haben wir in drei Sätzen festgehalten. Keine Philosophie zum Aufhängen, sondern das, was jeden Dienstag um 16 Uhr in der Küche beginnt.</p>
           </div>
-          <div class="phil-card reveal">
-            <span class="phil-num">02</span>
-            <h3>Kuratiert statt beliebig</h3>
-            <p>Ein kompakter Weinkeller, jede Flasche persönlich verkostet. Lieber weniger Auswahl, dafür jede mit Bedacht.</p>
-          </div>
-          <div class="phil-card reveal">
-            <span class="phil-num">03</span>
-            <h3>Zeit zum Verweilen</h3>
-            <p>Warmes Licht, ruhige Tische, kein Takt von aussen. Ein Abend bei uns gehört Ihnen und Ihren Gästen.</p>
-          </div>
+          <ol class="credo-list reveal" role="list">
+            <li>
+              <span class="n" aria-hidden="true">i</span>
+              <div>
+                <h3>Saisonal &amp; regional</h3>
+                <p>Wir kochen mit dem, was gerade reif ist — von Produzentinnen und Produzenten aus der Umgebung, in kurzen Wegen.</p>
+              </div>
+            </li>
+            <li>
+              <span class="n" aria-hidden="true">ii</span>
+              <div>
+                <h3>Kuratiert statt beliebig</h3>
+                <p>Ein kompakter Weinkeller, jede Flasche persönlich verkostet. Lieber weniger Auswahl, dafür jede mit Bedacht.</p>
+              </div>
+            </li>
+            <li>
+              <span class="n" aria-hidden="true">iii</span>
+              <div>
+                <h3>Zeit zum Verweilen</h3>
+                <p>Warmes Licht, ruhige Tische, kein Takt von aussen. Ein Abend bei uns gehört Ihnen und Ihren Gästen.</p>
+              </div>
+            </li>
+          </ol>
         </div>
       </div>
     </section>
 
     <section id="menu" aria-labelledby="menu-title">
       <div class="wrap">
-        <div class="section-head reveal">
-          <p class="eyebrow">Die Karte</p>
-          <h2 id="menu-title">Ein Auszug aus unserer Saisonkarte</h2>
-          <p class="section-intro">Die Karte wechselt alle sechs Wochen mit der Saison. Ein Blick auf das, was Sie derzeit erwartet.</p>
+        <div class="head-center reveal">
+          <p class="chapter centered"><span class="num" aria-hidden="true">II</span> Die Karte</p>
+          <h2 id="menu-title">Ein Auszug, sechs Wochen gültig</h2>
+          <p class="lede">Dann kommt die nächste. Was Sie hier lesen, hängt heute Abend genauso in der Küche.</p>
         </div>
 
-        <div class="menu-groups">
-          <div class="menu-group reveal">
-            <h3>Vorspeisen</h3>
+        <div class="carte">
+          <p class="market reveal">
+            <span class="dot" aria-hidden="true"></span>
+            <span>Auf dem Markt gerade: <strong id="marketItem">Herbsttrompeten aus dem Jura</strong></span>
+          </p>
+
+          <section class="course reveal" aria-labelledby="c-vorspeisen">
+            <h3 class="course-title" id="c-vorspeisen">Vorspeisen</h3>
             <div class="dish">
               <div class="dish-head">
                 <span class="dish-name">Kalbstatar</span>
@@ -465,18 +707,20 @@
               <p class="dish-desc">Muskatkürbis, geröstete Kürbiskerne, ein Faden Haselnussöl.</p>
               <div class="dish-tags"><span class="tag">Vegetarisch</span></div>
             </div>
-            <div class="dish">
+            <div class="dish chef">
+              <span class="mark" aria-hidden="true">◆</span>
               <div class="dish-head">
                 <span class="dish-name">Jakobsmuscheln</span>
                 <span class="dish-lead"></span>
                 <span class="dish-price">CHF 29</span>
               </div>
               <p class="dish-desc">Kurz gebraten, Blumenkohl in zwei Texturen, Beurre blanc.</p>
+              <div class="dish-tags"><span class="tag chef">Empfehlung der Küchenchefin</span></div>
             </div>
-          </div>
+          </section>
 
-          <div class="menu-group reveal">
-            <h3>Hauptgänge</h3>
+          <section class="course reveal" aria-labelledby="c-haupt">
+            <h3 class="course-title" id="c-haupt">Hauptgänge</h3>
             <div class="dish">
               <div class="dish-head">
                 <span class="dish-name">Confierte Ente</span>
@@ -502,10 +746,10 @@
               </div>
               <p class="dish-desc">Auf der Haut gebraten, Fenchel, Safran-Muschelsud.</p>
             </div>
-          </div>
+          </section>
 
-          <div class="menu-group reveal">
-            <h3>Desserts</h3>
+          <section class="course reveal" aria-labelledby="c-dessert">
+            <h3 class="course-title" id="c-dessert">Desserts &amp; Käse</h3>
             <div class="dish">
               <div class="dish-head">
                 <span class="dish-name">Schokoladentarte</span>
@@ -530,112 +774,180 @@
               </div>
               <p class="dish-desc">Drei Schweizer Affineur-Käse, Feigensenf, Nussbrot.</p>
             </div>
-          </div>
+          </section>
 
-          <div class="menu-group featured reveal">
-            <h3>Menü Découverte</h3>
-            <div class="dish">
-              <div class="dish-head">
-                <span class="dish-name">Fünf Gänge</span>
-                <span class="dish-lead"></span>
-                <span class="dish-price">CHF 98</span>
+          <section class="decouverte reveal" aria-labelledby="dec-title">
+            <h3 id="dec-title">Menü <em>Découverte</em></h3>
+            <p class="sub">Fünf Gänge, von der Küchenchefin zusammengestellt — ein Querschnitt dessen, was die Saison gerade hergibt.</p>
+            <div class="dec-lines">
+              <div>
+                <span>Fünf Gänge</span>
+                <span class="lead" aria-hidden="true"></span>
+                <span class="price">CHF 98</span>
               </div>
-              <p class="dish-desc">Ein Querschnitt der Saison, vom Küchenchef zusammengestellt.</p>
-            </div>
-            <div class="dish">
-              <div class="dish-head">
-                <span class="dish-name">Weinbegleitung</span>
-                <span class="dish-lead"></span>
-                <span class="dish-price">CHF 68</span>
+              <div>
+                <span>Weinbegleitung</span>
+                <span class="lead" aria-hidden="true"></span>
+                <span class="price">CHF 68</span>
               </div>
-              <p class="dish-desc">Fünf Gläser, auf jeden Gang abgestimmt.</p>
             </div>
+            <p class="dec-foot">Für den ganzen Tisch · bitte bei der Reservierung vermerken</p>
+          </section>
+
+          <p class="menu-note reveal">
+            <strong>Allergien &amp; Ernährungsweisen:</strong> Fast alle Gerichte lassen sich anpassen — vegetarisch, vegan oder glutenfrei. Sprechen Sie uns bei der Reservierung darauf an, wir richten uns gerne danach.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="abend" aria-labelledby="abend-title">
+      <div class="wrap">
+        <div class="head reveal">
+          <div>
+            <p class="chapter"><span class="num" aria-hidden="true">III</span> Der Abend</p>
+            <h2 id="abend-title">Wie ein Abend bei uns verläuft</h2>
           </div>
+          <p class="lede">Ein Menü ist kein Stapel Teller, sondern ein Ablauf. Damit Sie wissen, worauf Sie sich zeitlich einlassen.</p>
         </div>
 
-        <div class="menu-note reveal">
-          <strong>Allergien &amp; Ernährungsweisen:</strong> Fast alle Gerichte lassen sich anpassen — vegetarisch, vegan oder glutenfrei. Sprechen Sie uns bei der Reservierung darauf an, wir richten uns gerne danach.
+        <div class="abend-grid">
+          <div class="note reveal">
+            <p>«Ich koche lieber ein Gericht weniger und dafür eines, bei dem ich am Pass noch einmal hinschaue, bevor es hinausgeht.»</p>
+            <p>Élodie hat vierzehn Jahre in Lyon und Genf gearbeitet, bevor sie die Küche hier übernommen hat. Die Karte schreibt sie jeden Montagmorgen neu — nach dem Markt, nicht davor.</p>
+            <p class="sig">
+              <span class="sig-name">Élodie Rochat<span class="sig-role">Küchenchefin</span></span>
+            </p>
+          </div>
+
+          <ol class="timeline reveal" role="list">
+            <li>
+              <span class="t-time">17:30</span>
+              <h3 class="t-title">Apéro an der Bar</h3>
+              <p class="t-desc">Ein Glas Crémant, Oliven aus Nyons. Auch ohne Tisch — die Bar nimmt Sie ohne Reservierung.</p>
+            </li>
+            <li>
+              <span class="t-time">18:15</span>
+              <h3 class="t-title">Der Tisch wird eröffnet</h3>
+              <p class="t-desc">Brot aus dem Holzofen, gesalzene Butter, ein Amuse-bouche vom Pass. Ab hier bestimmen Sie das Tempo.</p>
+            </li>
+            <li>
+              <span class="t-time">19:00</span>
+              <h3 class="t-title">Die Gänge</h3>
+              <p class="t-desc">Zwischen den Gängen bleibt Zeit für ein Gespräch. Wir servieren erst, wenn der Tisch bereit ist.</p>
+            </li>
+            <li>
+              <span class="t-time">21:30</span>
+              <h3 class="t-title">Käse, Süsses, Digestif</h3>
+              <p class="t-desc">Der Käsewagen kommt an den Tisch. Danach ein Marc oder ein Kaffee — beides ohne Eile.</p>
+            </li>
+            <li>
+              <span class="t-time">23:00</span>
+              <h3 class="t-title">Kein Kehraus</h3>
+              <p class="t-desc">Wir vergeben pro Tisch einen Abend, nicht zwei Sitzungen. Ihr Tisch bleibt Ihrer, bis Sie gehen.</p>
+            </li>
+          </ol>
         </div>
       </div>
     </section>
 
     <section id="impressionen" aria-labelledby="imp-title">
       <div class="wrap">
-        <div class="section-head reveal">
-          <p class="eyebrow">Ambiente</p>
-          <h2 id="imp-title">Impressionen aus dem Haus</h2>
-          <p class="section-intro">Eine offene Küche, eine ruhige Terrasse am Abend und ein Tisch, der auf Sie wartet.</p>
+        <div class="head reveal">
+          <div>
+            <p class="chapter"><span class="num" aria-hidden="true">IV</span> Ambiente</p>
+            <h2 id="imp-title">Impressionen aus dem Haus</h2>
+          </div>
+          <p class="lede">Eine offene Küche, eine ruhige Terrasse am Abend und ein Tisch, der auf Sie wartet.</p>
         </div>
         <div class="gallery reveal">
-          <div class="frame">
+          <div class="frame g-tall">
+            <img src="assets/gallery-table.jpg" alt="Gedeckter Tisch mit Speisekarte, Weinglas und Orchidee im warmen Licht" loading="lazy">
+            <span class="caption">Die Tafel<small>Für Gesellschaften bis 14</small></span>
+          </div>
+          <div class="frame g-wide">
             <img src="assets/gallery-kitchen.jpg" alt="Köche in weisser Uniform bei der Arbeit in einer offenen Restaurantküche" loading="lazy">
             <span class="caption">Die Küche<small>Offen einsehbar</small></span>
           </div>
-          <div class="frame">
+          <blockquote class="quote-tile g-half">
+            <p>«Man sitzt hier, als hätte der Abend keinen Fahrplan.»</p>
+            <cite>Gästebuch, Tisch 4 · Konzepttext</cite>
+          </blockquote>
+          <div class="frame g-half">
             <img src="assets/gallery-terrace.jpg" alt="Tischlampe auf einer Terrasse am Abend mit Blick über die beleuchtete Stadt" loading="lazy">
-            <span class="caption">Sommerterrasse<small>Ab Mai</small></span>
-          </div>
-          <div class="frame">
-            <img src="assets/gallery-table.jpg" alt="Gedeckter Tisch mit Speisekarte, Weinglas und Orchidee im warmen Licht" loading="lazy">
-            <span class="caption">Die Tafel<small>Für Gesellschaften</small></span>
+            <span class="caption">Terrasse<small>Ab Mai</small></span>
           </div>
         </div>
       </div>
     </section>
 
     <section id="reservieren" aria-labelledby="res-title">
-      <div class="wrap reserve-grid">
-        <div class="reserve-info reveal">
-          <p class="eyebrow">Reservieren</p>
+      <div class="wrap">
+        <div class="head-center reveal">
+          <p class="chapter centered"><span class="num" aria-hidden="true">V</span> Reservieren</p>
           <h2 id="res-title">Ein Tisch für Ihren Abend</h2>
-          <p class="section-intro">Reservieren Sie bequem über das Formular. Für Gesellschaften ab acht Personen stimmen wir Menü und Ablauf gerne persönlich mit Ihnen ab.</p>
-          <ul class="hours">
-            <li><span>Dienstag – Donnerstag</span><span>18:00 – 23:00</span></li>
-            <li><span>Freitag – Samstag</span><span>17:30 – 00:00</span></li>
-            <li class="closed"><span>Sonntag – Montag</span><span>Ruhetag</span></li>
-          </ul>
-          <p class="locale">Im Herzen der Schweizer Altstadt · Küche bis 22:00 Uhr</p>
+          <p class="lede">Für Gesellschaften ab acht Personen stimmen wir Menü und Ablauf gerne persönlich mit Ihnen ab.</p>
         </div>
 
-        <form id="reserveForm" novalidate>
-          <div class="field">
-            <label for="r-name">Name</label>
-            <input type="text" id="r-name" name="name" placeholder="Ihr Name" autocomplete="name" required>
+        <div class="reserve-grid">
+          <div class="reserve-info reveal">
+            <h3>Öffnungszeiten</h3>
+            <ul class="hours">
+              <li><span>Dienstag – Donnerstag</span><span>18:00 – 23:00</span></li>
+              <li><span>Freitag – Samstag</span><span>17:30 – 00:00</span></li>
+              <li class="closed"><span>Sonntag – Montag</span><span>Ruhetag</span></li>
+            </ul>
+            <p class="locale">Im Herzen der Schweizer Altstadt · Küche bis 22:00 Uhr · Die Bar nimmt Sie auch ohne Reservierung.</p>
+            <p class="phone-line"><small>Lieber persönlich</small>Hier stünde die Telefonnummer des Hauses.</p>
           </div>
-          <div class="field-row">
+
+          <form id="reserveForm" class="reveal" novalidate>
+            <p class="form-title">Tischanfrage
+              <small>Wir melden uns innerhalb eines Tages mit einer Bestätigung.</small>
+            </p>
             <div class="field">
-              <label for="r-date">Datum</label>
-              <input type="date" id="r-date" name="datum" required>
+              <label for="r-name">Name</label>
+              <input type="text" id="r-name" name="name" placeholder="Ihr Name" autocomplete="name" required>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="r-date">Datum</label>
+                <input type="date" id="r-date" name="datum" required>
+              </div>
+              <div class="field">
+                <label for="r-time">Uhrzeit</label>
+                <input type="time" id="r-time" name="zeit" required>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="r-guests">Personen</label>
+                <select id="r-guests" name="personen">
+                  <option>2 Personen</option>
+                  <option>3 Personen</option>
+                  <option>4 Personen</option>
+                  <option>5 Personen</option>
+                  <option>6 Personen</option>
+                  <option>7+ Personen</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="r-mail">E-Mail</label>
+                <input type="email" id="r-mail" name="email" placeholder="name@beispiel.ch" autocomplete="email" required>
+              </div>
             </div>
             <div class="field">
-              <label for="r-time">Uhrzeit</label>
-              <input type="time" id="r-time" name="zeit" required>
+              <label for="r-note">Allergien, Anlass, Wünsche</label>
+              <textarea id="r-note" name="anmerkung" rows="3" placeholder="Zum Beispiel: eine Person vegan, Geburtstag, Menü Découverte für den ganzen Tisch."></textarea>
             </div>
-          </div>
-          <div class="field-row">
-            <div class="field">
-              <label for="r-guests">Personen</label>
-              <select id="r-guests" name="personen">
-                <option>2 Personen</option>
-                <option>3 Personen</option>
-                <option>4 Personen</option>
-                <option>5 Personen</option>
-                <option>6 Personen</option>
-                <option>7+ Personen</option>
-              </select>
+            <button type="submit" class="btn">Reservierung anfragen</button>
+            <p class="form-note">Demo-Formular — es wird nichts gesendet oder gespeichert.</p>
+            <div class="form-confirm" id="formConfirm" role="status" aria-live="polite">
+              <h3>Merci vielmal!</h3>
+              <p>Ihre Anfrage wäre nun unterwegs — dies ist eine Konzeptseite, daher wird nichts wirklich versendet.</p>
             </div>
-            <div class="field">
-              <label for="r-mail">E-Mail</label>
-              <input type="email" id="r-mail" name="email" placeholder="name@beispiel.ch" autocomplete="email" required>
-            </div>
-          </div>
-          <button type="submit" class="btn">Reservierung anfragen</button>
-          <p class="form-note">Demo-Formular — es wird nichts gesendet oder gespeichert.</p>
-          <div class="form-confirm" id="formConfirm" role="status" aria-live="polite">
-            <h3>Merci vielmal!</h3>
-            <p>Ihre Anfrage wäre nun unterwegs — dies ist eine Konzeptseite, daher wird nichts wirklich versendet.</p>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </section>
   </main>
@@ -650,8 +962,9 @@
         <div class="footer-col">
           <h4>Entdecken</h4>
           <ul>
-            <li><a href="#philosophie">Philosophie</a></li>
-            <li><a href="#menu">Menü</a></li>
+            <li><a href="#philosophie">Haltung</a></li>
+            <li><a href="#menu">Die Karte</a></li>
+            <li><a href="#abend">Der Abend</a></li>
             <li><a href="#impressionen">Impressionen</a></li>
             <li><a href="#reservieren">Reservieren</a></li>
           </ul>
@@ -710,18 +1023,36 @@
           link.classList.add('active');
         });
       }, {rootMargin:'-45% 0px -50% 0px'});
-      document.querySelectorAll('main section[id]').forEach(s => spy.observe(s));
+      document.querySelectorAll('main > section[id]').forEach(s => spy.observe(s));
     }
 
-    // Reveal on scroll
+    // Marktkorb — the kitchen works around one ingredient per month
+    const market = {
+      0:'Topinambur vom Seeland', 1:'Endivien &amp; Blutorange', 2:'Bärlauch aus dem Jura',
+      3:'Grüner Spargel aus dem Wallis', 4:'Erste Erbsen &amp; Frühlingszwiebeln', 5:'Aprikosen aus dem Wallis',
+      6:'Pfifferlinge aus dem Emmental', 7:'Zwetschgen &amp; Fenchel', 8:'Feigen und junger Kürbis',
+      9:'Herbsttrompeten aus dem Jura', 10:'Wild &amp; Quitte', 11:'Trüffel aus der Bourgogne'
+    };
+    const marketItem = document.getElementById('marketItem');
+    if (marketItem) marketItem.innerHTML = market[new Date().getMonth()];
+
+    // Reveal on scroll — siblings rise in a short, staggered cascade
     const reveals = document.querySelectorAll('.reveal');
     if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-          if (entry.isIntersecting) { entry.target.classList.add('visible'); io.unobserve(entry.target); }
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
         });
       }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
-      reveals.forEach(el => io.observe(el));
+      reveals.forEach(el => {
+        // stagger by position among revealing siblings, capped so nothing lags behind
+        const group = [...el.parentElement.children].filter(c => c.classList.contains('reveal'));
+        const i = group.indexOf(el);
+        if (group.length > 1 && i > 0) el.style.setProperty('--rd', Math.min(i * 0.07, 0.28) + 's');
+        io.observe(el);
+      });
     } else {
       reveals.forEach(el => el.classList.add('visible'));
     }

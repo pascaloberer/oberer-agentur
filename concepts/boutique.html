@@ -23,23 +23,35 @@
     --surface:#fbf8f3;
     --border:#e4d9c9;
     --border-2:#d8cbb8;
+    --hair:rgba(42,37,33,.14);
     --ink:#2a2521;
+    --ink-soft:#3b342d;
     --muted:#6e645a;
     --muted-2:#665c50;
     --terra:#b06848;
     --terra-ink:#a1502f;
     --blush:#c98f7c;
+    --cream:#efe7dc;
+    --cream-2:#faf5ec;
+    --cream-muted:#b9ab99;
+    --sand:#e7b48f;
     --maxw:1180px;
     --ease:cubic-bezier(.22,1,.36,1);
-    --r-sm:4px;
-    --r-md:6px;
-    --r-lg:12px;
-    --r-pill:999px;
+    --ease-soft:cubic-bezier(.33,.9,.28,1);
+    --t-micro:.22s;
+    --r-sm:3px;
+    --r-md:2px;
+    --r-lg:3px;
+    /* Papierkorn — inline SVG, keine externe Ressource */
+    --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)' opacity='.05'/%3E%3C/svg%3E");
   }
+  /* Getönte Bänder erben Grundfarbe + Korn */
+  .band{background-image:var(--grain);background-size:160px 160px;background-repeat:repeat}
   html{scroll-behavior:smooth}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   body{
-    background:var(--bg);color:var(--ink);
+    background-color:var(--bg);background-image:var(--grain);
+    background-size:160px 160px;color:var(--ink);
     font-family:'Inter',system-ui,sans-serif;line-height:1.65;
     -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
     overflow-x:hidden;
@@ -56,6 +68,10 @@
   }
   .skip-link:focus{top:1rem}
   :focus-visible{outline:2px solid var(--terra);outline-offset:3px;border-radius:2px}
+  .visually-hidden{
+    position:absolute;width:1px;height:1px;margin:-1px;padding:0;
+    overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+  }
 
   /* ---- Sticky topbar (banner + nav pinned together) ---- */
   .topbar{position:sticky;top:0;z-index:250}
@@ -91,59 +107,72 @@
   .nav-links{display:flex;gap:2.25rem;list-style:none;align-items:center}
   .nav-links a{
     position:relative;color:var(--muted);text-decoration:none;
-    font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;
-    padding:.25rem 0;transition:color .3s var(--ease);
+    font-size:.76rem;text-transform:uppercase;letter-spacing:.14em;
+    padding:.35rem 0;transition:color var(--t-micro) var(--ease);
   }
   .nav-links a::after{
-    content:"";position:absolute;left:0;bottom:-2px;height:1px;width:0;
-    background:var(--terra);transition:width .35s var(--ease);
+    content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
+    background:var(--terra);transform:scaleX(0);transform-origin:center;
+    transition:transform var(--t-micro) var(--ease);
   }
   .nav-links a:hover,.nav-links a:focus-visible{color:var(--ink)}
-  .nav-links a:hover::after,.nav-links a:focus-visible::after{width:100%}
+  .nav-links a:hover::after,.nav-links a:focus-visible::after{transform:scaleX(1)}
+  .nav-links a[aria-current]{color:var(--ink)}
+  .nav-links a[aria-current]::after{transform:scaleX(1);background:var(--border-2)}
+  /* Kein Pillen-Button in der Navigation — feine Linie statt Kapsel */
   .nav-cta{
-    display:inline-block;border:1px solid var(--border-2);color:var(--ink);
-    padding:.5rem 1.2rem;border-radius:var(--r-pill);text-decoration:none;
-    font-size:.74rem;text-transform:uppercase;letter-spacing:.12em;
-    transition:border-color .3s var(--ease),color .3s var(--ease),background .3s var(--ease);
+    display:inline-flex;align-items:center;gap:.6rem;color:var(--ink);
+    text-decoration:none;font-size:.73rem;text-transform:uppercase;letter-spacing:.16em;
+    padding:.5rem 0;border-bottom:1px solid var(--ink);
+    transition:color var(--t-micro) var(--ease),border-color var(--t-micro) var(--ease);
   }
-  .nav-cta:hover,.nav-cta:focus-visible{border-color:var(--terra);color:var(--terra-ink)}
+  .nav-cta:hover,.nav-cta:focus-visible{color:var(--terra-ink);border-color:var(--terra)}
   .nav-toggle{display:none}
 
-  /* ---- Buttons ---- */
+  /* ---- Buttons: rechteckig gesetzt, nicht als Kapsel ---- */
   .btn{
-    display:inline-block;background:var(--ink);color:#f7f3ee;
-    padding:.9rem 2.1rem;border-radius:var(--r-pill);text-decoration:none;
-    font-size:.78rem;font-weight:500;text-transform:uppercase;letter-spacing:.1em;
+    display:inline-flex;align-items:center;justify-content:center;
+    min-height:48px;background:var(--ink);color:#f7f3ee;
+    padding:.85rem 2.2rem;border-radius:var(--r-md);text-decoration:none;
+    font-size:.75rem;font-weight:500;text-transform:uppercase;letter-spacing:.16em;
     border:1px solid var(--ink);cursor:pointer;
-    transition:transform .3s var(--ease),box-shadow .3s var(--ease),background .3s var(--ease),border-color .3s var(--ease);
+    transition:background var(--t-micro) var(--ease),border-color var(--t-micro) var(--ease),color var(--t-micro) var(--ease);
   }
-  .btn:hover,.btn:focus-visible{transform:translateY(-2px);box-shadow:0 12px 28px -14px rgba(42,37,33,.55);background:var(--terra);border-color:var(--terra)}
-  .btn-ghost{
-    display:inline-block;border:1px solid var(--border-2);color:var(--ink);
-    padding:.9rem 2.1rem;border-radius:var(--r-pill);text-decoration:none;
-    font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;background:transparent;
-    transition:border-color .3s var(--ease),color .3s var(--ease);
+  .btn:hover,.btn:focus-visible{background:var(--terra);border-color:var(--terra);color:#fff}
+  /* Stiller Textlink mit wachsender Haarlinie */
+  .link-quiet{
+    display:inline-flex;align-items:center;gap:.85rem;min-height:48px;
+    color:var(--ink);text-decoration:none;
+    font-size:.75rem;text-transform:uppercase;letter-spacing:.16em;
+    transition:color var(--t-micro) var(--ease);
   }
-  .btn-ghost:hover,.btn-ghost:focus-visible{border-color:var(--terra);color:var(--terra-ink)}
+  .link-quiet .bar{
+    display:block;width:28px;height:1px;background:currentColor;flex:none;
+    transition:width var(--t-micro) var(--ease);
+  }
+  .link-quiet:hover,.link-quiet:focus-visible{color:var(--terra-ink)}
+  .link-quiet:hover .bar,.link-quiet:focus-visible .bar{width:48px}
 
-  /* ---- Layout ---- */
-  section{padding:clamp(4.75rem,8.5vw,7.5rem) 6%;scroll-margin-top:6.5rem}
+  /* ---- Layout & Rhythmus ---- */
+  section{padding:clamp(5rem,9vw,8rem) 6%;scroll-margin-top:6.5rem}
   .wrap{max-width:var(--maxw);margin:0 auto}
+  /* Kolumnentitel: Linie ÜBER dem Label, nicht davor */
   .eyebrow{
-    color:var(--terra-ink);text-transform:uppercase;letter-spacing:.24em;
-    font-size:.7rem;font-weight:500;margin-bottom:1.1rem;
-    display:inline-flex;align-items:center;gap:.7rem;
+    display:block;width:fit-content;
+    color:var(--terra-ink);text-transform:uppercase;letter-spacing:.28em;
+    font-size:.67rem;font-weight:500;line-height:1;
+    padding-top:.95rem;margin:0 0 1.4rem;
+    border-top:1px solid var(--terra);
   }
-  .eyebrow::before{content:"";width:26px;height:1px;background:var(--terra);opacity:.8}
   h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:600;line-height:1.08;color:var(--ink);text-wrap:balance}
-  h2{font-size:clamp(2rem,4vw,3rem);margin-bottom:1rem;letter-spacing:.005em}
-  .section-intro{color:var(--muted);max-width:54ch;margin-bottom:3.5rem;font-size:1.02rem}
-  .section-head{margin-bottom:3.5rem}
+  h2{font-size:clamp(2rem,4vw,3rem);margin-bottom:1rem;letter-spacing:-.006em}
+  .section-intro{color:var(--muted);max-width:52ch;margin-bottom:clamp(2.75rem,5vw,4rem);font-size:1.02rem}
+  .section-head{margin-bottom:clamp(2.75rem,5vw,4.25rem);max-width:62ch}
   .section-head .section-intro{margin-bottom:0}
 
   /* ---- Hero ---- */
   .hero{
-    position:relative;min-height:clamp(560px,90vh,920px);
+    position:relative;min-height:clamp(580px,92vh,940px);
     display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;
     text-align:left;padding:5rem 6% 4.5rem;overflow:hidden;
   }
@@ -154,126 +183,243 @@
   .hero::before{
     content:"";position:absolute;inset:0;z-index:-1;
     background:
-      linear-gradient(180deg,rgba(30,24,20,.10) 0%,rgba(30,24,20,.28) 45%,rgba(24,19,15,.72) 100%),
-      radial-gradient(70% 55% at 18% 90%, rgba(120,60,36,.30), transparent 72%);
+      linear-gradient(180deg,rgba(26,20,16,.56) 0%,rgba(26,20,16,.20) 26%,rgba(24,18,14,.62) 62%,rgba(20,15,12,.86) 100%),
+      radial-gradient(72% 58% at 16% 92%, rgba(120,60,36,.30), transparent 74%);
   }
+  /* Zeitungskopf über dem Bild */
+  .hero-masthead{
+    position:absolute;top:2.15rem;left:6%;right:6%;z-index:1;
+    max-width:var(--maxw);margin-inline:auto;
+    display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
+    padding-bottom:.85rem;border-bottom:1px solid rgba(247,243,238,.3);
+    color:#f4ebdd;font-size:.67rem;text-transform:uppercase;letter-spacing:.24em;
+  }
+  .hero-masthead .mh-r{color:#eedcc4}
   .hero-inner{max-width:var(--maxw);margin:0 auto;width:100%}
-  .hero .eyebrow{color:#f0d3b8}
-  .hero .eyebrow::before{background:#e7b48f}
+  .hero .eyebrow{color:#f3d9bf;border-top-color:#e7b48f}
   h1{
-    font-size:clamp(2.7rem,7vw,5.2rem);max-width:16ch;margin:0 0 1.4rem;
-    letter-spacing:.01em;color:#fbf6ef;text-shadow:0 1px 34px rgba(24,16,10,.35);
+    font-size:clamp(2.75rem,7.4vw,5.4rem);max-width:14ch;margin:0 0 1.5rem;
+    letter-spacing:-.012em;color:#fbf6ef;text-shadow:0 1px 34px rgba(24,16,10,.4);
   }
-  h1 em{font-style:italic;color:#f0c9a8}
-  .hero-sub{color:#f0e8db;max-width:46ch;margin:0 0 2.4rem;font-size:1.08rem;text-shadow:0 1px 20px rgba(24,16,10,.3)}
-  .hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+  h1 em{
+    font-style:italic;color:#f2cba9;display:block;
+    margin-left:.36em;letter-spacing:0;
+  }
+  .hero-sub{color:#f2ebe0;max-width:44ch;margin:0 0 2.6rem;font-size:1.06rem;text-shadow:0 1px 20px rgba(24,16,10,.42)}
+  .hero-actions{display:flex;gap:2.25rem;flex-wrap:wrap;align-items:center}
   .hero .btn{background:#faf6f0;color:#2a2521;border-color:#faf6f0}
   .hero .btn:hover,.hero .btn:focus-visible{background:var(--terra);color:#fff;border-color:var(--terra)}
-  .hero .btn-ghost{color:#faf6f0;border-color:rgba(250,246,240,.5)}
-  .hero .btn-ghost:hover,.hero .btn-ghost:focus-visible{border-color:#fff;color:#fff}
+  .hero .link-quiet{color:#faf6f0}
+  .hero .link-quiet:hover,.hero .link-quiet:focus-visible{color:#f2cba9}
+  .hero :focus-visible{outline-color:#f2cba9}
+  /* Haarlinien statt Punkt-Pillen */
   .hero-meta{
-    margin-top:3rem;display:flex;gap:2.25rem;flex-wrap:wrap;
-    color:#d8cbb8;font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;
+    margin-top:3.25rem;display:flex;flex-wrap:wrap;row-gap:.5rem;
+    color:#e6d8c4;font-size:.69rem;text-transform:uppercase;letter-spacing:.18em;
   }
-  .hero-meta span{display:inline-flex;align-items:center;gap:.6rem}
-  .hero-meta span::before{content:"";width:5px;height:5px;border-radius:50%;background:#e7b48f}
+  .hero-meta span{padding:.15rem 1.6rem;border-left:1px solid rgba(231,180,143,.5)}
+  .hero-meta span:first-child{padding-left:0;border-left:none}
 
-  /* ---- Maison / philosophy ---- */
-  #haus{background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-  .phil-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2.5rem}
-  .phil-card{
-    padding:2rem 1.75rem;border:1px solid var(--border);border-radius:var(--r-md);
-    background:linear-gradient(180deg,rgba(255,255,255,.5),rgba(255,255,255,.15));
-    transition:border-color .4s var(--ease),transform .4s var(--ease),box-shadow .4s var(--ease);
+  /* ---- Brief aus dem Atelier (redaktioneller Bruch) ---- */
+  #brief{
+    background-color:var(--surface);
+    border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+    padding-block:clamp(4.5rem,8vw,7rem);
   }
-  .phil-card:hover{border-color:var(--blush);transform:translateY(-4px);box-shadow:0 18px 40px -28px rgba(120,70,45,.4)}
-  .phil-num{
-    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.4rem;
-    color:var(--terra);margin-bottom:1rem;display:block;
+  .brief-wrap{max-width:960px;margin:0 auto}
+  .brief-quote{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;
+    font-size:clamp(1.85rem,4.6vw,3.15rem);line-height:1.2;letter-spacing:-.008em;
+    color:var(--ink);max-width:24ch;margin:0 0 clamp(2.5rem,5vw,3.75rem);
+    text-indent:-.44em;text-wrap:balance;
   }
-  .phil-card h3{font-size:1.5rem;margin-bottom:.6rem}
-  .phil-card p{color:var(--muted);font-size:.95rem}
+  .brief-quote::before{content:"\201C";color:var(--terra)}
+  .brief-quote::after{content:"\201D";color:var(--terra)}
+  .brief-body{
+    max-width:54ch;margin-left:auto;
+    border-left:1px solid var(--hair);padding-left:clamp(1.25rem,3vw,2.75rem);
+    color:var(--muted);
+  }
+  .brief-body p+p{margin-top:1.2rem}
+  .brief-body p:first-child::first-letter{
+    float:left;font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:3.4rem;line-height:.78;padding:.06em .14em 0 0;
+    color:var(--terra-ink);
+  }
+  .brief-sign{
+    max-width:54ch;margin:clamp(2.25rem,4vw,3rem) 0 0 auto;
+    padding-left:clamp(1.25rem,3vw,2.75rem);
+  }
+  .brief-sign .sig{
+    display:block;font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:1.9rem;line-height:1.2;color:var(--ink);
+  }
+  .brief-sign .role{
+    display:block;margin-top:.45rem;
+    font-size:.68rem;text-transform:uppercase;letter-spacing:.2em;color:var(--muted-2);
+  }
+  .brief-sign .fiction{
+    display:block;margin-top:1.1rem;padding-top:.9rem;border-top:1px solid var(--hair);
+    font-size:.75rem;color:var(--muted-2);
+  }
 
-  /* ---- Lookbook ---- */
-  #lookbook .section-head{max-width:var(--maxw)}
-  .look-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-  .look{
-    position:relative;border-radius:var(--r-md);overflow:hidden;border:1px solid var(--border);
-    background:var(--surface);
-    transition:transform .55s var(--ease),box-shadow .55s var(--ease),border-color .55s var(--ease);
+  /* ---- Das Haus: Register statt Kartenraster ---- */
+  #haus{background-color:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .creed{list-style:none;border-top:1px solid var(--hair)}
+  .creed li{
+    position:relative;display:grid;
+    grid-template-columns:9rem minmax(0,1fr);gap:clamp(1rem,4vw,3.5rem);
+    padding:clamp(1.9rem,3.6vw,3rem) 0;border-bottom:1px solid var(--hair);
   }
-  .look:hover{
-    transform:translateY(-6px);border-color:var(--blush);
-    box-shadow:0 28px 52px -34px rgba(120,70,45,.55);
+  .creed li::after{
+    content:"";position:absolute;left:0;bottom:-1px;height:1px;width:0;
+    background:var(--terra);transition:width .28s var(--ease);
   }
-  .look-media{position:relative;overflow:hidden}
+  .creed li:hover::after{width:100%}
+  .creed-num{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.45rem;
+    line-height:1.25;color:var(--terra-ink);letter-spacing:.03em;
+  }
+  .creed h3{font-size:clamp(1.55rem,2.6vw,2rem);margin-bottom:.6rem}
+  .creed p{color:var(--muted);max-width:56ch;font-size:.98rem}
+
+  /* ---- Lookbook: asymmetrische Treppe, native Bildformate ---- */
+  #lookbook{padding-block:clamp(5.5rem,10vw,9.5rem)}
+  .look-grid{
+    display:grid;grid-template-columns:1.2fr 1fr 1.1fr;
+    gap:clamp(1.5rem,3vw,2.75rem);align-items:start;
+  }
+  /* Versatz erzeugt den redaktionellen Fall */
+  .look--b{margin-top:clamp(0rem,6vw,5rem)}
+  .look--c{margin-top:clamp(0rem,9.5vw,8rem)}
+  .look{position:relative;background:none;border:none}
+  .look-media{
+    position:relative;overflow:hidden;background:var(--bg-2);border-radius:var(--r-md);
+    clip-path:inset(0 0 100% 0);
+    transition:clip-path .95s var(--ease-soft);transition-delay:var(--d,0s);
+  }
+  .look.visible .look-media{clip-path:inset(0 0 0 0)}
   .look-media img{
-    width:100%;height:100%;object-fit:cover;aspect-ratio:4/5;
-    transition:transform .85s var(--ease);
+    width:100%;height:auto;object-fit:cover;
+    filter:saturate(.86) contrast(1.02);
+    transition:transform .64s var(--ease-soft),filter var(--t-micro) linear;
   }
-  .look:hover .look-media img{transform:scale(1.055)}
-  .look-body{padding:1.4rem 1.5rem 1.6rem}
-  .look-body h3{transition:color .45s var(--ease)}
-  .look:hover .look-body h3{color:var(--terra-ink)}
+  .look--a .look-media img{aspect-ratio:4/5}
+  .look--b .look-media img{aspect-ratio:1/1}
+  .look--c .look-media img{aspect-ratio:6/5}
+  .look:hover .look-media img,.look:focus-within .look-media img{
+    transform:scale(1.035);filter:saturate(1) contrast(1);
+  }
+  .look-body{
+    position:relative;margin-top:1.3rem;padding-top:1.3rem;
+    border-top:1px solid var(--border-2);
+  }
+  .look-body::before{
+    content:"";position:absolute;left:0;top:-1px;height:1px;width:0;
+    background:var(--terra);transition:width .28s var(--ease);
+  }
+  .look:hover .look-body::before{width:100%}
+  .look-kicker{
+    display:flex;align-items:baseline;gap:.85rem;margin-bottom:.55rem;
+  }
+  .look-index{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;
+    color:var(--terra-ink);line-height:1;letter-spacing:.05em;
+  }
   .look-cat{
-    font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--terra-ink);
-    display:block;margin-bottom:.5rem;
+    font-size:.67rem;text-transform:uppercase;letter-spacing:.18em;color:var(--muted-2);
   }
-  .look-body h3{font-size:1.5rem;line-height:1.12;margin-bottom:.4rem}
-  .look-body p{color:var(--muted);font-size:.9rem}
+  .look-body h3{font-size:1.55rem;line-height:1.12;margin-bottom:.45rem}
+  .look-desc{color:var(--muted);font-size:.92rem;max-width:34ch}
+  /* Herkunft & Pflege — dauerhaft sichtbar, nicht nur bei Hover */
+  .look-meta{margin-top:1.35rem}
+  .look-meta > div{
+    display:flex;justify-content:space-between;align-items:baseline;gap:1.25rem;
+    padding:.55rem 0;border-bottom:1px solid var(--hair);
+  }
+  .look-meta > div:first-child{border-top:1px solid var(--hair)}
+  .look-meta dt{
+    flex:none;font-size:.68rem;text-transform:uppercase;letter-spacing:.15em;
+    color:var(--muted-2);
+  }
+  .look-meta dd{color:var(--ink-soft);font-size:.82rem;text-align:right}
   .look-note{
-    margin-top:2.75rem;color:var(--muted-2);font-size:.82rem;max-width:60ch;
+    margin-top:clamp(3rem,5vw,4.5rem);padding-top:1.5rem;
+    border-top:1px solid var(--hair);
+    color:var(--muted-2);font-size:.82rem;max-width:64ch;
   }
   .look-note em{font-style:italic;color:var(--muted)}
 
-  /* ---- Atelier / materials ---- */
-  #atelier{background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-  .atelier-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+  /* ---- Atelier / Materialregister ---- */
+  #atelier{background-color:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .atelier-grid{
+    display:grid;grid-template-columns:.85fr 1.15fr;
+    gap:clamp(2.5rem,6vw,5rem);align-items:start;
+  }
+  .atelier-copy{position:sticky;top:7.5rem}
   .atelier-copy h2{margin-bottom:1.25rem}
-  .atelier-copy p{color:var(--muted);margin-bottom:1.1rem;max-width:48ch}
-  .materials{list-style:none;margin-top:2rem;display:grid;gap:.2rem}
+  .atelier-copy p{color:var(--muted);margin-bottom:1.1rem;max-width:46ch}
+  .materials{list-style:none;display:grid;border-top:1px solid var(--border-2)}
   .materials li{
-    display:flex;justify-content:space-between;align-items:baseline;gap:1.25rem;
-    padding:1rem 0;border-bottom:1px solid var(--border-2);
+    display:grid;grid-template-columns:minmax(0,1fr) auto;
+    gap:.4rem 1.5rem;padding:1.35rem 0;border-bottom:1px solid var(--border-2);
   }
-  .materials li:last-child{border-bottom:none}
-  .mat-name{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--ink)}
-  .mat-desc{color:var(--muted);font-size:.86rem;text-align:right;max-width:24ch}
+  .mat-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;line-height:1.15;color:var(--ink)}
+  .mat-origin{
+    align-self:center;text-align:right;white-space:nowrap;
+    font-size:.68rem;text-transform:uppercase;letter-spacing:.15em;color:var(--terra-ink);
+  }
+  .mat-desc{grid-column:1/-1;color:var(--muted);font-size:.9rem;max-width:46ch}
 
-  /* ---- Newsletter ---- */
-  #journal{text-align:center}
-  #journal .wrap{
-    max-width:660px;background:var(--surface);
-    border:1px solid var(--border);border-radius:var(--r-lg);
-    padding:clamp(2.5rem,5vw,4rem) clamp(1.5rem,5vw,3.5rem);
-    box-shadow:0 34px 74px -52px rgba(120,70,45,.42);
+  /* ---- Journal: dunkles Schlussband ---- */
+  #journal{
+    background-color:var(--ink);color:var(--cream);
+    padding-block:clamp(5rem,9vw,8.5rem);
   }
-  #journal .eyebrow{justify-content:center}
-  .news-form{
-    margin:2.5rem auto 0;max-width:480px;display:flex;gap:.75rem;
+  #journal :focus-visible{outline-color:var(--sand)}
+  #journal .eyebrow{color:var(--sand);border-top-color:var(--sand)}
+  #journal h2{color:var(--cream-2)}
+  #journal .section-intro{color:var(--cream-muted);margin-bottom:0}
+  .journal-grid{
+    display:grid;grid-template-columns:1.05fr .95fr;
+    gap:clamp(2.75rem,7vw,6rem);align-items:start;
   }
-  .news-form input{
-    flex:1;background:var(--bg);border:1px solid var(--border-2);border-radius:var(--r-pill);
-    padding:.9rem 1.4rem;color:var(--ink);font-family:'Inter',sans-serif;font-size:.95rem;
-    transition:border-color .25s var(--ease),box-shadow .25s var(--ease);
+  .journal-aside{
+    margin-top:2rem;padding-top:1.4rem;border-top:1px solid rgba(231,180,143,.3);
+    color:var(--cream-muted);font-size:.8rem;max-width:38ch;
   }
-  .news-form input::placeholder{color:var(--muted-2)}
-  .news-form input:focus{outline:none;border-color:var(--terra);box-shadow:0 0 0 3px rgba(176,104,72,.16)}
-  .news-form .btn{white-space:nowrap}
-  .form-note{font-size:.76rem;color:var(--muted-2);margin-top:1.1rem}
+  .news-form{display:grid;gap:1.75rem}
+  .field label{
+    display:block;margin-bottom:.7rem;
+    font-size:.67rem;text-transform:uppercase;letter-spacing:.2em;color:var(--cream-muted);
+  }
+  /* Unterstrichenes Feld statt Kapsel */
+  .field input{
+    width:100%;background:transparent;border:none;
+    border-bottom:1px solid rgba(231,180,143,.42);border-radius:0;
+    padding:.7rem 0;color:var(--cream-2);
+    font-family:'Inter',sans-serif;font-size:1.02rem;
+    transition:border-color var(--t-micro) var(--ease);
+  }
+  .field input::placeholder{color:#a39687}
+  .field input:focus{outline:none;border-bottom-color:var(--sand)}
+  .field input:focus-visible{outline:2px solid var(--sand);outline-offset:4px}
+  #journal .btn{background:var(--cream-2);color:var(--ink);border-color:var(--cream-2);justify-self:start}
+  #journal .btn:hover,#journal .btn:focus-visible{background:var(--blush);border-color:var(--blush);color:#211c18}
+  .form-note{font-size:.76rem;color:var(--cream-muted);margin-top:1.35rem;max-width:40ch}
   .form-confirm{
-    display:none;margin:2.25rem auto 0;max-width:480px;text-align:center;
-    padding:1.6rem 1.25rem;border:1px solid var(--blush);border-radius:var(--r-lg);
-    background:rgba(201,143,124,.1);
+    display:none;margin-top:.5rem;
+    padding:1.7rem 1.5rem;border:1px solid rgba(231,180,143,.45);border-radius:var(--r-lg);
+    background:rgba(231,180,143,.08);
   }
-  .form-confirm.show{display:block;animation:fade .5s var(--ease)}
-  .form-confirm h3{color:var(--terra-ink);font-size:1.6rem;margin-bottom:.35rem}
-  .form-confirm p{color:var(--muted);font-size:.92rem}
+  .form-confirm.show{display:block;animation:fade .45s var(--ease)}
+  .form-confirm h3{color:var(--sand);font-size:1.6rem;margin-bottom:.35rem}
+  .form-confirm p{color:var(--cream-muted);font-size:.92rem}
   form.done .news-form,form.done .form-note{display:none}
   @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
   /* ---- Footer ---- */
-  footer{border-top:1px solid var(--border);padding:3.5rem 6% 2.5rem;background:var(--surface)}
+  footer{border-top:1px solid var(--border);padding:4rem 6% 2.75rem;background-color:var(--surface)}
   .footer-inner{
     max-width:var(--maxw);margin:0 auto;
     display:flex;flex-wrap:wrap;gap:2rem;justify-content:space-between;align-items:flex-start;
@@ -299,42 +445,74 @@
   .footer-bottom a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
   .footer-bottom a:hover{color:var(--terra-ink)}
 
-  /* ---- Reveal on scroll ---- */
-  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+  /* ---- Reveal on scroll (weicher, gestaffelt) ---- */
+  .reveal{
+    opacity:0;transform:translateY(16px);
+    transition:opacity .8s var(--ease-soft),transform .8s var(--ease-soft);
+    transition-delay:var(--d,0s);
+  }
   .reveal.visible{opacity:1;transform:none}
+  .look-grid > .look:nth-child(2){--d:.1s}
+  .look-grid > .look:nth-child(3){--d:.2s}
+  .creed li:nth-child(2){--d:.08s}
+  .creed li:nth-child(3){--d:.16s}
+  .creed li:nth-child(4){--d:.24s}
+
   @media (prefers-reduced-motion:reduce){
-    .reveal{opacity:1;transform:none;transition:none}
-    .btn,.phil-card,.look,.look-media img,.look-body h3,.nav-links a::after{transition:none}
+    .reveal{opacity:1;transform:none;transition:none;transition-delay:0s}
+    .look-media{clip-path:none;transition:none;transition-delay:0s}
+    .btn,.link-quiet,.link-quiet .bar,.nav-links a,.nav-links a::after,.nav-cta,
+    .creed li::after,.look,.look-media img,.look-body::before,
+    .field input,.skip-link,.site-header,.footer-col a,.photo-credit a{transition:none}
+    /* Zoom entfällt ganz; Haarlinien bleiben als Zustand, nur ohne Übergang */
+    .look:hover .look-media img,.look:focus-within .look-media img{transform:none}
+    .form-confirm.show{animation:none}
   }
 
   /* ---- Responsive ---- */
+  @media (max-width:1000px){
+    .look-grid{grid-template-columns:1fr 1fr;gap:2rem}
+    .look--b{margin-top:3rem}
+    .look--c{margin-top:0;grid-column:1/-1;max-width:560px}
+    .journal-grid{grid-template-columns:1fr;gap:2.5rem}
+  }
   @media (max-width:900px){
-    .look-grid{grid-template-columns:1fr 1fr}
     .atelier-grid{grid-template-columns:1fr;gap:2.5rem}
-    .atelier-media{order:-1}
+    .atelier-copy{position:static}
+  }
+  @media (max-width:760px){
+    .brief-body,.brief-sign{margin-left:0;max-width:none;border-left:none;padding-left:0}
+    .brief-quote{max-width:none}
+    .creed li{grid-template-columns:1fr;gap:.5rem}
   }
   @media (max-width:640px){
     section{padding:4.5rem 7%}
+    #lookbook,#journal{padding-block:4.75rem}
     .nav-links,.nav-cta{display:none}
     .nav-toggle{
-      display:inline-flex;background:none;border:1px solid var(--border-2);
-      color:var(--ink);border-radius:6px;padding:.5rem .9rem;font-size:.72rem;
-      text-transform:uppercase;letter-spacing:.1em;cursor:pointer;
+      display:inline-flex;align-items:center;min-height:44px;
+      background:none;border:1px solid var(--border-2);
+      color:var(--ink);border-radius:var(--r-sm);padding:.55rem 1.05rem;font-size:.72rem;
+      text-transform:uppercase;letter-spacing:.14em;cursor:pointer;
     }
-    .hero{justify-content:flex-end;min-height:80vh}
-    .look-grid{grid-template-columns:1fr;gap:1.25rem}
-    .news-form{flex-direction:column}
-    .news-form .btn{width:100%}
-    .mat-desc{max-width:18ch}
-    .hero-meta{gap:1.25rem}
+    .hero{justify-content:flex-end;min-height:82vh;padding-top:7rem}
+    .hero-masthead{font-size:.62rem;letter-spacing:.18em}
+    .hero-actions{gap:1.25rem 2rem}
+    .look-grid{grid-template-columns:1fr;gap:2.75rem}
+    .look--a,.look--b,.look--c{margin-top:0;max-width:none}
+    .look-desc{max-width:none}
+    #journal .btn{width:100%}
+    .hero-meta{font-size:.66rem}
+    .hero-meta span{padding:.15rem 1rem}
     .footer-cols{gap:2rem}
   }
   .mobile-menu{display:none}
   .mobile-menu.open{display:block;background:var(--surface);border-bottom:1px solid var(--border)}
-  .mobile-menu ul{list-style:none;padding:1rem 7% 1.5rem;display:grid;gap:.25rem}
+  .mobile-menu ul{list-style:none;padding:.75rem 7% 1.5rem;display:grid}
   .mobile-menu a{
-    display:block;color:var(--ink);text-decoration:none;padding:.7rem 0;
-    font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid var(--border);
+    display:flex;align-items:center;min-height:48px;
+    color:var(--ink);text-decoration:none;padding:.7rem 0;
+    font-size:.82rem;text-transform:uppercase;letter-spacing:.14em;border-bottom:1px solid var(--border);
   }
 </style>
 </head>
@@ -350,20 +528,21 @@
     <nav aria-label="Hauptnavigation">
       <a class="logo" href="#top" aria-label="Maison Ravel — Startseite">Maison <span class="mark">Ravel</span></a>
       <ul class="nav-links">
+        <li><a href="#brief">Der Brief</a></li>
         <li><a href="#haus">Das Haus</a></li>
         <li><a href="#lookbook">Lookbook</a></li>
         <li><a href="#atelier">Atelier</a></li>
-        <li><a href="#journal">Journal</a></li>
       </ul>
-      <a class="nav-cta" href="#journal">Anmelden</a>
+      <a class="nav-cta" href="#journal">Journal abonnieren</a>
       <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobileMenu">Menü</button>
     </nav>
     <div class="mobile-menu" id="mobileMenu">
       <ul>
+        <li><a href="#brief">Der Brief</a></li>
         <li><a href="#haus">Das Haus</a></li>
         <li><a href="#lookbook">Lookbook</a></li>
         <li><a href="#atelier">Atelier</a></li>
-        <li><a href="#journal">Journal</a></li>
+        <li><a href="#journal">Journal abonnieren</a></li>
       </ul>
     </div>
   </header>
@@ -372,46 +551,80 @@
   <main id="hauptinhalt">
     <section class="hero" aria-labelledby="hero-title">
       <img class="hero-photo" src="assets/hero-boutique.jpg" alt="Ein Kunde prüft in einer warm beleuchteten Boutique ein weisses Hemd an der Kleiderstange" fetchpriority="high">
+      <p class="hero-masthead">
+        <span>Ausgabe N° 04</span>
+        <span class="mh-r">Herbst / Winter 2026</span>
+      </p>
       <div class="hero-inner">
-        <p class="eyebrow">Herbst / Winter · Kleine Auflage</p>
-        <h1 id="hero-title">Zeitlose Stücke, in <em>kleinen Auflagen</em>.</h1>
+        <p class="eyebrow">Kleine Auflage — 120 Stück</p>
+        <h1 id="hero-title">Kleidung, die <em>bleiben darf.</em></h1>
         <p class="hero-sub">Maison Ravel ist ein feines Modehaus für reduzierte Formen und natürliche Materialien — sorgfältig gefertigt, gemacht, um zu bleiben.</p>
         <div class="hero-actions">
           <a href="#lookbook" class="btn">Lookbook ansehen</a>
-          <a href="#atelier" class="btn-ghost">Unser Atelier</a>
+          <a href="#brief" class="link-quiet">Aus der Werkstatt<span class="bar" aria-hidden="true"></span></a>
         </div>
         <div class="hero-meta">
           <span>Natürliche Materialien</span>
           <span>In Handarbeit gefertigt</span>
-          <span>Limitierte Serien</span>
+          <span>Reparatur inbegriffen</span>
         </div>
       </div>
     </section>
 
-    <section id="haus" aria-labelledby="haus-title">
+    <section id="brief" class="band" aria-labelledby="brief-title">
+      <div class="brief-wrap">
+        <p class="eyebrow reveal">Aus der Werkstatt</p>
+        <h2 class="brief-quote reveal" id="brief-title" style="--d:.06s">Wir entwerfen für den zweiten Winter, nicht für die erste Saison.</h2>
+        <div class="brief-body reveal" style="--d:.12s">
+          <p>Am Anfang von Maison Ravel stand keine Kollektion, sondern eine Liste: Dinge, die uns an Kleidung stören. Nähte, die nach einem Jahr nachgeben. Farben, die man genau einen Sommer lang gern trägt. Etiketten, die mehr versprechen, als das Stück halten kann.</p>
+          <p>Geblieben ist davon eine einfache Arbeitsweise. Wir schneiden wenige Modelle, tragen sie über mehrere Saisons selbst und ändern erst, wenn wir wissen, warum. Was gut ist, bleibt im Programm — auch dann, wenn es längst nicht mehr neu ist.</p>
+          <p>Wer ein Stück von uns kauft, soll es in fünf Jahren noch anziehen. Alles Weitere ergibt sich daraus.</p>
+        </div>
+        <p class="brief-sign reveal" style="--d:.18s">
+          <span class="sig">Camille Ravel</span>
+          <span class="role">Gründerin &amp; Schnittdirektrice</span>
+          <span class="fiction">Camille Ravel ist eine erfundene Person. Dieser Brief gehört zur Konzept-Demo und beschreibt keine reale Marke.</span>
+        </p>
+      </div>
+    </section>
+
+    <section id="haus" class="band" aria-labelledby="haus-title">
       <div class="wrap">
         <div class="section-head reveal">
           <p class="eyebrow">Das Haus</p>
-          <h2 id="haus-title">Drei Überzeugungen, in jedes Stück eingearbeitet</h2>
-          <p class="section-intro">Maison Ravel ist keine Kollektion für eine Saison. Was uns leitet, lässt sich in drei Gedanken fassen.</p>
+          <h2 id="haus-title">Vier Grundsätze, in jedes Stück eingearbeitet</h2>
+          <p class="section-intro">Maison Ravel ist keine Kollektion für eine Saison. Was uns leitet, steht auf einer kurzen Liste — und daran halten wir uns auch dann, wenn es länger dauert.</p>
         </div>
-        <div class="phil-grid">
-          <div class="phil-card reveal">
-            <span class="phil-num">01</span>
-            <h3>Natürliche Materialien</h3>
-            <p>Merinowolle, Leinen, pflanzlich gegerbtes Leder — Fasern, die schön altern und sich mit den Jahren an ihre Trägerin gewöhnen.</p>
-          </div>
-          <div class="phil-card reveal">
-            <span class="phil-num">02</span>
-            <h3>Reduzierte Formen</h3>
-            <p>Klare Linien statt lauter Trends. Jedes Stück ist so entworfen, dass es in fünf Jahren noch dieselbe Ruhe ausstrahlt wie heute.</p>
-          </div>
-          <div class="phil-card reveal">
-            <span class="phil-num">03</span>
-            <h3>Kleine Auflagen</h3>
-            <p>Wir fertigen in überschaubaren Serien, nicht auf Vorrat. Weniger, dafür mit Sorgfalt und ohne Eile hergestellt.</p>
-          </div>
-        </div>
+        <ol class="creed">
+          <li class="reveal">
+            <p class="creed-num" aria-hidden="true">N° 01</p>
+            <div>
+              <h3>Natürliche Materialien</h3>
+              <p>Merinowolle, Leinen, pflanzlich gegerbtes Leder — Fasern, die schön altern und sich mit den Jahren an ihre Trägerin gewöhnen.</p>
+            </div>
+          </li>
+          <li class="reveal">
+            <p class="creed-num" aria-hidden="true">N° 02</p>
+            <div>
+              <h3>Reduzierte Formen</h3>
+              <p>Klare Linien statt lauter Trends. Jedes Stück ist so entworfen, dass es in fünf Jahren noch dieselbe Ruhe ausstrahlt wie heute.</p>
+            </div>
+          </li>
+          <li class="reveal">
+            <p class="creed-num" aria-hidden="true">N° 03</p>
+            <div>
+              <h3>Kleine Auflagen</h3>
+              <p>Wir fertigen in überschaubaren Serien, nicht auf Vorrat. Weniger, dafür mit Sorgfalt und ohne Eile hergestellt.</p>
+            </div>
+          </li>
+          <li class="reveal">
+            <p class="creed-num" aria-hidden="true">N° 04</p>
+            <div>
+              <h3>Instandsetzung statt Ersatz</h3>
+              <p>Jedes Stück darf zurück ins Atelier: nachsäumen, stopfen, Leder nähren. Reparieren ist bei uns Teil des Entwurfs, nicht dessen Eingeständnis.</p>
+            </div>
+          </li>
+        </ol>
       </div>
     </section>
 
@@ -422,94 +635,129 @@
           <h2 id="look-title">Materialien &amp; Formen der Saison</h2>
           <p class="section-intro">Eine editoriale Auswahl, die Stimmung und Handschrift des Hauses zeigt — vom Abendmantel bis zur Umhängetasche.</p>
         </div>
-        <div class="look-grid reveal">
-          <article class="look">
+        <div class="look-grid">
+          <article class="look look--a reveal">
             <div class="look-media">
               <img src="assets/look-eveningwear.jpg" alt="Schwarzer Abendmantel aus Samt mit fächerförmigem, silbern gesticktem Sonnenmuster auf einer Schneiderpuppe" loading="lazy" width="1000" height="1250">
             </div>
             <div class="look-body">
-              <span class="look-cat">Abendgarderobe</span>
+              <p class="look-kicker">
+                <span class="look-index" aria-hidden="true">I</span>
+                <span class="look-cat">Abendgarderobe</span>
+              </p>
               <h3>Der Samtmantel</h3>
-              <p>Fliessender Seidensamt, dramatisch gehalten durch eine einzige, fächerförmig auslaufende Stickerei.</p>
+              <p class="look-desc">Fliessender Seidensamt, dramatisch gehalten durch eine einzige, fächerförmig auslaufende Stickerei.</p>
+              <dl class="look-meta">
+                <div><dt>Material</dt><dd>Seidensamt, Kupro-Futter</dd></div>
+                <div><dt>Fertigung</dt><dd>Atelier Lyon · 34 Std.</dd></div>
+                <div><dt>Pflege</dt><dd>Fachreinigung, hängend lagern</dd></div>
+              </dl>
             </div>
           </article>
-          <article class="look">
+          <article class="look look--b reveal">
             <div class="look-media">
               <img src="assets/look-knitwear.jpg" alt="Tannengrüner Pullover aus Rippstrick mit V-Ausschnitt auf einer Leinen-Schneiderpuppe vor hellem Hintergrund" loading="lazy" width="1100" height="1100">
             </div>
             <div class="look-body">
-              <span class="look-cat">Strick</span>
+              <p class="look-kicker">
+                <span class="look-index" aria-hidden="true">II</span>
+                <span class="look-cat">Strick</span>
+              </p>
               <h3>Der Rippenpullover</h3>
-              <p>Dicht gestrickte Wolle mit tiefem V-Ausschnitt — ein ruhiges Stück, das Struktur über Farbe stellt.</p>
+              <p class="look-desc">Dicht gestrickte Wolle mit tiefem V-Ausschnitt — ein ruhiges Stück, das Struktur über Farbe stellt.</p>
+              <dl class="look-meta">
+                <div><dt>Material</dt><dd>Merinowolle, 19,5 Mikron</dd></div>
+                <div><dt>Fertigung</dt><dd>Strickerei Biella · 11 Std.</dd></div>
+                <div><dt>Pflege</dt><dd>Handwäsche kalt, flach trocknen</dd></div>
+              </dl>
             </div>
           </article>
-          <article class="look">
+          <article class="look look--c reveal">
             <div class="look-media">
               <img src="assets/look-accessory.jpg" alt="Cognacfarbene Umhängetasche aus pflanzlich gegerbtem Leder mit geprägtem Spiralmotiv und schlanker Schulterlasche" loading="lazy" width="1200" height="996">
             </div>
             <div class="look-body">
-              <span class="look-cat">Accessoires</span>
+              <p class="look-kicker">
+                <span class="look-index" aria-hidden="true">III</span>
+                <span class="look-cat">Accessoires</span>
+              </p>
               <h3>Die Ledertasche</h3>
-              <p>Pflanzlich gegerbtes Leder in warmem Cognac, von Hand genäht und mit einem einzigen Prägemotiv veredelt.</p>
+              <p class="look-desc">Pflanzlich gegerbtes Leder in warmem Cognac, von Hand genäht und mit einem einzigen Prägemotiv veredelt.</p>
+              <dl class="look-meta">
+                <div><dt>Material</dt><dd>Rindsleder, pflanzlich gegerbt</dd></div>
+                <div><dt>Fertigung</dt><dd>Sattlerei Wallis · 9 Std.</dd></div>
+                <div><dt>Pflege</dt><dd>Halbjährlich Lederbalsam</dd></div>
+              </dl>
             </div>
           </article>
         </div>
-        <p class="look-note reveal"><em>Hinweis:</em> Die gezeigten Fotografien illustrieren Stil und Materialstimmung des Konzepts. Es handelt sich um frei lizenzierte Aufnahmen realer Kleidungs- und Sammlungsstücke, nicht um käufliche Artikel — Namen, Preise und Kollektion sind fiktiv.</p>
+        <p class="look-note reveal"><em>Hinweis:</em> Die gezeigten Fotografien illustrieren Stil und Materialstimmung des Konzepts. Es handelt sich um frei lizenzierte Aufnahmen realer Kleidungs- und Sammlungsstücke, nicht um käufliche Artikel — Namen, Personen, Herkunftsangaben, Preise und Kollektion sind fiktiv.</p>
       </div>
     </section>
 
-    <section id="atelier" aria-labelledby="atelier-title">
+    <section id="atelier" class="band" aria-labelledby="atelier-title">
       <div class="wrap atelier-grid">
         <div class="atelier-copy reveal">
           <p class="eyebrow">Aus dem Atelier</p>
           <h2 id="atelier-title">Wenige Materialien, gut gewählt</h2>
           <p>Wir arbeiten bewusst mit einer knappen Palette an Fasern. Jede muss zwei Prüfungen bestehen: Sie soll sich gut anfühlen — und über Jahre schön altern.</p>
-          <p>Zugeschnitten und genäht wird in kleinen Werkstätten, mit Zeit für die Details, die man erst auf den zweiten Blick bemerkt.</p>
+          <p>Zugeschnitten und genäht wird in kleinen Werkstätten, mit Zeit für die Details, die man erst auf den zweiten Blick bemerkt. Wo ein Stück herkommt, steht bei jedem Look — so wie es sich gehört.</p>
         </div>
-        <div class="atelier-media reveal">
+        <div class="atelier-media reveal" style="--d:.1s">
+          <h3 class="visually-hidden">Materialien und ihre Herkunft</h3>
           <ul class="materials">
             <li>
               <span class="mat-name">Merinowolle</span>
-              <span class="mat-desc">temperaturausgleichend, fein und langlebig</span>
+              <span class="mat-origin">Biella, IT</span>
+              <span class="mat-desc">Temperaturausgleichend, fein gesponnen und über Jahre formstabil.</span>
             </li>
             <li>
               <span class="mat-name">Leinen</span>
-              <span class="mat-desc">kühl im Griff, mit gewollter Struktur</span>
+              <span class="mat-origin">Normandie, FR</span>
+              <span class="mat-desc">Kühl im Griff, mit gewollter Struktur, die mit jedem Waschgang weicher wird.</span>
             </li>
             <li>
               <span class="mat-name">Seidensamt</span>
-              <span class="mat-desc">für Stücke, die den Abend tragen</span>
+              <span class="mat-origin">Como, IT</span>
+              <span class="mat-desc">Schwer fallend und lichtempfindlich — für die wenigen Stücke, die den Abend tragen.</span>
             </li>
             <li>
               <span class="mat-name">Pflanzenleder</span>
-              <span class="mat-desc">natürlich gegerbt, altert zu einer Patina</span>
+              <span class="mat-origin">Wallis, CH</span>
+              <span class="mat-desc">Ohne Chrom gegerbt, dunkelt nach und altert zu einer warmen Patina.</span>
             </li>
           </ul>
         </div>
       </div>
     </section>
 
-    <section id="journal" aria-labelledby="journal-title">
-      <div class="wrap">
-        <p class="eyebrow">Journal</p>
-        <h2 id="journal-title">Neue Serien zuerst erfahren</h2>
-        <p class="section-intro" style="margin:0 auto 0;max-width:46ch">Ein bis zwei Briefe pro Saison: neue Stücke, Blicke ins Atelier und limitierte Auflagen, bevor sie öffentlich werden.</p>
-        <form id="newsForm" novalidate>
+    <section id="journal" class="band" aria-labelledby="journal-title">
+      <div class="wrap journal-grid">
+        <div class="reveal">
+          <p class="eyebrow">Journal</p>
+          <h2 id="journal-title">Neue Serien zuerst erfahren</h2>
+          <p class="section-intro">Ein bis zwei Briefe pro Saison: neue Stücke, Blicke ins Atelier und limitierte Auflagen, bevor sie öffentlich werden.</p>
+          <p class="journal-aside">Kein Wochenrhythmus, keine Rabattaktionen. Abmelden geht mit einem Klick am Fuss jedes Briefs.</p>
+        </div>
+        <form id="newsForm" class="reveal" style="--d:.1s" novalidate>
           <div class="news-form">
-            <input type="email" id="news-mail" name="email" placeholder="E-Mail-Adresse" autocomplete="email" aria-label="E-Mail-Adresse" required>
-            <button type="submit" class="btn">Anmelden</button>
+            <div class="field">
+              <label for="news-mail">E-Mail-Adresse</label>
+              <input type="email" id="news-mail" name="email" placeholder="name@beispiel.ch" autocomplete="email" required>
+            </div>
+            <button type="submit" class="btn">Journal abonnieren</button>
           </div>
           <p class="form-note">Demo-Formular — es wird nichts gesendet oder gespeichert.</p>
           <div class="form-confirm" id="formConfirm" role="status" aria-live="polite">
             <h3>Merci vielmal!</h3>
-            <p>Ihre Anmeldung wäre nun eingetragen — dies ist eine Konzeptseite, daher wird nichts wirklich versendet.</p>
+            <p>Ihre Anmeldung wäre nun eingetragen — dies ist eine Konzeptseite, daher wird nichts wirklich versendet oder gespeichert.</p>
           </div>
         </form>
       </div>
     </section>
   </main>
 
-  <footer>
+  <footer class="band">
     <div class="footer-inner">
       <div class="footer-brand">
         <span class="logo">Maison <span class="mark">Ravel</span></span>
@@ -519,6 +767,7 @@
         <div class="footer-col">
           <h4>Entdecken</h4>
           <ul>
+            <li><a href="#brief">Der Brief</a></li>
             <li><a href="#haus">Das Haus</a></li>
             <li><a href="#lookbook">Lookbook</a></li>
             <li><a href="#atelier">Atelier</a></li>
@@ -531,6 +780,7 @@
             <li>Kleine Auflagen</li>
             <li>Natürliche Materialien</li>
             <li>In Handarbeit gefertigt</li>
+            <li>Reparatur inbegriffen</li>
           </ul>
         </div>
       </div>
@@ -558,13 +808,21 @@
     // Mobile menu toggle
     const toggle = document.getElementById('navToggle');
     const mobile = document.getElementById('mobileMenu');
+    const closeMenu = (refocus) => {
+      if (!mobile.classList.contains('open')) return;
+      mobile.classList.remove('open');
+      toggle.setAttribute('aria-expanded','false');
+      if (refocus) toggle.focus();
+    };
     toggle.addEventListener('click', () => {
       const open = mobile.classList.toggle('open');
       toggle.setAttribute('aria-expanded', open);
     });
     mobile.addEventListener('click', e => {
-      if (e.target.tagName === 'A') { mobile.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); }
+      if (e.target.tagName === 'A') closeMenu(false);
     });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(true); });
+    window.addEventListener('resize', () => { if (window.innerWidth > 640) closeMenu(false); });
 
     // Reveal on scroll
     const reveals = document.querySelectorAll('.reveal');
@@ -577,6 +835,24 @@
       reveals.forEach(el => io.observe(el));
     } else {
       reveals.forEach(el => el.classList.add('visible'));
+    }
+
+    // Aktiver Abschnitt in der Navigation
+    const navMap = new Map();
+    document.querySelectorAll('.nav-links a[href^="#"]').forEach(a => {
+      navMap.set(a.getAttribute('href').slice(1), a);
+    });
+    const spySections = [...navMap.keys()].map(id => document.getElementById(id)).filter(Boolean);
+    if ('IntersectionObserver' in window && spySections.length) {
+      const spy = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const link = navMap.get(entry.target.id);
+          if (!link) return;
+          if (entry.isIntersecting) link.setAttribute('aria-current','true');
+          else link.removeAttribute('aria-current');
+        });
+      }, {rootMargin:'-45% 0px -50% 0px'});
+      spySections.forEach(s => spy.observe(s));
     }
 
     // Newsletter — graceful inline confirmation, no backend

@@ -36,6 +36,8 @@
     --muted-2:#7e867f;
     --maxw:1200px;
     --ease:cubic-bezier(.22,1,.36,1);
+    --punch:cubic-bezier(.16,1,.3,1);
+    --snap:cubic-bezier(.3,.9,.25,1);
   }
   html{scroll-behavior:smooth}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
@@ -57,8 +59,13 @@
   .skip-link:focus{top:1rem}
   :focus-visible{outline:2px solid var(--sage);outline-offset:3px;border-radius:3px}
   /* On sage-filled controls, add a dark separator so the ring stays legible against any surface */
-  .btn:focus-visible,.nav-cta:focus-visible,.billing-toggle button.active:focus-visible{
+  .btn:focus-visible,.nav-cta:focus-visible,.billing-toggle button.active:focus-visible,
+  .cta-panel .btn:focus-visible{
     outline-color:var(--sage-bright);box-shadow:0 0 0 3px #04110c
+  }
+  .vh{
+    position:absolute!important;width:1px;height:1px;overflow:hidden;
+    clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;
   }
 
   /* ---- Disclosure banner ---- */
@@ -112,6 +119,23 @@
   }
   .nav-cta:hover,.nav-cta:focus-visible{background:var(--sage-bright);transform:translateY(-1px);box-shadow:0 8px 22px -10px rgba(127,188,167,.6)}
   .nav-toggle{display:none}
+  .nav-right{display:flex;align-items:center;gap:1.35rem}
+  .nav-live{
+    display:inline-flex;align-items:center;gap:.5rem;
+    color:var(--muted);font-size:.68rem;text-transform:uppercase;letter-spacing:.14em;font-weight:600;
+  }
+  @media (max-width:1080px){.nav-live{display:none}}
+
+  /* ---- Live pip (shared by header + Puls-Strip) ---- */
+  .pip{
+    position:relative;width:8px;height:8px;border-radius:50%;
+    background:var(--sage);flex:none;
+  }
+  .pip::after{
+    content:"";position:absolute;inset:0;border-radius:50%;border:1px solid var(--sage);
+    animation:ping 2.6s var(--ease) infinite;
+  }
+  @keyframes ping{0%{transform:scale(1);opacity:.7}70%,100%{transform:scale(3.4);opacity:0}}
 
   /* ---- Buttons ---- */
   .btn{
@@ -129,22 +153,47 @@
     transition:border-color .3s var(--ease),color .3s var(--ease),background .3s var(--ease);
   }
   .btn-ghost:hover,.btn-ghost:focus-visible{border-color:var(--sage);color:var(--sage)}
+  .link-arrow{
+    display:inline-flex;align-items:center;gap:.6rem;min-height:44px;
+    color:var(--sage);text-decoration:none;font-size:.78rem;font-weight:600;
+    text-transform:uppercase;letter-spacing:.12em;
+    transition:color .2s var(--snap);
+  }
+  .link-arrow svg{width:18px;height:18px;stroke:currentColor;stroke-width:1.9;fill:none;stroke-linecap:round;stroke-linejoin:round;transition:transform .22s var(--punch)}
+  .link-arrow:hover,.link-arrow:focus-visible{color:var(--sage-bright)}
+  .link-arrow:hover svg,.link-arrow:focus-visible svg{transform:translateX(5px)}
 
   /* ---- Layout ---- */
-  section{padding:6rem 6%}
+  /* Rhythm is deliberately uneven: the status strip sits tight under the hero,
+     the editorial sections breathe, the marquee has no padding at all. */
+  section{padding:7rem 6%}
   .wrap{max-width:var(--maxw);margin:0 auto}
   .eyebrow{
-    color:var(--sage);text-transform:uppercase;letter-spacing:.22em;
-    font-size:.72rem;font-weight:600;margin-bottom:1.15rem;
-    display:inline-flex;align-items:center;gap:.7rem;
+    color:var(--sage);text-transform:uppercase;letter-spacing:.2em;
+    font-size:.71rem;font-weight:600;margin-bottom:1.4rem;
+    display:flex;align-items:center;gap:.85rem;
   }
-  .eyebrow::before{content:"";width:26px;height:2px;background:var(--sage);opacity:.8}
+  .eyebrow .idx{
+    font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;
+    color:var(--terra-bright);letter-spacing:.05em;
+    padding-right:.85rem;border-right:1px solid var(--border-2);
+  }
   h1,h2,h3,h4{font-family:'Barlow Condensed',sans-serif;font-weight:700;line-height:1.02;text-transform:uppercase;letter-spacing:.01em;text-wrap:balance}
-  h2{font-size:clamp(2.3rem,5vw,3.6rem);margin-bottom:1rem}
+  h2{font-size:clamp(2.3rem,5.2vw,3.7rem);margin-bottom:1rem}
   h2 em{font-style:normal;color:var(--sage)}
   .section-intro{color:var(--muted);max-width:56ch;margin-bottom:3.5rem;font-size:1.03rem;line-height:1.7;text-wrap:pretty}
-  .section-head{margin-bottom:3.5rem;max-width:var(--maxw)}
-  .section-head .section-intro{margin-bottom:0}
+  /* Headline left, intro right — a two-column masthead instead of a stacked block */
+  .section-head{
+    display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);
+    gap:.6rem 4rem;align-items:end;margin-bottom:3.75rem;
+  }
+  .section-head .eyebrow{grid-column:1/-1}
+  .section-head h2{margin-bottom:0}
+  .section-head .section-intro{margin-bottom:.4rem;max-width:50ch}
+  /* Type-mask reveal: headlines rise out of their own line box */
+  .rise{display:block;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em}
+  .rise > span{display:block;transform:translateY(106%);transition:transform .75s var(--punch)}
+  .visible .rise > span,.rise.visible > span{transform:none}
 
   /* ---- Hero ---- */
   .hero{
@@ -164,6 +213,14 @@
       radial-gradient(60% 50% at 12% 88%, rgba(127,188,167,.22), transparent 70%);
   }
   .hero-inner{max-width:var(--maxw);margin:0 auto;width:100%}
+  /* Staggered entrance — the page arrives with weight instead of fading in */
+  .hero-inner > *{animation:heroIn .85s var(--punch) both}
+  .hero-inner > *:nth-child(1){animation-delay:.06s}
+  .hero-inner > *:nth-child(2){animation-delay:.13s}
+  .hero-inner > *:nth-child(3){animation-delay:.22s}
+  .hero-inner > *:nth-child(4){animation-delay:.3s}
+  .hero-inner > *:nth-child(5){animation-delay:.38s}
+  @keyframes heroIn{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
   .badge{
     display:inline-flex;align-items:center;gap:.55rem;
     background:rgba(127,188,167,.12);border:1px solid rgba(127,188,167,.5);
@@ -177,84 +234,237 @@
   h1 em{font-style:normal;color:var(--sage)}
   .hero-sub{color:#dfe6e1;max-width:48ch;margin:0 0 2.4rem;font-size:1.12rem;line-height:1.6;text-wrap:pretty}
   .hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
-  .hero-meta{
-    margin-top:3.2rem;display:flex;gap:2.5rem;flex-wrap:wrap;
-    color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.13em;font-weight:500;
+  /* Hard-ruled fact rail instead of soft pills */
+  .hero-rail{
+    margin-top:3.4rem;display:flex;flex-wrap:wrap;gap:1.3rem 0;
+    border-top:1px solid rgba(255,255,255,.16);padding-top:1.4rem;
   }
-  .hero-meta span{display:inline-flex;align-items:center;gap:.6rem}
-  .hero-meta span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--sage)}
+  .hero-rail div{margin-right:2.4rem;padding-right:2.4rem;border-right:1px solid rgba(255,255,255,.13)}
+  .hero-rail div:last-child{border-right:0;padding-right:0;margin-right:0}
+  .hero-rail dt{
+    color:var(--sage);font-size:.68rem;text-transform:uppercase;
+    letter-spacing:.18em;font-weight:600;margin-bottom:.25rem;
+  }
+  .hero-rail dd{
+    font-family:'Barlow Condensed',sans-serif;font-weight:600;text-transform:uppercase;
+    font-size:1.35rem;letter-spacing:.03em;line-height:1.1;color:#fff;
+  }
+  /* Rotated edge marker — a print detail, not a template pill */
+  .hero-edge{
+    position:absolute;right:1.4rem;bottom:4.5rem;z-index:2;
+    writing-mode:vertical-rl;
+    color:rgba(255,255,255,.72);text-shadow:0 1px 8px rgba(0,0,0,.9);font-size:.68rem;font-weight:600;
+    text-transform:uppercase;letter-spacing:.34em;
+    display:flex;align-items:center;gap:.9rem;
+  }
+  .hero-edge::after{content:"";width:1px;height:70px;background:linear-gradient(180deg,rgba(127,188,167,.9),transparent)}
+  @media (max-width:900px){.hero-edge{display:none}}
 
-  /* ---- Advantages (icon grid) ---- */
-  #vorteile{background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-  .icon-grid{
-    display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;
+  /* ---- Puls-Strip: Live-Status, Tagesandrang, Standort ---- */
+  #puls{padding:3.25rem 6% 3.75rem;background:var(--bg-2);border-bottom:1px solid var(--border)}
+  /* hairline grid: cells share 1px gaps instead of floating as separate cards */
+  .puls-grid{
+    display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.5fr) minmax(0,.95fr);
+    gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden;
   }
+  .puls-cell{background:var(--bg-2);padding:1.85rem 1.7rem;min-width:0}
+  .puls-cell h3{
+    font-family:'Inter',sans-serif;font-weight:600;font-size:.71rem;text-transform:uppercase;
+    letter-spacing:.18em;color:var(--muted);margin-bottom:1.1rem;line-height:1.4;
+  }
+  .live{
+    display:inline-flex;align-items:center;gap:.6rem;margin-bottom:.9rem;
+    color:var(--sage-bright);font-size:.71rem;font-weight:600;
+    text-transform:uppercase;letter-spacing:.18em;
+  }
+  .clock{
+    font-family:'Barlow Condensed',sans-serif;font-weight:700;
+    font-size:clamp(2.4rem,4vw,3.1rem);line-height:.95;letter-spacing:.02em;
+    font-variant-numeric:tabular-nums;display:flex;align-items:baseline;
+    flex-wrap:wrap;gap:.2rem .55rem;
+  }
+  .clock .tz{
+    font-family:'Inter',sans-serif;font-weight:500;font-size:.72rem;color:var(--muted);
+    text-transform:uppercase;letter-spacing:.14em;white-space:nowrap;
+  }
+  .puls-line{
+    display:flex;justify-content:space-between;gap:1rem;align-items:baseline;
+    margin-top:1.3rem;padding-top:.9rem;border-top:1px solid var(--border);
+    font-size:.82rem;color:var(--muted);
+  }
+  .puls-line b{color:var(--sage);font-weight:600;text-transform:uppercase;letter-spacing:.08em;font-size:.76rem;white-space:nowrap}
+  .puls-now{color:var(--text);font-size:.92rem;line-height:1.55;max-width:46ch}
+  .load-chart{display:flex;align-items:flex-end;gap:2px;height:92px;margin-top:1.4rem}
+  .load-bar{flex:1 1 0;height:100%;display:flex;align-items:flex-end;min-width:0}
+  .load-bar i{
+    position:relative;z-index:1;
+    display:block;width:100%;height:calc(var(--v) * 1%);border-radius:2px 2px 0 0;
+    background:linear-gradient(180deg,var(--sage-deep),#27403a);
+    transition:height .6s var(--punch),background .2s var(--snap);
+  }
+  .load-chart:not(.charged) .load-bar i{height:3px}
+  .load-bar.now i{background:linear-gradient(180deg,var(--terra-bright),var(--terra));box-shadow:0 0 18px -4px rgba(209,107,70,.7)}
+  /* the current hour keeps a soft marker even before the bars grow in */
+  .load-bar.now{position:relative}
+  .load-bar.now::before{
+    content:"";position:absolute;left:0;right:0;top:0;bottom:0;
+    background:rgba(209,107,70,.09);border-radius:3px;
+  }
+  .load-axis{
+    display:flex;justify-content:space-between;margin-top:.55rem;padding-top:.5rem;
+    border-top:1px solid var(--border);
+    color:var(--muted-2);font-size:.68rem;letter-spacing:.12em;font-variant-numeric:tabular-nums;
+  }
+  .puls-fine{margin-top:1rem;color:var(--muted-2);font-size:.72rem;line-height:1.6}
+  .loc-list{list-style:none;display:grid;gap:.85rem;margin-bottom:1rem}
+  .loc-list li{display:flex;gap:.7rem;align-items:flex-start;color:var(--muted);font-size:.88rem;line-height:1.5}
+  .loc-list svg{width:17px;height:17px;flex:none;margin-top:.2rem;stroke:var(--sage);stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+  /* ---- Kinetische Laufschrift ---- */
+  .marquee{
+    position:relative;overflow:hidden;padding:0;
+    border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+    background:linear-gradient(180deg,#070a09,#000);
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+            mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+  }
+  .marquee-track{display:flex;width:max-content;animation:slide 34s linear infinite}
+  .marquee:hover .marquee-track,.marquee:focus-within .marquee-track{animation-play-state:paused}
+  .marquee-group{
+    display:flex;align-items:center;gap:2.2rem;padding:1.3rem 1.1rem;white-space:nowrap;
+    font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;
+    font-size:clamp(2.4rem,6.5vw,4.6rem);line-height:1;letter-spacing:.03em;
+  }
+  .marquee-group span{color:#fff}
+  .marquee-group .hollow{color:#121715;-webkit-text-stroke:1px rgba(127,188,167,.55)}
+  .marquee-group .dot-sep{color:var(--terra-bright);font-size:.5em;transform:translateY(-.18em)}
+  @keyframes slide{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+
+  /* ---- Advantages (bento) ---- */
+  #vorteile{background:var(--bg-2);border-bottom:1px solid var(--border)}
+  .bento{display:grid;grid-template-columns:repeat(6,1fr);gap:1rem}
   .tile{
-    padding:1.85rem 1.6rem;border:1px solid var(--border);border-radius:10px;
-    background:linear-gradient(180deg,rgba(255,255,255,.022),transparent);
-    transition:border-color .4s var(--ease),transform .4s var(--ease),background .4s var(--ease);
-  }
-  .tile:hover{border-color:var(--sage-deep);transform:translateY(-4px);background:linear-gradient(180deg,rgba(127,188,167,.06),transparent)}
-  .tile .ico{
-    width:44px;height:44px;border-radius:9px;display:grid;place-items:center;margin-bottom:1.1rem;
-    background:rgba(127,188,167,.1);border:1px solid rgba(127,188,167,.22);color:var(--sage);
-    transition:background .4s var(--ease),border-color .4s var(--ease),color .4s var(--ease);
-  }
-  .tile:hover .ico{background:rgba(127,188,167,.17);border-color:rgba(127,188,167,.42);color:var(--sage-bright)}
-  .tile .ico svg{width:22px;height:22px;stroke:currentColor;stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}
-  .tile h3{font-size:1.28rem;margin-bottom:.4rem;letter-spacing:.02em}
-  .tile p{color:var(--muted);font-size:.9rem;line-height:1.6}
-
-  /* ---- Classes ---- */
-  .class-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-  .class-card{
-    position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--border);
+    position:relative;grid-column:span 2;overflow:hidden;
+    padding:1.85rem 1.6rem 1.75rem;border:1px solid var(--border);border-radius:12px;
     background:var(--surface);
-    transition:border-color .4s var(--ease),transform .4s var(--ease),box-shadow .4s var(--ease);
+    transition:border-color .22s var(--snap),background .22s var(--snap);
   }
-  .class-card:hover{border-color:var(--sage-deep);transform:translateY(-4px);box-shadow:0 22px 50px -30px rgba(0,0,0,.9)}
-  .class-media{position:relative;overflow:hidden;aspect-ratio:4/5}
-  .class-media img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
-  .class-card:hover .class-media img{transform:scale(1.05)}
-  .class-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.85))}
+  /* hover = a rule wiping across the top edge, not a lift */
+  .tile::before{
+    content:"";position:absolute;top:-1px;left:-1px;right:-1px;height:2px;background:var(--sage);
+    transform:scaleX(0);transform-origin:left;transition:transform .28s var(--punch);
+  }
+  .tile:hover,.tile:focus-within{border-color:var(--border-2);background:var(--surface-2)}
+  .tile:hover::before,.tile:focus-within::before{transform:scaleX(1)}
+  .tile .ico{
+    width:42px;height:42px;border-radius:9px;display:grid;place-items:center;margin-bottom:1.05rem;
+    background:rgba(127,188,167,.1);border:1px solid rgba(127,188,167,.22);color:var(--sage);
+    transition:background .22s var(--snap),border-color .22s var(--snap),color .22s var(--snap);
+  }
+  .tile:hover .ico{background:rgba(127,188,167,.18);border-color:rgba(127,188,167,.45);color:var(--sage-bright)}
+  .tile .ico svg{width:21px;height:21px;stroke:currentColor;stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .tile h3{font-size:1.26rem;margin-bottom:.4rem;letter-spacing:.02em}
+  .tile p{color:var(--muted);font-size:.9rem;line-height:1.6}
+  .tile.wide{grid-column:span 3}
+  .tile.lead{
+    grid-column:span 4;display:flex;flex-direction:column;justify-content:space-between;gap:1.6rem;
+    border-color:var(--sage-deep);padding:2.1rem 1.9rem 1.9rem;
+    background:linear-gradient(135deg,rgba(127,188,167,.16),rgba(127,188,167,0) 58%),var(--surface);
+  }
+  .tile.lead:hover{background:linear-gradient(135deg,rgba(127,188,167,.22),rgba(127,188,167,0) 58%),var(--surface-2);border-color:var(--sage)}
+  .tile .lead-num{
+    font-family:'Barlow Condensed',sans-serif;font-weight:700;
+    font-size:clamp(3.4rem,7vw,5.2rem);line-height:.82;letter-spacing:.01em;color:var(--sage);
+  }
+  .tile .lead-num small{display:block;font-family:'Inter',sans-serif;font-weight:500;font-size:.72rem;color:var(--muted);letter-spacing:.18em;text-transform:uppercase;margin-top:.9rem;line-height:1.4}
+  .tile.lead h3{font-size:1.6rem}
+  .tile.lead p{max-width:44ch}
+  .tile.band{grid-column:span 6;display:flex;align-items:center;gap:1.6rem;padding:1.55rem 1.7rem}
+  .tile.band .ico{margin-bottom:0}
+  .tile.band h3{margin-bottom:.15rem}
+  .tile.band p{max-width:72ch}
+
+  /* ---- Classes: staggered editorial rail, bottoms aligned, tops offset ---- */
+  .class-grid{display:grid;grid-template-columns:1.22fr 1fr 1fr;gap:1.1rem;align-items:end}
+  .class-card{
+    position:relative;overflow:hidden;border-radius:14px;border:1px solid var(--border);
+    display:flex;align-items:flex-end;
+    transition:border-color .22s var(--snap);
+  }
+  .class-card:nth-child(1){min-height:clamp(430px,50vw,600px)}
+  .class-card:nth-child(2){min-height:clamp(340px,40vw,470px)}
+  .class-card:nth-child(3){min-height:clamp(380px,45vw,530px)}
+  .class-card:hover{border-color:var(--sage-deep)}
+  .class-img{
+    position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;
+    transition:transform .6s var(--punch);
+  }
+  .class-card:hover .class-img{transform:scale(1.05)}
+  .class-card::after{
+    content:"";position:absolute;inset:0;z-index:1;
+    background:linear-gradient(180deg,rgba(0,0,0,.5) 0%,rgba(0,0,0,.12) 34%,rgba(0,0,0,.9) 100%);
+  }
+  .class-idx{
+    position:absolute;top:1.1rem;left:1.3rem;z-index:2;
+    font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.15rem;
+    letter-spacing:.1em;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.95);
+  }
   .class-tagline{
-    position:absolute;top:1.1rem;left:1.1rem;z-index:2;
-    font-size:.66rem;text-transform:uppercase;letter-spacing:.14em;font-weight:600;
-    background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.18);color:#fff;
-    padding:.3rem .7rem;border-radius:999px;backdrop-filter:blur(4px);
+    position:absolute;top:1.15rem;right:1.2rem;z-index:2;
+    font-size:.64rem;text-transform:uppercase;letter-spacing:.16em;font-weight:600;
+    color:var(--sage-bright);text-shadow:0 1px 8px rgba(0,0,0,.95);
   }
-  .class-body{position:absolute;bottom:0;left:0;right:0;z-index:2;padding:1.5rem}
-  .class-body h3{font-size:1.7rem;margin-bottom:.35rem;letter-spacing:.02em}
-  .class-body p{color:#d3dbd6;font-size:.9rem;line-height:1.55}
-  .class-note{margin-top:2.5rem;color:var(--muted-2);font-size:.84rem;max-width:62ch}
+  .class-body{position:relative;z-index:2;padding:1.6rem 1.5rem 1.5rem;width:100%}
+  .class-body h3{font-size:1.75rem;margin-bottom:.5rem;letter-spacing:.02em}
+  .class-body h3::after{
+    content:"";display:block;width:34px;height:2px;background:var(--sage);
+    margin-top:.7rem;transform-origin:left;transition:transform .28s var(--punch);
+  }
+  .class-card:hover .class-body h3::after{transform:scaleX(2.4)}
+  .class-body p{color:#d7ded9;font-size:.9rem;line-height:1.55;max-width:38ch}
+  .class-note{margin-top:2.75rem;color:var(--muted-2);font-size:.84rem;max-width:62ch}
   .class-note em{font-style:normal;color:var(--muted)}
 
   /* ---- Pricing ---- */
   #preise{background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
   .billing-toggle{
-    display:inline-flex;background:var(--surface);border:1px solid var(--border);border-radius:999px;
+    position:relative;display:inline-flex;background:var(--surface);
+    border:1px solid var(--border);border-radius:999px;
     padding:.3rem;margin-bottom:3rem;gap:.25rem;
   }
+  /* sliding thumb — measured in JS so it fits either label exactly */
+  .billing-toggle::before{
+    content:"";position:absolute;top:.3rem;bottom:.3rem;left:0;
+    width:var(--thumb-w,0);transform:translateX(var(--thumb-x,0));
+    background:var(--sage);border-radius:999px;opacity:0;
+    box-shadow:0 6px 18px -8px rgba(127,188,167,.6);
+    transition:transform .26s var(--punch),width .26s var(--punch);
+  }
+  .billing-toggle.ready::before{opacity:1}
   .billing-toggle button{
+    position:relative;z-index:1;min-height:44px;
     border:none;background:transparent;color:var(--muted);cursor:pointer;
     font-family:'Inter',sans-serif;font-size:.8rem;font-weight:500;letter-spacing:.04em;
-    padding:.55rem 1.25rem;border-radius:999px;transition:background .35s var(--ease),color .35s var(--ease),box-shadow .35s var(--ease);
+    padding:.5rem 1.35rem;border-radius:999px;transition:color .2s var(--snap);
   }
   .billing-toggle button:hover:not(.active){color:var(--text)}
-  .billing-toggle button.active{background:var(--sage);color:#04110c;font-weight:600;box-shadow:0 6px 18px -8px rgba(127,188,167,.55)}
+  .billing-toggle button.active{color:#04110c;font-weight:600}
+  .billing-toggle:not(.ready) button.active{background:var(--sage)}
   .billing-toggle .save{color:var(--sage);font-size:.7rem;margin-left:.35rem}
   .billing-toggle button.active .save{color:#04110c}
+  .amount.flip{animation:flipnum .24s var(--punch)}
+  @keyframes flipnum{from{opacity:0;transform:translateY(-.3em)}to{opacity:1;transform:none}}
   .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;align-items:stretch}
   .plan{
     display:flex;flex-direction:column;padding:2.2rem 1.9rem;border:1px solid var(--border);border-radius:14px;
-    background:var(--surface);transition:border-color .4s var(--ease),transform .4s var(--ease),box-shadow .4s var(--ease)}
-  .plan:hover{border-color:var(--border-2);transform:translateY(-4px)}
+    background:var(--surface);transition:border-color .22s var(--snap),background .22s var(--snap),box-shadow .3s var(--ease)}
+  .plan:hover{border-color:var(--border-2);background:var(--surface-2)}
   .plan.featured{
     border-color:var(--sage);position:relative;
     background:linear-gradient(180deg,rgba(127,188,167,.09),transparent 62%);
     box-shadow:0 24px 60px -30px rgba(127,188,167,.5),0 2px 0 0 rgba(127,188,167,.12) inset;
   }
-  .plan.featured:hover{border-color:var(--sage-bright);transform:translateY(-6px);box-shadow:0 34px 70px -28px rgba(127,188,167,.6)}
+  .plan.featured:hover{border-color:var(--sage-bright);box-shadow:0 30px 68px -28px rgba(127,188,167,.62)}
   .plan-badge{
     position:absolute;top:-.85rem;left:50%;transform:translateX(-50%);
     background:var(--sage);color:#04110c;font-size:.66rem;font-weight:600;text-transform:uppercase;
@@ -282,23 +492,37 @@
     background:radial-gradient(70% 80% at 85% 20%,rgba(127,188,167,.1),transparent 65%),
               radial-gradient(60% 70% at 10% 90%,rgba(192,85,48,.08),transparent 65%);
   }
-  .incl-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:4rem;align-items:center}
+  .incl-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:4.5rem;align-items:center}
   .incl-copy h2{margin-bottom:1.25rem}
   .incl-copy p{color:var(--muted);margin-bottom:1.1rem;max-width:52ch;font-size:1.03rem}
-  .incl-stats{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem 1rem}
-  .stat{padding:1.5rem 1.4rem;border:1px solid var(--border);border-radius:12px;background:var(--surface)}
-  .stat .num{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:2.6rem;line-height:1;color:var(--sage);letter-spacing:.01em}
-  .stat .lbl{color:var(--muted);font-size:.86rem;margin-top:.4rem}
+  /* Ledger rows on hairlines instead of four boxed stat cards */
+  .incl-stats{display:grid;border-top:1px solid var(--border-2)}
+  .stat{
+    display:flex;gap:1.5rem;align-items:baseline;
+    padding:1.15rem .2rem;border-bottom:1px solid var(--border);
+    transition:padding-left .22s var(--snap),border-color .22s var(--snap);
+  }
+  .stat:hover{padding-left:.7rem;border-bottom-color:var(--sage-deep)}
+  .stat .num{
+    flex:none;min-width:5.4ch;
+    font-family:'Barlow Condensed',sans-serif;font-weight:700;
+    font-size:clamp(2.1rem,3.4vw,2.9rem);line-height:1;color:var(--sage);letter-spacing:.01em;
+    font-variant-numeric:tabular-nums;
+  }
+  .stat .lbl{color:var(--muted);font-size:.9rem;line-height:1.5}
 
   /* ---- Testimonials ---- */
-  .quote-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+  /* Stepped columns on top rules — no card boxes */
+  .quote-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem 2.4rem;align-items:start}
+  .quote-grid .quote:nth-child(2){margin-top:2.6rem}
+  .quote-grid .quote:nth-child(3){margin-top:5.2rem}
   .quote{
-    display:flex;flex-direction:column;padding:2rem 1.8rem;border:1px solid var(--border);border-radius:12px;
-    background:linear-gradient(180deg,rgba(255,255,255,.02),transparent);
+    display:flex;flex-direction:column;padding:1.6rem 0 0;
+    border-top:2px solid var(--sage-deep);
   }
-  .quote .stars{color:var(--sage);letter-spacing:.15em;font-size:.85rem;margin-bottom:1rem}
-  .quote blockquote{margin:0 0 1.5rem;flex:1}
-  .quote p{color:#dfe6e1;font-size:1rem;line-height:1.65}
+  .quote .stars{color:var(--sage);letter-spacing:.15em;font-size:.8rem;margin-bottom:.9rem}
+  .quote blockquote{margin:0 0 1.6rem;flex:1}
+  .quote p{color:#e4eae6;font-size:1.06rem;line-height:1.6;text-wrap:pretty}
   .quote .who{display:flex;align-items:center;gap:.85rem}
   .avatar{
     width:42px;height:42px;border-radius:50%;flex:none;display:grid;place-items:center;
@@ -308,25 +532,37 @@
   .who .name{font-weight:500;font-size:.92rem}
   .who .role{color:var(--muted-2);font-size:.8rem}
 
-  /* ---- Final CTA / trial ---- */
-  #starten{border-top:1px solid var(--border);text-align:center;background:var(--bg-2)}
-  #starten .wrap{max-width:680px}
-  #starten .eyebrow{justify-content:center}
+  /* ---- Final CTA / trial: split, not a centred block ---- */
+  #starten{border-top:1px solid var(--border);background:var(--bg-2)}
+  .cta-split{display:grid;grid-template-columns:1fr .85fr;gap:4rem;align-items:center}
   #starten h2{margin-bottom:1rem}
-  #starten .section-intro{margin:0 auto 2.5rem;max-width:46ch}
-  .trial-form{margin:0 auto;max-width:520px;display:flex;gap:.75rem}
+  #starten .section-intro{margin-bottom:1.8rem;max-width:44ch}
+  .cta-points{list-style:none;display:grid;gap:.6rem}
+  .cta-points li{display:flex;gap:.65rem;align-items:center;color:var(--muted);font-size:.92rem}
+  .cta-points svg{width:17px;height:17px;flex:none;stroke:var(--sage);stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .cta-panel{
+    padding:2rem 1.9rem;border:1px solid var(--border-2);border-radius:16px;
+    background:linear-gradient(180deg,rgba(127,188,167,.07),transparent 70%),var(--surface);
+  }
+  .cta-panel h3{font-size:1.5rem;letter-spacing:.03em;margin-bottom:.5rem}
+  .cta-panel > p{color:var(--muted);font-size:.9rem;margin-bottom:1.4rem}
+  .trial-form{display:flex;flex-direction:column;gap:.75rem}
+  .trial-form label{
+    color:var(--muted);font-size:.7rem;font-weight:600;
+    text-transform:uppercase;letter-spacing:.16em;
+  }
   .trial-form input{
-    flex:1;background:var(--surface);border:1px solid var(--border-2);border-radius:999px;
-    padding:.95rem 1.5rem;color:var(--text);font-family:'Inter',sans-serif;font-size:.95rem;
-    transition:border-color .25s var(--ease),box-shadow .25s var(--ease);
+    width:100%;background:var(--bg-2);border:1px solid var(--border-2);border-radius:999px;
+    padding:.95rem 1.4rem;color:var(--text);font-family:'Inter',sans-serif;font-size:.95rem;
+    transition:border-color .2s var(--snap),box-shadow .2s var(--snap);
   }
   .trial-form input::placeholder{color:var(--muted-2)}
-  .trial-form input:focus{outline:none;border-color:var(--sage);box-shadow:0 0 0 3px rgba(127,188,167,.16)}
-  .trial-form .btn{white-space:nowrap}
-  .form-note{font-size:.78rem;color:var(--muted-2);margin-top:1.1rem}
+  .trial-form input:focus{outline:none;border-color:var(--sage);box-shadow:0 0 0 3px rgba(127,188,167,.18)}
+  .trial-form .btn{white-space:nowrap;width:100%}
+  .form-note{font-size:.78rem;color:var(--muted-2);margin-top:1rem;line-height:1.6}
   .form-confirm{
-    display:none;margin:2.25rem auto 0;max-width:520px;text-align:center;
-    padding:1.7rem 1.3rem;border:1px solid var(--sage-deep);border-radius:12px;
+    display:none;margin:0;
+    padding:1.6rem 1.3rem;border:1px solid var(--sage-deep);border-radius:12px;
     background:rgba(127,188,167,.08);
   }
   .form-confirm.show{display:block;animation:fade .5s var(--ease)}
@@ -362,53 +598,94 @@
   .footer-bottom a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
   .footer-bottom a:hover{color:var(--sage)}
 
-  /* ---- Reveal on scroll ---- */
-  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+  /* ---- Reveal on scroll: shorter throw, snappier curve than a generic fade-up ---- */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .45s var(--snap),transform .55s var(--punch)}
   .reveal.visible{opacity:1;transform:none}
   /* Gentle left-to-right cascade within grids — delay only, never leaves anything hidden */
-  .icon-grid .reveal:nth-child(4n+2){transition-delay:.07s}
-  .icon-grid .reveal:nth-child(4n+3){transition-delay:.14s}
-  .icon-grid .reveal:nth-child(4n+4){transition-delay:.21s}
-  .price-grid .reveal:nth-child(2),.quote-grid .reveal:nth-child(2){transition-delay:.09s}
-  .price-grid .reveal:nth-child(3),.quote-grid .reveal:nth-child(3){transition-delay:.18s}
+  .bento .reveal:nth-child(2),.bento .reveal:nth-child(4),.bento .reveal:nth-child(7){transition-delay:.07s}
+  .bento .reveal:nth-child(5){transition-delay:.14s}
+  .price-grid .reveal:nth-child(2),.quote-grid .reveal:nth-child(2){transition-delay:.08s}
+  .price-grid .reveal:nth-child(3),.quote-grid .reveal:nth-child(3){transition-delay:.16s}
+  .class-grid .reveal:nth-child(2){transition-delay:.08s}
+  .class-grid .reveal:nth-child(3){transition-delay:.16s}
   @media (prefers-reduced-motion:reduce){
     .reveal{opacity:1;transform:none;transition:none}
-    .btn,.tile,.tile .ico,.class-card,.class-media img,.plan,.nav-links a::after{transition:none}
+    .rise{overflow:visible}
+    .rise > span{transform:none;transition:none}
+    .btn,.tile,.tile::before,.tile .ico,.class-card,.class-img,.class-body h3::after,
+    .plan,.nav-links a::after,.stat,.link-arrow svg,.load-bar i,
+    .billing-toggle::before,.trial-form input{transition:none}
+    .marquee-track{animation:none;transform:none}
+    .hero-inner > *{animation:none}
+    .marquee{-webkit-mask-image:none;mask-image:none}
+    .pip::after{animation:none;opacity:0}
+    .amount.flip{animation:none}
+    .form-confirm.show{animation:none}
   }
 
   /* ---- Responsive ---- */
+  @media (max-width:1080px){
+    .puls-grid{grid-template-columns:1fr 1fr}
+    .puls-cell.puls-load{grid-column:1/-1;order:-1}
+  }
   @media (max-width:1000px){
-    .icon-grid{grid-template-columns:repeat(2,1fr)}
+    section{padding:5.5rem 6%}
+    .bento{grid-template-columns:repeat(4,1fr)}
+    .tile.lead{grid-column:span 4}
+    .tile.wide{grid-column:span 2}
+    .tile.band{grid-column:span 4;flex-direction:column;align-items:flex-start;gap:1rem}
     .class-grid{grid-template-columns:1fr 1fr}
+    .class-card:nth-child(1){grid-column:1/-1;min-height:clamp(360px,52vw,460px)}
+    .class-card:nth-child(2),.class-card:nth-child(3){min-height:clamp(340px,48vw,430px)}
     .price-grid{grid-template-columns:1fr;max-width:460px;margin:0 auto}
     .plan.featured{order:-1}
-    .incl-grid{grid-template-columns:1fr;gap:2.5rem}
-    .quote-grid{grid-template-columns:1fr}
+    .incl-grid{grid-template-columns:1fr;gap:2.75rem}
+    .quote-grid{grid-template-columns:1fr;gap:2rem}
+    .quote-grid .quote:nth-child(2),.quote-grid .quote:nth-child(3){margin-top:0}
+    .cta-split{grid-template-columns:1fr;gap:2.5rem}
+    .section-head{grid-template-columns:1fr;gap:1rem;align-items:start}
   }
   @media (max-width:640px){
     section{padding:4.5rem 7%}
-    .nav-links,.nav-cta{display:none}
+    #puls{padding:2.5rem 7% 3rem}
+    .nav-links,.nav-cta,.nav-live{display:none}
     .nav-toggle{
-      display:inline-flex;background:none;border:1px solid var(--border-2);
-      color:var(--text);border-radius:8px;padding:.5rem .9rem;font-size:.72rem;
+      display:inline-flex;align-items:center;min-height:44px;
+      background:none;border:1px solid var(--border-2);
+      color:var(--text);border-radius:8px;padding:.55rem 1rem;font-size:.72rem;
       text-transform:uppercase;letter-spacing:.1em;cursor:pointer;font-family:'Inter',sans-serif;
     }
-    .icon-grid{grid-template-columns:1fr}
+    .puls-grid{grid-template-columns:1fr}
+    .puls-cell.puls-load{order:0}
+    .puls-cell{padding:1.5rem 1.35rem}
+    .bento{grid-template-columns:1fr;gap:.85rem}
+    .tile,.tile.wide,.tile.lead,.tile.band{grid-column:auto}
     .class-grid{grid-template-columns:1fr}
-    .incl-stats{grid-template-columns:1fr 1fr}
-    .trial-form{flex-direction:column}
-    .trial-form .btn{width:100%}
-    .hero-meta{gap:1.25rem}
+    .class-card:nth-child(1),.class-card:nth-child(2),.class-card:nth-child(3){
+      grid-column:auto;min-height:clamp(330px,70vw,420px)
+    }
+    .hero-rail{gap:1rem 0}
+    .hero-rail div{margin-right:1.4rem;padding-right:1.4rem}
+    .cta-panel{padding:1.6rem 1.3rem}
     .footer-cols{gap:2rem}
   }
   .mobile-menu{display:none}
   .mobile-menu.open{display:block;background:var(--bg-2);border-bottom:1px solid var(--border)}
   .mobile-menu ul{list-style:none;padding:1rem 7% 1.5rem;display:grid;gap:.25rem}
   .mobile-menu a{
-    display:block;color:var(--text);text-decoration:none;padding:.7rem 0;
+    display:flex;align-items:center;min-height:48px;
+    color:var(--text);text-decoration:none;padding:.75rem 0;
     font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid var(--border);
   }
 </style>
+<noscript><style>
+  /* Ohne JavaScript bleibt alles sichtbar und bedienbar */
+  .reveal{opacity:1;transform:none}
+  .rise{overflow:visible}
+  .rise > span{transform:none}
+  .billing-toggle:not(.ready) button.active{background:var(--sage)}
+  .load-chart:not(.charged) .load-bar i{height:calc(var(--v) * 1%)}
+</style></noscript>
 </head>
 <body>
   <a class="skip-link" href="#hauptinhalt">Zum Inhalt springen</a>
@@ -426,8 +703,11 @@
         <li><a href="#preise">Preise</a></li>
         <li><a href="#jedes-alter">Für alle</a></li>
       </ul>
-      <a class="nav-cta" href="#starten">Mitglied werden</a>
-      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobileMenu">Menü</button>
+      <div class="nav-right">
+        <span class="nav-live"><span class="pip" aria-hidden="true"></span>Jetzt offen</span>
+        <a class="nav-cta" href="#starten">Mitglied werden</a>
+        <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobileMenu">Menü</button>
+      </div>
     </nav>
     <div class="mobile-menu" id="mobileMenu">
       <ul>
@@ -451,26 +731,79 @@
           <a href="#starten" class="btn">Gratis-Woche starten</a>
           <a href="#kurse" class="btn-ghost">Kurse ansehen</a>
         </div>
-        <div class="hero-meta">
-          <span>24/7 Zugang</span>
-          <span>Kurse inklusive</span>
-          <span>Keine Vertragsbindung</span>
+        <dl class="hero-rail">
+          <div><dt>Geöffnet</dt><dd>24/7 · 365 Tage</dd></div>
+          <div><dt>Kurse</dt><dd>40+ pro Woche</dd></div>
+          <div><dt>Vertrag</dt><dd>Monatlich kündbar</dd></div>
+        </dl>
+      </div>
+      <span class="hero-edge" aria-hidden="true">Nachts um drei? Auch dann.</span>
+    </section>
+
+    <!-- Puls-Strip: Live-Status, Tagesandrang und Standort auf einen Blick -->
+    <section id="puls" aria-labelledby="puls-title">
+      <h2 id="puls-title" class="vh">Studio-Status, Andrang und Standort</h2>
+      <div class="wrap puls-grid reveal">
+        <div class="puls-cell">
+          <p class="live"><span class="pip" aria-hidden="true"></span>Jetzt geöffnet</p>
+          <p class="clock"><span id="clockTime">--:--:--</span><span class="tz">Uhr · Luzern</span></p>
+          <p class="puls-line"><span>Nächste Schliessung</span><b>Keine</b></p>
+          <p class="puls-line"><span>Türöffnung per Badge</span><b>Rund um die Uhr</b></p>
+        </div>
+
+        <div class="puls-cell puls-load">
+          <h3>Andrang im Tagesverlauf</h3>
+          <p class="puls-now" id="loadHint">Am Vormittag ist es ruhig, ab 17 Uhr wird es voll — plane deine schweren Sätze entsprechend.</p>
+          <div class="load-chart" id="loadChart" aria-hidden="true">
+            <span class="load-bar" style="--v:9"><i></i></span><span class="load-bar" style="--v:6"><i></i></span><span class="load-bar" style="--v:4"><i></i></span><span class="load-bar" style="--v:4"><i></i></span>
+            <span class="load-bar" style="--v:8"><i></i></span><span class="load-bar" style="--v:17"><i></i></span><span class="load-bar" style="--v:35"><i></i></span><span class="load-bar" style="--v:47"><i></i></span>
+            <span class="load-bar" style="--v:39"><i></i></span><span class="load-bar" style="--v:30"><i></i></span><span class="load-bar" style="--v:27"><i></i></span><span class="load-bar" style="--v:33"><i></i></span>
+            <span class="load-bar" style="--v:53"><i></i></span><span class="load-bar" style="--v:45"><i></i></span><span class="load-bar" style="--v:31"><i></i></span><span class="load-bar" style="--v:35"><i></i></span>
+            <span class="load-bar" style="--v:49"><i></i></span><span class="load-bar" style="--v:74"><i></i></span><span class="load-bar" style="--v:93"><i></i></span><span class="load-bar" style="--v:86"><i></i></span>
+            <span class="load-bar" style="--v:64"><i></i></span><span class="load-bar" style="--v:44"><i></i></span><span class="load-bar" style="--v:28"><i></i></span><span class="load-bar" style="--v:15"><i></i></span>
+          </div>
+          <div class="load-axis" aria-hidden="true"><span>00</span><span>06</span><span>12</span><span>18</span><span>24</span></div>
+          <p class="puls-fine">Beispielwerte für dieses Konzept — es gibt weder ein echtes Studio noch eine echte Messung.</p>
+        </div>
+
+        <div class="puls-cell">
+          <h3>Standort &amp; Anfahrt</h3>
+          <ul class="loc-list">
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>Granitweg 4, 6003 Luzern</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="3.5" width="12" height="13" rx="3"/><path d="M6 10h12M8.5 20l-1.5 1.5M15.5 20l1.5 1.5M9 16.5v2M15 16.5v2"/></svg>Bus 8 &amp; 24 — Haltestelle Werkhof, 2 Gehminuten</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="17" r="3.2"/><circle cx="18" cy="17" r="3.2"/><path d="M6 17l4-8h4l4 8M10 9h5"/></svg>Veloparkplätze gedeckt, 40 Parkplätze im Haus</li>
+          </ul>
+          <a class="link-arrow" href="#starten">Gratis-Woche sichern <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
         </div>
       </div>
     </section>
 
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <div class="marquee-group">
+          <span>Kraft</span><span class="dot-sep">●</span><span class="hollow">Ausdauer</span><span class="dot-sep">●</span><span>Mobilität</span><span class="dot-sep">●</span><span class="hollow">Erholung</span><span class="dot-sep">●</span><span>Dein Tempo</span><span class="dot-sep">●</span><span class="hollow">Immer offen</span><span class="dot-sep">●</span>
+        </div>
+        <div class="marquee-group">
+          <span>Kraft</span><span class="dot-sep">●</span><span class="hollow">Ausdauer</span><span class="dot-sep">●</span><span>Mobilität</span><span class="dot-sep">●</span><span class="hollow">Erholung</span><span class="dot-sep">●</span><span>Dein Tempo</span><span class="dot-sep">●</span><span class="hollow">Immer offen</span><span class="dot-sep">●</span>
+        </div>
+      </div>
+    </div>
+
     <section id="vorteile" aria-labelledby="vorteile-title">
       <div class="wrap">
         <div class="section-head reveal">
-          <p class="eyebrow">Warum GRANIT</p>
-          <h2 id="vorteile-title">Alles dabei, was ein <em>gutes Training</em> braucht</h2>
+          <p class="eyebrow"><span class="idx">01</span>Warum GRANIT</p>
+          <h2 id="vorteile-title"><span class="rise"><span>Alles dabei, was ein <em>gutes Training</em> braucht</span></span></h2>
           <p class="section-intro">Ein Preis, kein Kleingedrucktes. Von der App über die Kurse bis zur Sauna ist alles inbegriffen — du kommst einfach vorbei und legst los.</p>
         </div>
-        <div class="icon-grid">
-          <div class="tile reveal">
-            <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
-            <h3>24/7 Zugang</h3>
-            <p>Trainiere, wann es dir passt — mit deinem Badge kommst du rund um die Uhr rein, auch nachts und am Wochenende.</p>
+        <div class="bento">
+          <div class="tile lead reveal">
+            <div>
+              <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+              <h3>Zugang rund um die Uhr</h3>
+              <p>Mit deinem Badge kommst du jederzeit rein — vor der Frühschicht, nach dem Spätdienst, am Sonntag um elf. Das Studio richtet sich nach deinem Tag, nicht umgekehrt.</p>
+            </div>
+            <p class="lead-num">24/7<small>365 Tage im Jahr geöffnet</small></p>
           </div>
           <div class="tile reveal">
             <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2"/></svg></span>
@@ -492,20 +825,22 @@
             <h3>Wellness &amp; Sauna</h3>
             <p>Finnische Sauna und ein ruhiger Erholungsbereich, um nach dem Training wirklich abzuschalten.</p>
           </div>
-          <div class="tile reveal">
+          <div class="tile wide reveal">
             <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0"/><path d="m15.5 12.5 1.4 1.4 2.6-2.6"/></svg></span>
             <h3>Persönliche Beratung</h3>
-            <p>Ein kostenloses Startgespräch mit Plan, plus Coaches auf der Fläche, die dir bei der Technik helfen.</p>
+            <p>Ein kostenloses Startgespräch mit Plan, plus Coaches auf der Fläche, die dir bei der Technik helfen — auch wenn du das erste Mal an einer Langhantel stehst.</p>
           </div>
-          <div class="tile reveal">
+          <div class="tile wide reveal">
             <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 11h16v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8Z"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/><path d="M9 15v2M15 15v2"/></svg></span>
             <h3>Duschen &amp; Spinde</h3>
-            <p>Grosszügige Garderoben, Tagesspinde und heisse Duschen — Handtuchservice gibt es dazu.</p>
+            <p>Grosszügige Garderoben, Tagesspinde und heisse Duschen — Handtuchservice gibt es dazu, ohne Aufpreis.</p>
           </div>
-          <div class="tile reveal">
+          <div class="tile band reveal">
             <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4 3 7 7 8 4-1 7-4 7-8V6l-7-3Z"/><path d="m9.5 12 1.8 1.8 3.5-3.6"/></svg></span>
-            <h3>Fair &amp; flexibel</h3>
-            <p>Monatlich kündbar, keine Anschlussgebühr. Bleib, weil es dir gefällt — nicht wegen eines Vertrags.</p>
+            <div>
+              <h3>Fair &amp; flexibel</h3>
+              <p>Monatlich kündbar, keine Anschlussgebühr, keine automatische Verlängerung. Bleib, weil es dir gefällt — nicht wegen eines Vertrags.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -514,36 +849,33 @@
     <section id="kurse" aria-labelledby="kurse-title">
       <div class="wrap">
         <div class="section-head reveal">
-          <p class="eyebrow">Kurse &amp; Training</p>
-          <h2 id="kurse-title">Drei Wege, stärker zu werden</h2>
+          <p class="eyebrow"><span class="idx">02</span>Kurse &amp; Training</p>
+          <h2 id="kurse-title"><span class="rise"><span>Drei Wege, stärker zu werden</span></span></h2>
           <p class="section-intro">Ob du Gewichte bewegen, ausser Atem kommen oder beweglicher werden willst — unsere Kursformate decken jedes Ziel ab. Alle sind im Abo enthalten.</p>
         </div>
-        <div class="class-grid reveal">
-          <article class="class-card">
-            <div class="class-media">
-              <img src="assets/fitness-strength.jpg" alt="Langhantel mit gestapelten Gewichtsscheiben auf einer Ablage in einem Kraftraum, in Schwarzweiss" loading="lazy" width="1200" height="900">
-              <span class="class-tagline">Kraft</span>
-            </div>
+        <div class="class-grid">
+          <article class="class-card reveal">
+            <img class="class-img" src="assets/fitness-strength.jpg" alt="Langhantel mit gestapelten Gewichtsscheiben auf einer Ablage in einem Kraftraum, in Schwarzweiss" loading="lazy" width="1200" height="900">
+            <span class="class-idx" aria-hidden="true">01</span>
+            <span class="class-tagline">Kraft</span>
             <div class="class-body">
               <h3>Kraft &amp; Aufbau</h3>
               <p>Strukturierte Programme an Langhantel und Maschine — vom ersten Kniebeugen bis zum persönlichen Rekord.</p>
             </div>
           </article>
-          <article class="class-card">
-            <div class="class-media">
-              <img src="assets/fitness-functional.jpg" alt="Hand mit Trainingshandschuh umgreift eine Haltestange an einem Fitnessgerät, Nahaufnahme" loading="lazy" width="1200" height="798">
-              <span class="class-tagline">Intensität</span>
-            </div>
+          <article class="class-card reveal">
+            <img class="class-img" src="assets/fitness-functional.jpg" alt="Hand mit Trainingshandschuh umgreift eine Haltestange an einem Fitnessgerät, Nahaufnahme" loading="lazy" width="1200" height="798">
+            <span class="class-idx" aria-hidden="true">02</span>
+            <span class="class-tagline">Intensität</span>
             <div class="class-body">
               <h3>Functional &amp; HIIT</h3>
               <p>Kurze, knackige Einheiten mit Kettlebells, Seilen und Körpergewicht. Viel Schweiss in wenig Zeit.</p>
             </div>
           </article>
-          <article class="class-card">
-            <div class="class-media">
-              <img src="assets/fitness-mobility.jpg" alt="Frau streckt lächelnd beide Arme über den Kopf während einer Yoga-Einheit auf einer Matte" loading="lazy" width="1200" height="1798">
-              <span class="class-tagline">Balance</span>
-            </div>
+          <article class="class-card reveal">
+            <img class="class-img" src="assets/fitness-mobility.jpg" alt="Frau streckt lächelnd beide Arme über den Kopf während einer Yoga-Einheit auf einer Matte" loading="lazy" width="1200" height="1798">
+            <span class="class-idx" aria-hidden="true">03</span>
+            <span class="class-tagline">Balance</span>
             <div class="class-body">
               <h3>Yoga &amp; Mobility</h3>
               <p>Ruhige Formate für Beweglichkeit, Haltung und Erholung — der Ausgleich zu den harten Tagen.</p>
@@ -557,8 +889,8 @@
     <section id="preise" aria-labelledby="preise-title">
       <div class="wrap">
         <div class="section-head reveal">
-          <p class="eyebrow">Mitgliedschaft</p>
-          <h2 id="preise-title">Ein Abo, das <em>zu dir passt</em></h2>
+          <p class="eyebrow"><span class="idx">03</span>Mitgliedschaft</p>
+          <h2 id="preise-title"><span class="rise"><span>Ein Abo, das <em>zu dir passt</em></span></span></h2>
           <p class="section-intro">Alle Abos beinhalten Geräte, Kurse und App. Du wählst nur, wie viel Wellness und Betreuung du dazu möchtest — jederzeit wechselbar.</p>
         </div>
 
@@ -618,8 +950,8 @@
     <section id="jedes-alter" aria-labelledby="alter-title">
       <div class="wrap incl-grid">
         <div class="incl-copy reveal">
-          <p class="eyebrow">Für alle gemacht</p>
-          <h2 id="alter-title">Fit in jedem Alter, auf jedem Level</h2>
+          <p class="eyebrow"><span class="idx">04</span>Für alle gemacht</p>
+          <h2 id="alter-title"><span class="rise"><span>Fit in jedem Alter, auf jedem Level</span></span></h2>
           <p>Bei GRANIT trainieren 16-Jährige neben 70-Jährigen, Anfängerinnen neben Wettkampfathleten. Niemand muss sich erst „in Form bringen“, um anzufangen — der erste Schritt zählt, egal von wo aus.</p>
           <p>Unsere Coaches passen jede Übung an dich an, statt umgekehrt. Ruhige Zeiten, sanfte Kursformate und barrierearme Geräte gehören genauso dazu wie das schwere Eisen.</p>
         </div>
@@ -633,8 +965,8 @@
             <div class="lbl">Kurse pro Woche, für jedes Level</div>
           </div>
           <div class="stat">
-            <div class="num">7&nbsp;Tage</div>
-            <div class="lbl">Gratis testen, ohne Verpflichtung</div>
+            <div class="num">7</div>
+            <div class="lbl">Tage gratis testen, ohne Verpflichtung</div>
           </div>
           <div class="stat">
             <div class="num">0</div>
@@ -647,8 +979,8 @@
     <section id="stimmen" aria-labelledby="stimmen-title">
       <div class="wrap">
         <div class="section-head reveal">
-          <p class="eyebrow">Stimmen</p>
-          <h2 id="stimmen-title">Was Mitglieder erzählen würden</h2>
+          <p class="eyebrow"><span class="idx">05</span>Stimmen</p>
+          <h2 id="stimmen-title"><span class="rise"><span>Was Mitglieder erzählen würden</span></span></h2>
           <p class="section-intro">Beispielhafte Stimmen für dieses Konzept — sie zeigen den Ton, in dem GRANIT über sich selbst spricht.</p>
         </div>
         <div class="quote-grid">
@@ -681,21 +1013,33 @@
     </section>
 
     <section id="starten" aria-labelledby="starten-title">
-      <div class="wrap">
-        <p class="eyebrow">Jetzt starten</p>
-        <h2 id="starten-title">Erste Woche gratis — <em>ohne Haken</em></h2>
-        <p class="section-intro">Trag dich ein und wir halten deinen Gratis-Pass bereit. Kein Vertrag, keine Kreditkarte, einfach vorbeikommen und trainieren.</p>
-        <form id="trialForm" novalidate>
-          <div class="trial-form">
-            <input type="email" id="trial-mail" name="email" placeholder="E-Mail-Adresse" autocomplete="email" aria-label="E-Mail-Adresse" required>
-            <button type="submit" class="btn">Gratis-Pass sichern</button>
-          </div>
-          <p class="form-note">Demo-Formular — es wird nichts gesendet oder gespeichert.</p>
-          <div class="form-confirm" id="formConfirm" role="status" aria-live="polite">
-            <h3>Bis gleich im Studio!</h3>
-            <p>Dein Gratis-Pass wäre nun unterwegs — dies ist eine Konzeptseite, daher wird nichts wirklich versendet.</p>
-          </div>
-        </form>
+      <div class="wrap cta-split">
+        <div class="cta-copy reveal">
+          <p class="eyebrow"><span class="idx">06</span>Jetzt starten</p>
+          <h2 id="starten-title"><span class="rise"><span>Erste Woche gratis — <em>ohne Haken</em></span></span></h2>
+          <p class="section-intro">Trag dich ein und wir halten deinen Gratis-Pass bereit. Du kommst vorbei, wann es dir passt — auch am ersten Abend um 22 Uhr.</p>
+          <ul class="cta-points">
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 6"/></svg>Kein Vertrag, keine Kreditkarte</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 6"/></svg>Alle Kurse in der Testwoche inklusive</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 6"/></svg>Startgespräch mit Coach auf Wunsch</li>
+          </ul>
+        </div>
+        <div class="cta-panel reveal">
+          <h3>Gratis-Pass anfordern</h3>
+          <p>Eine E-Mail genügt — den Rest klären wir beim ersten Besuch.</p>
+          <form id="trialForm" novalidate>
+            <div class="trial-form">
+              <label for="trial-mail">E-Mail-Adresse</label>
+              <input type="email" id="trial-mail" name="email" placeholder="name@beispiel.ch" autocomplete="email" required>
+              <button type="submit" class="btn">Gratis-Pass sichern</button>
+            </div>
+            <p class="form-note">Demo-Formular — es wird nichts gesendet oder gespeichert.</p>
+            <div class="form-confirm" id="formConfirm" role="status" aria-live="polite">
+              <h3>Bis gleich im Studio!</h3>
+              <p>Dein Gratis-Pass wäre nun unterwegs — dies ist eine Konzeptseite, daher wird nichts wirklich versendet.</p>
+            </div>
+          </form>
+        </div>
       </div>
     </section>
   </main>
@@ -719,6 +1063,7 @@
         <div class="footer-col">
           <h4>Studio</h4>
           <ul>
+            <li>Granitweg 4, 6003 Luzern</li>
             <li>24/7 geöffnet</li>
             <li>Kurse inklusive</li>
             <li>Monatlich kündbar</li>
@@ -756,18 +1101,97 @@
     mobile.addEventListener('click', e => {
       if (e.target.tagName === 'A') { mobile.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); }
     });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && mobile.classList.contains('open')) {
+        mobile.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); toggle.focus();
+      }
+    });
 
-    // Pricing billing toggle
+    // ---- Puls-Strip -------------------------------------------------------
+    // Studio-Zeit (Europe/Zurich) — 24/7 bedeutet: es gibt keine Schliesszeit.
+    const clockEl = document.getElementById('clockTime');
+    const timeFmt = () => {
+      try {
+        return new Intl.DateTimeFormat('de-CH', {
+          hour:'2-digit', minute:'2-digit', second:'2-digit',
+          hourCycle:'h23', timeZone:'Europe/Zurich'
+        }).format(new Date());
+      } catch (e) {
+        return new Date().toLocaleTimeString('de-CH');
+      }
+    };
+    const tick = () => { clockEl.textContent = timeFmt(); };
+    tick();
+    setInterval(tick, 1000);
+
+    // Aktuelle Stunde im Andrangs-Diagramm markieren (Beispielwerte, kein echtes Studio)
+    const chart = document.getElementById('loadChart');
+    const bars = chart ? Array.from(chart.querySelectorAll('.load-bar')) : [];
+    const zurichHour = () => {
+      try {
+        // formatToParts, weil deutschsprachige Locales "22 Uhr" statt "22" liefern
+        const parts = new Intl.DateTimeFormat('de-CH', {hour:'2-digit', hourCycle:'h23', timeZone:'Europe/Zurich'})
+          .formatToParts(new Date());
+        const hour = parts.find(p => p.type === 'hour');
+        const n = hour ? parseInt(hour.value, 10) : NaN;
+        return Number.isInteger(n) ? n % 24 : new Date().getHours();
+      } catch (e) { return new Date().getHours(); }
+    };
+    const nowBar = bars.length === 24 ? bars[zurichHour()] : null;
+    if (nowBar) {
+      const h = bars.indexOf(nowBar);
+      const bar = nowBar;
+      bar.classList.add('now');
+      const v = Number(bar.style.getPropertyValue('--v')) || 0;
+      const pad = n => String(n).padStart(2, '0');
+      const hint =
+        v < 20 ? 'fast leer — beste Zeit für schwere Sätze in aller Ruhe.' :
+        v < 40 ? 'angenehm ruhig, Geräte und Hantelbänke sind frei.' :
+        v < 65 ? 'normal besucht, kaum Wartezeit an den Stationen.' :
+                 'Prime Time, es ist was los. Wer es ruhiger mag, kommt nach 21 Uhr.';
+      document.getElementById('loadHint').textContent =
+        `Jetzt (${pad(h)}–${pad((h + 1) % 24)} Uhr): ${hint}`;
+    }
+    // Balken erst beim Sichtbarwerden aufbauen
+    if (chart) {
+      if ('IntersectionObserver' in window) {
+        const co = new IntersectionObserver((entries, obs) => {
+          entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('charged'); obs.unobserve(en.target); } });
+        }, {threshold:0.25});
+        co.observe(chart);
+      } else {
+        chart.classList.add('charged');
+      }
+    }
+
+    // ---- Pricing billing toggle (mit gleitendem Thumb) ---------------------
+    const billing = document.querySelector('.billing-toggle');
     const bm = document.getElementById('billMonthly');
     const by = document.getElementById('billYearly');
     const amounts = document.querySelectorAll('.amount');
-    function setBilling(yearly){
-      amounts.forEach(a => { a.textContent = yearly ? a.dataset.y : a.dataset.m; });
+    function moveThumb(){
+      const active = billing.querySelector('button.active');
+      if (!active) return;
+      billing.style.setProperty('--thumb-w', active.offsetWidth + 'px');
+      billing.style.setProperty('--thumb-x', active.offsetLeft + 'px');
+      billing.classList.add('ready');
+    }
+    function setBilling(yearly, animate){
+      amounts.forEach(a => {
+        const next = yearly ? a.dataset.y : a.dataset.m;
+        if (next === a.textContent) return;
+        a.textContent = next;
+        if (animate) { a.classList.remove('flip'); void a.offsetWidth; a.classList.add('flip'); }
+      });
       bm.classList.toggle('active', !yearly); by.classList.toggle('active', yearly);
       bm.setAttribute('aria-pressed', String(!yearly)); by.setAttribute('aria-pressed', String(yearly));
+      moveThumb();
     }
-    bm.addEventListener('click', () => setBilling(false));
-    by.addEventListener('click', () => setBilling(true));
+    bm.addEventListener('click', () => setBilling(false, true));
+    by.addEventListener('click', () => setBilling(true, true));
+    moveThumb();
+    window.addEventListener('resize', moveThumb, {passive:true});
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(moveThumb);
 
     // Reveal on scroll
     const reveals = document.querySelectorAll('.reveal');
